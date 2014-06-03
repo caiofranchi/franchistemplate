@@ -84,18 +84,6 @@ module.exports = function(grunt) {
         },
 
         /**
-         * JSHint
-         * https://github.com/gruntjs/grunt-contrib-jshint
-         * Manage the options inside .jshintrc file
-         */
-        jshint: {
-            files: ['src/js/*.js', 'Gruntfile.js'],
-            options: {
-                jshintrc: '.jshintrc'
-            }
-        },
-
-        /**
          * Concatenate JavaScript files
          * https://github.com/gruntjs/grunt-contrib-concat
          * Imports all .js files and appends project banner
@@ -231,7 +219,7 @@ module.exports = function(grunt) {
         watch: {
             concat: {
                 files: '<%= project.src %>/js/{,*/}*.js',
-                tasks: ['concat:dev', 'jshint']
+                tasks: ['concat:dev']
             },
             sass: {
                 files: '<%= project.src %>/scss/{,*/}*.{scss,sass}',
@@ -250,13 +238,13 @@ module.exports = function(grunt) {
      * Default task
      * Run `grunt` on the command line
      */
-    grunt.registerTask('default', ['sass:dev', 'bower:dev', 'autoprefixer:dev', 'cssmin:dev', 'jshint', 'concat:dev', 'connect:livereload', 'open', 'watch']);
+    grunt.registerTask('default', ['sass:dev', 'bower:dev', 'autoprefixer:dev', 'cssmin:dev', 'concat:dev', 'watch']);
 
     /**
      * Build task
      * Run `grunt build` on the command line
      * Then compress all JS/CSS files
      */
-    grunt.registerTask('build', ['sass:dist', 'bower:dist', 'autoprefixer:dist', 'cssmin:dist', 'clean:dist', 'jshint', 'uglify']);
+    grunt.registerTask('build', ['sass:dist', 'bower:dist', 'autoprefixer:dist', 'cssmin:dist', 'clean:dist', 'uglify']);
 
 };
