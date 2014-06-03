@@ -1,0 +1,15 @@
+@mixin set-vendor-prefix($name, $args...) {
+  #{$name}: $args;
+  -webkit-#{$name}: $args;
+  -ms-#{$name}: $args;
+  -moz-#{$name}: $args;
+  -o-#{$name}: $args;
+}
+
+//sprite buttons
+@mixin button-sprite($pBackgroundPosition) {
+  overflow:hidden;
+  background-repeat: no-repeat;
+  background-image:url('../img/SpriteButtons.png');
+  background-position: $pBackgroundPosition;
+}

@@ -1,0 +1,61 @@
+@media only screen and (min-width:320px) {
+
+}
+@media only screen and (min-width:480px) {
+
+}
+@media only screen and (min-width:768px) {
+
+}
+@media only screen and (min-width:1024px) {
+
+}
+@media only screen and (min-width:1140px) {
+
+}
+@media only screen and (min-width:1280px) {
+
+}
+@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+
+}
+
+/** PREDEFINED BREAKPOINTS */
+$num-break-mobile: 640px;
+$num-break-tablet: 768px;
+$num-break-netbook: 1025px;
+$num-break-notebook: 1366px;
+$num-break-desktop: 1920px;
+
+
+$query-mobile: "only screen and (max-width : #{$num-break-mobile})";
+$query-tablet: "only screen and (min-width : #{$num-break-mobile}) and (max-width : #{$num-break-tablet})";
+$query-netbook: "only screen and (min-width : #{$num-break-tablet}) and (max-width : #{$num-break-netbook})";
+$query-notebook: "only screen and (min-width : #{$num-break-netbook})";
+$query-desktop: "only screen and (min-width : #{$num-break-notebook})";
+$query-gt-netbook: "only screen and (min-width : #{$num-break-netbook})";
+
+
+/*
+
+Example of breakpoint use:
+
+header .title {
+
+  float:left;
+  display: block;
+  background-image: url("../img/logo.png");
+  width: 111px;
+  height: 31px;
+  margin: 8px 0px 0px 0px;
+
+  @media #{$query-mobile} {
+    margin-left: 5px;
+  }
+
+  @media #{$query-tablet} {
+    margin-left: 5px;
+  }
+}
+
+*/
