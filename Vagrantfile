@@ -14,6 +14,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # --------------------
   #config.vm.network :private_network, ip: "192.168.5.0"
 
+   # Set the timezone to the host timezone
+   require 'time'
+   timezone = 'Etc/GMT' + ((Time.zone_offset(Time.now.zone)/60)/60).to_s
+   config.vm.provision :shell, :inline => "if [ $(grep -c UTC /etc/timezone) -gt 0 ]; then echo \"#{timezone}\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata; fi"
+
    # Provisioning Script
    # --------------------
    config.vm.provision "shell", path: "src/server/Vagrant.sh"
@@ -33,4 +38,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    # --------------------
    config.vm.synced_folder ".", "/vagrant/", :mount_options => [ "dmode=777", "fmode=666" ]
    config.vm.synced_folder "./www", "/vagrant/www/", :mount_options => [ "dmode=775", "fmode=644" ], :owner => 'www-data', :group => 'www-data'
+
+
 end
