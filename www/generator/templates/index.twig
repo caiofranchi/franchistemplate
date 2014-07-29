@@ -1,0 +1,65 @@
+require 'Slim/Slim.php';
+
+\Slim\Slim::registerAutoloader();
+
+$app = new \Slim\Slim();
+
+// GET route with parameter
+$app->get('/artist', function () use ($app) {
+
+// get all artists
+
+});
+
+// GET route with parameter
+$app->get('/artist/:id', function () use ($app) {
+
+$request = (array) json_decode($app->request()->getBody());
+
+// use $request['id'] to query database based on id and create response...
+
+$response['id'] = 1;
+$response['name'] = "Mike Jones";
+$response['favoriteColor'] = "blue";
+$response['favoriteFood'] = "tacos";
+$app->response()->header('Content-Type', 'application/json');
+echo json_encode($response);
+
+});
+
+// POST route
+$app->post('/artist', function () use ($app) {
+
+$request = (array) json_decode($app->request()->getBody());
+
+// Save to database here creating a new entry with $request['name']; $request['favoriteColor']; etc.
+
+$app->response()->header('Content-Type', 'application/json');
+echo json_encode($request);
+
+});
+
+// PUT route
+$app->put('/artist/:id', function () use ($app) {
+
+$request = (array) json_decode($app->request()->getBody());
+
+// use $request['id'] to update database based on id and create response...
+
+$app->response()->header('Content-Type', 'application/json');
+echo json_encode($request);
+
+});
+
+// DELETE route
+$app->delete('/artist/:id', function () use ($app) {
+
+$request = (array) json_decode($app->request()->getBody());
+
+//use $request['id'] to remove database entry based on id...
+
+$app->response()->header('Content-Type', 'application/json');
+echo json_encode($request);
+});
+
+$app->run();

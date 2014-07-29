@@ -19,6 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    timezone = 'Etc/GMT' + ((Time.zone_offset(Time.now.zone)/60)/60).to_s
    config.vm.provision :shell, :inline => "if [ $(grep -c UTC /etc/timezone) -gt 0 ]; then echo \"#{timezone}\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata; fi"
 
+    # Set the Timezone to host timezone require 'time' offset = ((Time.zoneoffset(Time.now.zone)/60)/60) zonesufix = offset >= 0 ? "+#{offset.tos}" : "#{offset.tos}" timezone = 'Etc/GMT' + zone_sufix config.vm.provision :shell, :inline => "echo \"#{timezone}\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
+
    # Provisioning Script
    # --------------------
    config.vm.provision "shell", path: "src/server/Vagrant.sh"

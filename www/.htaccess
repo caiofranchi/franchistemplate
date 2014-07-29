@@ -213,6 +213,11 @@ AddDefaultCharset utf-8
     Options +FollowSymlinks
   # Options +SymLinksIfOwnerMatch
     RewriteEngine On
+
+    #Rewrite for SLIM framework
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
+
   # RewriteBase /
 </IfModule>
 

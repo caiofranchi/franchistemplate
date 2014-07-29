@@ -1,0 +1,12 @@
+{
+    "require": {
+        "slim/slim": "*",
+        "twig/twig": "1.*",
+        "illuminate/database": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "app/models"
+        ]
+    }
+}
