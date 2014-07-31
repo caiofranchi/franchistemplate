@@ -6,7 +6,7 @@
     },
     "autoload": {
         "classmap": [
-            "app/models"
+            "publish/app/models"
         ]
     }
 }

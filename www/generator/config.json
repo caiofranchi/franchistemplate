@@ -8,10 +8,15 @@
             "user":"root",
             "password":"vagrant"
         },
+        "admin": {
+            "user":"root",
+            "pass": "vagrant"
+        },
         "entities":[
             {
                 "slug":"groups",
                 "table":"groups",
+                "modelName": "Groups" ,
                 "isAPI":true,
                 "isAdmin":true,
                 "fields":{
@@ -22,13 +27,24 @@
                         "formType":"text",
                         "dataType":"varchar"
                     }
-                }
+                },
+                "relations":[
+                    {
+                        "type":"hasMany",
+                        "models": [
+                            "users"
+                        ]
+                    }
+                ]
             },
             {
                 "slug":"users",
                 "table":"users",
                 "isAPI":true,
                 "isAdmin":true,
+                "modelName": "Users" ,
+                "hiddenFields": ["descricao","tipo"],
+                "primaryKey": "id",
                 "fields":{
                     "id":{
                         "tableRef":"id",
@@ -70,17 +86,14 @@
                         ]
                     }
                 },
-                "relations":{
-                    "hasMany":[
-                        "photos"
-                    ],
-                    "belongsTo":[
-                        "groups"
-                    ],
-                    "oneToOne":[
-                        "type"
-                    ]
-                }
+                "relations":[
+                    {
+                        "type":"belongsTo",
+                        "models": [
+                            "groups"
+                        ]
+                    }
+                ]
             }
         ]
     }

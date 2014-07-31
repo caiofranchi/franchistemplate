@@ -7,9 +7,10 @@
  */
 require_once 'vendor/autoload.php';
 require_once 'inc/utils.php';
+require_once 'inc/JsonHandler.php';
 
 ////slim
-//$app = new \Slim\Slim();
+$app = new \Slim\Slim();
 //$app->get('/hello/:name', function ($name) {
 //    echo "Hello, $name";
 //});
@@ -19,7 +20,7 @@ require_once 'inc/utils.php';
 
 //read config JSON
 $filePath = file_get_contents("config.json");
-$jsonConfig= json_decode($filePath,false);
+$jsonConfig= JsonHandler::decode($filePath,false);
 
 $objDataBase = $jsonConfig->generator->database;
 $objEntities = $jsonConfig->generator->entities;
@@ -49,9 +50,11 @@ $resolver->setDefaultConnection('default');
 
 //twig
 $loader = new Twig_Loader_Filesystem('templates/');
-$twig = new Twig_Environment($loader, array(
-    'cache' => 'compilation_cache',
-));
+$twig = new Twig_Environment($loader);
+//$twig = new Twig_Environment($loader, array(
+//    'cache' => 'compilation_cache',
+//));
+
 
 
 //parsing json
@@ -61,20 +64,41 @@ $jsonIterator = new RecursiveIteratorIterator(
 
 foreach ($objEntities as $key) {
 
-
     //rendering Models based on templates
-    $arrTeste = (array) $key;
+    $arrCurrentEntity = (array) $key;
 
-    $renderedClass = $twig->render('model.twig', $arrTeste);
+    $renderedClass = $twig->render('model.twig', $arrCurrentEntity);
 
     //writing php models
     $myfile = fopen('publish/app/models/'.$key->slug.'.php', "w");
     fwrite($myfile, $renderedClass);
     fclose($myfile);
 
+    //build admin
+    if($arrCurrentEntity['isAdmin']){
+        //if the current entity should be on admin
+    }
 }
 
+require_once "publish/app/models/groups.php";
+require_once "publish/app/models/users.php";
 
+//$users = \Users::all();
+//echo $users->toJson();
+
+$users = Groups::find(1)->users;
+echo $users->toJson();
+
+//$app->get('/users', function () use ($app) {
+//
+//    $users = Users::all();
+//
+//    $res = $app->response();
+//    $res['Content-Type'] = 'application/json';
+//    $res->body($users);
+//});
+
+//$app->run();
 
 //each entity
 //$totalEntities = count($objEntities);

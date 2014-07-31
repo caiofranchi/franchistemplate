@@ -1,11 +1,22 @@
-class  extends IlluminateDatabaseEloquentModel
+<?php
+/**
+ * Created by PhpStorm.
+ * User: cfranchi
+ * Date: 30/07/14
+ * Time: 17:25
+ */
+
+class Groups extends Illuminate\Database\Eloquent\Model
 {
-    protected $table = '';
+    protected $table = 'groups';
 
-    protected $hidden = ['password', 'password_reset_hash', 'temp_password'];
+    protected $key = '';
 
-    public function groups()
-    {
-        return $this->belongsToMany('Group', 'users_groups', 'user_id', 'group_id');
-    }
-}
+    protected $hidden = [];
+
+                    public function users()
+        {
+              return $this->hasMany('users');
+
+        }
+             }
