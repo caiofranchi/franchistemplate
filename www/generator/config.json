@@ -14,6 +14,36 @@
         },
         "entities":[
             {
+            "slug":"admins",
+            "table":"admins",
+            "modelName": "Admins" ,
+            "primaryKey": "id",
+            "isAdmin":true,
+            "fields":{
+                "name":{
+                    "tableRef":"nome",
+                    "isForm":"true",
+                    "isRequired":true,
+                    "formType":"text",
+                    "dataType":"varchar"
+                },
+                "email":{
+                    "tableRef":"email",
+                    "isForm":"true",
+                    "isRequired":true,
+                    "formType":"email",
+                    "dataType":"varchar"
+                },
+                "password":{
+                    "tableRef":"password",
+                    "isForm":"true",
+                    "isRequired":true,
+                    "formType":"password",
+                    "dataType":"varchar"
+                }
+            }
+        },
+            {
                 "slug":"groups",
                 "table":"groups",
                 "modelName": "Groups" ,

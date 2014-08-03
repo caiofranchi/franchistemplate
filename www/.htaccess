@@ -215,8 +215,8 @@ AddDefaultCharset utf-8
     RewriteEngine On
 
     #Rewrite for SLIM framework
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteRule ^ index.php [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
 
   # RewriteBase /
 </IfModule>

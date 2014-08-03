@@ -5,7 +5,16 @@
  * Date: 31/07/14
  * Time: 17:47
  */
+session_cache_limiter(false);
+session_start();
 
+require_once '../../vendor/autoload.php';
+require_once 'Config.php';
+
+$app = new \Slim\Slim(array(
+    'mode' => 'development',
+    'debug' => true
+));
 
 
 ?>
@@ -15,7 +24,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>Admin</title>
 
     <!-- Bootstrap -->
     <link href="css/vendor/bootstrap.min.css" rel="stylesheet">
