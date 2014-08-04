@@ -8,32 +8,32 @@
 
 ?>
 
-<?php if($app->flash['error']!==''): ?>
+<?php if((string)$flash['error']!==''): ?>
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
         </button>
-        <strong>ERROR!</strong><?php echo $app->flash['error']; ?>
+        <strong>ERROR! </strong><?php echo $flash['error']; ?>
     </div>
 <?php endif ?>
 
-<?php if($app->flash['success']!==''): ?>
+<?php if((string)$flash['success']!==''): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
         </button>
-        <strong>ERROR!</strong><?php echo $app->flash['success']; ?>
+        <strong>SUCCESS!  </strong><?php echo $flash['success']; ?>
     </div>
 <?php endif ?>
 
-<?php if($app->flash['warning']!==''): ?>
+<?php if((string)$flash['warning']!==''): ?>
     <div class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
         </button>
-        <strong>ERROR!</strong><?php echo $app->flash['warning']; ?>
+        <strong>WARNING! </strong><?php echo $flash['warning']; ?>
     </div>
 <?php endif ?>

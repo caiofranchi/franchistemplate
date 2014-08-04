@@ -216,10 +216,19 @@ AddDefaultCharset utf-8
 
     #Rewrite for SLIM framework
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
+    RewriteRule ^ /generator/publish/admin/index.php [QSA,L]
+#    RewriteRule ^(.*)$ %/generator/publish/admin/index.php [QSA,L]
+#    RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
 
   # RewriteBase /
 </IfModule>
+
+#<Directory /vagrant/www/generator/publish/admin>
+#    #put here the rewrite rules
+#   RewriteEngine On
+#   RewriteCond %{REQUEST_FILENAME} ! -f
+#   RewriteRule ^ index.php [QSA,L]
+#</Directory>
 
 # ------------------------------------------------------------------------------
 # | Suppressing / Forcing the "www." at the beginning of URLs                  |

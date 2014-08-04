@@ -6,6 +6,16 @@
  * Time: 18:41
  */
 
+//CURRENT MODE
+$_ENV['SLIM_MODE'] = 'development';
+//$_ENV['SLIM_MODE'] = 'production';
+
+define('ROOT_PATH'  , __DIR__.'/../../');
+define('VENDOR_PATH', __DIR__.'/../../vendor/');
+define('APP_PATH'   , __DIR__.'/../../app/');
+define('MODULE_PATH', __DIR__.'/../../app/modules/');
+define('PUBLIC_PATH', __DIR__.'/../../public/');
+
 //eloquent ORM
 $settings = array(
     'driver' => 'mysql',

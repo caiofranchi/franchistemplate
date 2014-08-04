@@ -10,64 +10,49 @@ require_once "../app/models/admins.php";
 require_once "../../inc/PassHash.php";
 
 
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     $email = $_REQUEST["email"];
-    $senha = $_REQUEST["password"];
-
-    //cookie session store
-
-    $app->add(new \Slim\Middleware\SessionCookie(array(
-        'expires' => '30 minutes',
-        'path' => '/',
-        'domain' => null,
-        'secure' => false,
-        'httponly' => false,
-        'name' => 'USER_ID',
-        'secret' => 'CHANGE_ME',
-        'cipher' => MCRYPT_RIJNDAEL_256,
-        'cipher_mode' => MCRYPT_MODE_CBC
-    )));
+    $password = $_REQUEST["password"];
+    $remember = isset($_REQUEST["remember"]) ? $_REQUEST["remember"] : false;
 
 
-    if(!empty($email) && !empty($senha)){
-
-//        var_dump(\Admins::all());
+    if(!empty($email) && !empty($password)){
 
         $user = \Admins::where('email',$email)->first();
 
         if(count($user)==1) {
             //user exists
 
-            if (PassHash::check_password($user->password,$senha)) {
+            if (PassHash::check_password($user->password,$password)) {
 
                 // User password is correct
-                $_SESSION['USER_ID'] = $user->id;
-                $_SESSION['USER_NAME'] = $user->name;
+                if($remember==='true') {
+                    $app->setCookie('USER_ID',$user->id);
+                    $app->setCookie('USER_NAME',$user->name);
+                } else {
+                    $_SESSION['USER_ID'] = $user->id;
+                    $_SESSION['USER_NAME'] = $user->name;
+                }
 
+                $app->flashNow('success', 'Welcome');
 
-                $app->flash('success', 'Welcome');
-//                $app->redirect('index.php');
+                //Redirect user to dashboard
+                $app->redirect('dashboard');
             } else {
 
-                // user password is incorrect
-                $_SESSION['USER_ID'] = '';
-                $_SESSION['USER_NAME'] = '';
-
-                $app->flash('error', 'Cannot login');
+                $app->flashNow('error', 'Cannot login');
             }
 
         } else {
             //user not exists
-            $app->flash('error', 'Cannot login');
+            $app->flashNow('error', 'Cannot login');
         }
 
     } else {
-        $app->flash('error', 'Email and password are required to login');
+        $app->flashNow('error', 'Email and password are required to login');
     }
 }
-
 
 ?>
     <!--        LOGIN-->
@@ -78,7 +63,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
         <div class="checkbox">
             <label>
-                <input id="remember" name="remember" type="checkbox" value="remember-me"> Remember me
+                <input id="remember" name="remember" type="checkbox" value="true"> Remember me
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

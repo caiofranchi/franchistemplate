@@ -5,17 +5,12 @@
  * Date: 31/07/14
  * Time: 17:47
  */
-session_cache_limiter(false);
-session_start();
-
 require_once '../../vendor/autoload.php';
 require_once 'Config.php';
 
-$app = new \Slim\Slim(array(
-    'mode' => 'development',
-    'debug' => true
-));
+$app = \Slim\Slim::getInstance();
 
+//double check for user logged
 
 ?>
 <!DOCTYPE html>
@@ -27,8 +22,8 @@ $app = new \Slim\Slim(array(
     <title>Admin</title>
 
     <!-- Bootstrap -->
-    <link href="css/vendor/bootstrap.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link href="assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
