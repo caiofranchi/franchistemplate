@@ -23,15 +23,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    # Provisioning Script
    # --------------------
-   config.vm.provision "shell", path: "src/server/Vagrant.sh"
+   config.vm.provision "shell", path: "src_backend/server/Vagrant.sh"
 
   #config.vm.provision :shell do |shell|
   # shell.inline = "/usr/bin/apt-get install libpcre3-dev --quiet --yes";
   #end
 
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "src/server/puppet/manifests"
-    puppet.module_path = "src/server/puppet/modules"
+    puppet.manifests_path = "src_backend/server/puppet/manifests"
+    puppet.module_path = "src_backend/server/puppet/modules"
     puppet.manifest_file  = "init.pp"
     puppet.options="--verbose --debug"
   end

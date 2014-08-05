@@ -1,14 +1,14 @@
 {
-    "name": "fireshell",
-    "title": "Fiercely quick and opinionated front-ends",
-    "url": "http://getfireshell.com",
+    "name": "franchistemplate",
+    "title": "Grunt tasks based on Todd Motto FireShell",
+    "url": "http://caiofranchi.com.br",
     "author": "Todd Motto",
-    "copyright": "2013",
-    "version": "1.1.0",
+    "copyright": "2014",
+    "version": "0.1.0",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "http://github.com/toddmotto/fireshell.git"
+        "url": "https://github.com/caiofranchi/franchistemplate.git"
     },
     "devDependencies": {
         "bower": "~1.2.6",

@@ -10,6 +10,7 @@
 <script src="assets/js/vendor/bootstrap.min.js"></script>
 
 <script src="assets/js/main.js"></script>
+<!--<script src="assets/js/--><?php //echo $app->getRoute()->getName() ?><!--.js"></script>-->
 
 </body>
 </html>

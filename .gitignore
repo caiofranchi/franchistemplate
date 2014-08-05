@@ -24,7 +24,7 @@ npm-debug.log
 node_modules
 
 ## Bower
-src/components
+src_frontend/components
 
 ## Sass
 .sass-cache
@@ -49,4 +49,4 @@ $RECYCLE.BIN/
 
 ##VAGRANT
 .vagrant
-src/server/puppet/modules/phalconphp/
+src_frontend/server/puppet/modules/phalconphp/

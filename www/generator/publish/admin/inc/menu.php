@@ -17,8 +17,11 @@
         </button>
         <div class="navbar-collapse collapse">
             <ul class="nav nav-sidebar" role="navigation">
+
                 <li class="active"><a href="dashboard"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
+
                 <li><a href="users">Users</a></li>
+
             </ul>
         </div>
 
