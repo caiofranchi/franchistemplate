@@ -13,7 +13,7 @@
 $app->group('/admin', function () use ($app) {
 
     // HOME
-    $app->get('/',function () use ($app) {
+    $app->get('/', array(new \Admin\AdminController(), 'authenticate') ,function () use ($app) {
         //render page
         if(isUserLogged()){
             $app->redirect('dashboard');
@@ -25,7 +25,7 @@ $app->group('/admin', function () use ($app) {
     // LOGIN
     $app->map('/login',function () use ($app) {
         //render page
-        $app->render('login.php');
+        $app->render('admin/login.php');
     })->via('GET', 'POST');;
 
 
@@ -52,8 +52,15 @@ $app->group('/admin', function () use ($app) {
     });
 
 
+
     //DASHBOARD
-    $app->get('/dashboard', 'authenticate', function () use ($app) {
+
+//    $teste = new \Admin\AdminController();
+//    echo $teste->isUserLogged();
+//    $function = $teste->authenticate;
+
+
+    $app->get('/dashboard',array(new \Admin\AdminController(), 'authenticate') ,  function () use ($app) {
         $app->render('dashboard.php');
     });
 
@@ -78,43 +85,3 @@ $app->group('/admin', function () use ($app) {
 //    });
 
 });
-
-/**
- * Adding Middle Layer to authenticate every request
- * Checking if the user is logged on admin
- */
-function authenticate(\Slim\Route $route) {
-    $app = \Slim\Slim::getInstance();
-
-    if(!isUserLogged()) {
-//        $response["error"] = true;
-//        $response["message"] = "Access Denied.";
-//        echoRespnse(401, $response);
-//        $app->stop();
-        $app->redirect('login');
-    }
-}
-
-function isUserLogged(){
-    $app = \Slim\Slim::getInstance();
-
-    // Verifying User Authorization
-    if((string)$app->getCookie('USER_ID',false) !== ''){
-        //cookie exists
-        return true;
-    } else {
-
-        //verifica a sessao
-        if(isset($_SESSION["USER_ID"])) {
-            if($_SESSION["USER_ID"]!=='') {
-                return true;
-            }else {
-                return false;
-            }
-        }else {
-            return false;
-        }
-    }
-
-    return false;
-}

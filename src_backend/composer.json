@@ -19,16 +19,9 @@
     },
     "autoload": {
         "psr-4": {
-            "" : [
-                "src/",
-                "app/controllers/",
-                "app/models/",
-                "app/middlewares/",
-                "app/modules/"
+            "": [
+                "controllers/"
             ]
-        },
-        "classmap": [
-            "publish/app/models"
-        ]
+        }
     }
 }

@@ -13,7 +13,8 @@ require __DIR__.'/../config/paths.php';
 
 
 //now load composer
-require VENDOR_PATH.'autoload.php';
+$loader = require VENDOR_PATH.'autoload.php';
+
 
 /**
  * Initialize ELOQUENT ORM
@@ -41,7 +42,6 @@ $resolver->setDefaultConnection('default');
 
 $app = require APP_PATH.'config/slim.php'; //start and configure an Slim app application
 $app->setName('MainSiteRouting');
-
 
 //SETUP SLIM ROUTES
 require APP_PATH.'routes/site.php';

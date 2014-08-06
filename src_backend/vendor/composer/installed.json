@@ -156,18 +156,18 @@
     },
     {
         "name": "illuminate/support",
-        "version": "v4.2.7",
-        "version_normalized": "4.2.7.0",
+        "version": "v4.2.8",
+        "version_normalized": "4.2.8.0",
         "target-dir": "Illuminate/Support",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/support.git",
-            "reference": "b3d84fa93aa3f2081a935158f860de8308d62d5a"
+            "reference": "8702d655da1f7502037a2206df38399656ff35ae"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/support/zipball/b3d84fa93aa3f2081a935158f860de8308d62d5a",
-            "reference": "b3d84fa93aa3f2081a935158f860de8308d62d5a",
+            "url": "https://api.github.com/repos/illuminate/support/zipball/8702d655da1f7502037a2206df38399656ff35ae",
+            "reference": "8702d655da1f7502037a2206df38399656ff35ae",
             "shasum": ""
         },
         "require": {
@@ -177,7 +177,7 @@
             "jeremeamia/superclosure": "~1.0",
             "patchwork/utf8": "1.1.*"
         },
-        "time": "2014-07-21 21:14:59",
+        "time": "2014-08-05 12:08:34",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -206,8 +206,8 @@
     },
     {
         "name": "illuminate/container",
-        "version": "v4.2.7",
-        "version_normalized": "4.2.7.0",
+        "version": "v4.2.8",
+        "version_normalized": "4.2.8.0",
         "target-dir": "Illuminate/Container",
         "source": {
             "type": "git",
@@ -249,18 +249,18 @@
     },
     {
         "name": "illuminate/events",
-        "version": "v4.2.7",
-        "version_normalized": "4.2.7.0",
+        "version": "v4.2.8",
+        "version_normalized": "4.2.8.0",
         "target-dir": "Illuminate/Events",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/events.git",
-            "reference": "c95614873f4e437ed7a723c1734197b51feaf991"
+            "reference": "3fd59a0dd07d2b569487d99a37011f33fc01aafd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/events/zipball/c95614873f4e437ed7a723c1734197b51feaf991",
-            "reference": "c95614873f4e437ed7a723c1734197b51feaf991",
+            "url": "https://api.github.com/repos/illuminate/events/zipball/3fd59a0dd07d2b569487d99a37011f33fc01aafd",
+            "reference": "3fd59a0dd07d2b569487d99a37011f33fc01aafd",
             "shasum": ""
         },
         "require": {
@@ -268,7 +268,7 @@
             "illuminate/support": "4.2.*",
             "php": ">=5.4.0"
         },
-        "time": "2014-06-06 13:58:46",
+        "time": "2014-08-03 15:26:23",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -294,18 +294,18 @@
     },
     {
         "name": "illuminate/database",
-        "version": "v4.2.7",
-        "version_normalized": "4.2.7.0",
+        "version": "v4.2.8",
+        "version_normalized": "4.2.8.0",
         "target-dir": "Illuminate/Database",
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/database.git",
-            "reference": "35adb30b2b9e26222e6c0803a5643e86674f13c1"
+            "reference": "0c4714accc27fa291789484e5a068a52ce7975d9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/database/zipball/35adb30b2b9e26222e6c0803a5643e86674f13c1",
-            "reference": "35adb30b2b9e26222e6c0803a5643e86674f13c1",
+            "url": "https://api.github.com/repos/illuminate/database/zipball/0c4714accc27fa291789484e5a068a52ce7975d9",
+            "reference": "0c4714accc27fa291789484e5a068a52ce7975d9",
             "shasum": ""
         },
         "require": {
@@ -322,7 +322,7 @@
             "illuminate/pagination": "4.2.*",
             "illuminate/support": "4.2.*"
         },
-        "time": "2014-07-20 23:19:36",
+        "time": "2014-08-05 19:35:51",
         "type": "library",
         "extra": {
             "branch-alias": {
