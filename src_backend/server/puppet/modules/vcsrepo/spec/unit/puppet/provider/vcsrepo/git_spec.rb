@@ -204,7 +204,7 @@ branches
     end
 
     context "when its SHA is not different than the current SHA" do
-      it "should return the ref" do
+      it "should return the refAdminController" do
         provider.expects(:git).with('config', 'remote.origin.url').returns('')
         provider.expects(:git).with('fetch', 'origin') # FIXME
         provider.expects(:git).with('fetch', '--tags', 'origin')
@@ -225,7 +225,7 @@ branches
       end
     end
 
-    context "when its a ref to a remote head" do
+    context "when its a refAdminController to a remote head" do
       it "should return the revision" do
         provider.expects(:git).with('config', 'remote.origin.url').returns('')
         provider.expects(:git).with('fetch', 'origin') # FIXME
@@ -237,7 +237,7 @@ branches
       end
     end
 
-    context "when its a ref to non existant remote head" do
+    context "when its a refAdminController to non existant remote head" do
       it "should fail" do
         provider.expects(:git).with('config', 'remote.origin.url').returns('')
         provider.expects(:git).with('fetch', 'origin') # FIXME
@@ -245,7 +245,7 @@ branches
         provider.expects(:git).with('tag', '-l').returns("Hello")
         provider.expects(:git).with('rev-parse', '--revs-only', resource.value(:revision)).returns('')
         provider.expects(:git).with('ls-remote', '--heads', '--tags', 'origin', resource.value(:revision)).returns('')
-        expect { provider.revision }.to raise_error(Puppet::Error, /not a local or remote ref$/)
+        expect { provider.revision }.to raise_error(Puppet::Error, /not a local or remote refAdminController$/)
       end
     end
 

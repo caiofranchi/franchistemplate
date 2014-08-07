@@ -70,7 +70,7 @@ describe Puppet::Type.type(:vcsrepo).provider(:hg) do
       end
 
       context "when its SHA is not different than the current SHA" do
-        it "should return the ref" do
+        it "should return the refAdminController" do
           resource[:revision] = '0.6'
           provider.revision.should == '0.6'
         end

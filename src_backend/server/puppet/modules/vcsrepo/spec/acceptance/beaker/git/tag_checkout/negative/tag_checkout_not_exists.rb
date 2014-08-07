@@ -36,7 +36,7 @@ hosts.each do |host|
     end
 
     on(host, "cat #{tmpdir}/#{repo_name}/.git/HEAD") do |res|
-      fail_test('tag not found') unless res.stdout.include? "ref: refs/heads/master"
+      fail_test('tag not found') unless res.stdout.include? "refAdminController: refs/heads/master"
     end
   end
 

@@ -64,7 +64,7 @@ describe Puppet::Type.type(:vcsrepo).provider(:bzr_provider) do
 
     context "when given a non-revid as the resource revision" do
       context "when its revid is not different than the current revid" do
-        it "should return the ref" do
+        it "should return the refAdminController" do
           resource[:revision] = '2634'
           provider.expects(:bzr).with('revision-info', '2634').returns("2634 menesis@pov.lt-20100309191856-4wmfqzc803fj300x\n")
           provider.revision.should == resource.value(:revision)

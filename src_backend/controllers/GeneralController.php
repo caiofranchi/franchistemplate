@@ -256,7 +256,7 @@ class GeneralController
     {
         $path       = dirname($_SERVER['SCRIPT_NAME']);
         $path       = trim($path, '/');
-        $baseUrl    = 'tempo'; //Request::getUrl();
+        $baseUrl    = 'temp'; //Request::getUrl();
         $baseUrl    = trim($baseUrl, '/');
         return $baseUrl.'/'.$path.( $path ? '/' : '' );
     }

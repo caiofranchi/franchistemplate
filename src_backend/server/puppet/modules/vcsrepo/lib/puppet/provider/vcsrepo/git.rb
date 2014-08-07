@@ -54,14 +54,14 @@ Puppet::Type.type(:vcsrepo).provide(:git, :parent => Puppet::Provider::Vcsrepo) 
     if tag_revision?(@resource.value(:revision))
       canonical = at_path { git_with_identity('rev-parse', @resource.value(:revision)).chomp }
     else
-      # if it's not a tag, look for it as a local ref
+      # if it's not a tag, look for it as a local refAdminController
       canonical = at_path { git_with_identity('rev-parse', '--revs-only', @resource.value(:revision)).chomp }
       if canonical.empty?
-        # git rev-parse executed properly but didn't find the ref;
+        # git rev-parse executed properly but didn't find the refAdminController;
         # look for it in the remote
         remote_ref = at_path { git_with_identity('ls-remote', '--heads', '--tags', @resource.value(:remote), @resource.value(:revision)).chomp }
         if remote_ref.empty?
-          fail("#{@resource.value(:revision)} is not a local or remote ref")
+          fail("#{@resource.value(:revision)} is not a local or remote refAdminController")
         end
 
         # $ git ls-remote --heads --tags origin feature/cvs

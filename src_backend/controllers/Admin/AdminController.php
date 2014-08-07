@@ -13,28 +13,39 @@ use Slim\Slim;
 
 class AdminController extends \GeneralController {
 
+
+//    public function __construct()
+//    {
+////        self:$this->app = Slim::getInstance();
+//    }
+
+    public function index(\Slim\Route $route) {
+
+    }
+
     /**
      * Middle layer method for verify user on routes
      * Checking if the user is logged on admin
      */
     public function authenticate(\Slim\Route $route) {
-        $app = \Slim\Slim::getInstance();
+//        $this->app = \Slim\Slim::getInstance();
 
-        if(!$this->isUserLogged()) {
-//        $app->stop();
-            $app->redirect('login');
+        if(!AdminController::isUserLogged()) {
+//        $this->app->stop();
+            $this->app->redirect('login');
         }
     }
+
 
     /**
      * Verify if the user is logged on admin
      * @return bool
      */
-    public static  function isUserLogged(){
-        $app = \Slim\Slim::getInstance();
+    public function isUserLogged(){
+        $this->app = \Slim\Slim::getInstance();
 
         // Verifying User Authorization
-        if((string)$app->getCookie('USER_ID',false) !== ''){
+        if((string)$this->app->getCookie('USER_ID',false) !== ''){
             //cookie exists
             return true;
         } else {
@@ -52,5 +63,75 @@ class AdminController extends \GeneralController {
         }
 
         return false;
+    }
+
+    public function login() {
+
+        if($this->app->request->isPost()) {
+            //render page
+            $email = $_REQUEST["email"];
+            $password = $_REQUEST["password"];
+            $remember = isset($_REQUEST["remember"]) ? $_REQUEST["remember"] : false;
+
+
+            if(!empty($email) && !empty($password)){
+
+                $user = \Admins::where('email',$email)->first();
+
+                if(count($user)==1) {
+                    //user exists
+
+                    if (\PassHash::check_password($user->password,$password)) {
+
+                        // User password is correct
+                        if($remember==='true') {
+                            $this->app->setCookie('USER_ID',$user->id);
+                            $this->app->setCookie('USER_NAME',$user->name);
+                        } else {
+                            $_SESSION['USER_ID'] = $user->id;
+                            $_SESSION['USER_NAME'] = $user->name;
+                        }
+
+                        $this->app->flashNow('success', 'Welcome');
+
+                        //Redirect user to dashboard
+                        $this->app->redirect('dashboard');
+                    } else {
+
+                        $this->app->flashNow('error', 'Cannot login');
+                    }
+
+                } else {
+                    //user not exists
+                    $this->app->flashNow('error', 'Cannot login');
+                }
+
+            } else {
+                $this->app->flashNow('error', 'Email and password are required to login');
+            }
+        }
+
+
+        $this->app->render('admin/login.twig');
+    }
+
+    public function logout(){
+        //clear and destroy all sessions
+        $_SESSION['USER_ID'] = '';
+        $_SESSION['USER_NAME'] = '';
+        unset($_SESSION['USER_ID']);
+        unset($_SESSION['USER_NAME']);
+        session_unset();
+        session_destroy();
+        $_SESSION = array();
+
+        //clear and destroy all cookies
+        $this->app->deleteCookie('USER_ID');
+        $this->app->deleteCookie('USER_NAME');
+
+        //redirect user
+        $this->app->flashNow('error','You have been logged out.');
+        $this->app->flashKeep();
+        $this->app->redirect('login');
     }
 }

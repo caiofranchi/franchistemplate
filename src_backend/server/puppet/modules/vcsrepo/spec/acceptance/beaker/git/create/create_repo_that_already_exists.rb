@@ -31,7 +31,7 @@ hosts.each do |host|
 
   step 'verify repo is on master branch' do
     on(host, "cat #{tmpdir}/#{repo_name}/.git/HEAD") do |res|
-      assert_match(/ref: refs\/heads\/master/, stdout, "Git checkout not on master on #{host}")
+      assert_match(/refAdminController: refs\/heads\/master/, stdout, "Git checkout not on master on #{host}")
     end
   end
 

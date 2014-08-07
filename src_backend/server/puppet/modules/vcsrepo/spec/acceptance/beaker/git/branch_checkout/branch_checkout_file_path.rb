@@ -37,7 +37,7 @@ hosts.each do |host|
     end
 
     on(host, "cat #{tmpdir}/#{repo_name}/.git/HEAD") do |res|
-      fail_test('branch not found') unless res.stdout.include? "ref: refs/heads/#{branch}"
+      fail_test('branch not found') unless res.stdout.include? "refAdminController: refs/heads/#{branch}"
     end
   end
 

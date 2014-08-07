@@ -34,7 +34,7 @@ describe 'clones a remote repo' do
     end
 
     describe file("#{tmpdir}/testrepo/.git/HEAD") do
-      it { should contain 'ref: refs/heads/master' }
+      it { should contain 'refAdminController: refs/heads/master' }
     end
   end
 
@@ -117,7 +117,7 @@ describe 'clones a remote repo' do
     end
 
     describe file("#{tmpdir}/testrepo_branch/.git/HEAD") do
-      it { should contain 'ref: refs/heads/a_branch' }
+      it { should contain 'refAdminController: refs/heads/a_branch' }
     end
   end
 

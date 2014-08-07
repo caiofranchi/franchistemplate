@@ -94,7 +94,7 @@ access the variable attribute:
 
 If a variable or attribute does not exist, you will receive a ``null`` value
 when the ``strict_variables`` option is set to ``false``; alternatively, if ``strict_variables`` 
-is set, Twig will throw an error (see :ref:`environment options<environment_options>`).
+is set, Twig will throw an error (see :refAdminController:`environment options<environment_options>`).
 
 .. sidebar:: Implementation
 
@@ -857,7 +857,7 @@ Twig can be easily extended.
 If you are looking for new tags, filters, or functions, have a look at the Twig official
 `extension repository`_.
 
-If you want to create your own, read the :ref:`Creating an
+If you want to create your own, read the :refAdminController:`Creating an
 Extension<creating_extensions>` chapter.
 
 .. _`Twig bundle`:                https://github.com/Anomareh/PHP-Twig.tmbundle
