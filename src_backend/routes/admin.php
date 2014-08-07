@@ -15,18 +15,66 @@ $app->group('/admin', function () use ($app) {
     // HOME
     $app->get('/', array(new \Admin\AdminController(), 'authenticate') ,function () use ($app) {
         //render page
-        if(isUserLogged()){
+        if(\Admin\AdminController::isUserLogged()){
             $app->redirect('dashboard');
         } else {
             $app->redirect('login');
         }
     });
 
-    // LOGIN
-    $app->map('/login',function () use ($app) {
+    // LOGIN VIEW
+    $app->get('/login',function () use ($app) {
         //render page
-        $app->render('admin/login.php');
-    })->via('GET', 'POST');;
+        $app->render('admin/login.twig');
+    });
+
+    //LOGIN POST
+    $app->post('/login',function () use ($app) {
+        //render page
+        $email = $_REQUEST["email"];
+        $password = $_REQUEST["password"];
+        $remember = isset($_REQUEST["remember"]) ? $_REQUEST["remember"] : false;
+
+
+        if(!empty($email) && !empty($password)){
+
+            $user = \Admins::where('email',$email)->first();
+
+            if(count($user)==1) {
+                //user exists
+
+                if (PassHash::check_password($user->password,$password)) {
+
+                    // User password is correct
+                    if($remember==='true') {
+                        $app->setCookie('USER_ID',$user->id);
+                        $app->setCookie('USER_NAME',$user->name);
+                    } else {
+                        $_SESSION['USER_ID'] = $user->id;
+                        $_SESSION['USER_NAME'] = $user->name;
+                    }
+
+                    $app->flashNow('success', 'Welcome');
+
+                    //Redirect user to dashboard
+                    $app->redirect('dashboard');
+                } else {
+
+                    $app->flashNow('error', 'Cannot login');
+                }
+
+            } else {
+                //user not exists
+                $app->flashNow('error', 'Cannot login');
+            }
+
+        } else {
+            $app->flashNow('error', 'Email and password are required to login');
+        }
+
+        $app->render('admin/login.twig');
+
+    });
 
 
     // LOGOUT
@@ -54,15 +102,12 @@ $app->group('/admin', function () use ($app) {
 
 
     //DASHBOARD
-
-//    $teste = new \Admin\AdminController();
-//    echo $teste->isUserLogged();
-//    $function = $teste->authenticate;
-
-
     $app->get('/dashboard',array(new \Admin\AdminController(), 'authenticate') ,  function () use ($app) {
         $app->render('dashboard.php');
     });
+
+
+    //USER GENERATED ENTITIES
 
 //    // Library group
 //    $app->group('/library', function () use ($app) {

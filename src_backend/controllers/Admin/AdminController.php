@@ -21,9 +21,6 @@ class AdminController extends \GeneralController {
         $app = \Slim\Slim::getInstance();
 
         if(!$this->isUserLogged()) {
-//        $response["error"] = true;
-//        $response["message"] = "Access Denied.";
-//        echoRespnse(401, $response);
 //        $app->stop();
             $app->redirect('login');
         }
@@ -33,7 +30,7 @@ class AdminController extends \GeneralController {
      * Verify if the user is logged on admin
      * @return bool
      */
-    public function isUserLogged(){
+    public static  function isUserLogged(){
         $app = \Slim\Slim::getInstance();
 
         // Verifying User Authorization

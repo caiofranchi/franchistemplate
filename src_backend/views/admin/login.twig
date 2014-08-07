@@ -1,0 +1,23 @@
+{% extends 'admin/master.twig' %}
+
+{% block body %}
+    <form class="form-signin" role="form" method="post" action="{{baseUrl()}}/admin/login">
+        <h1 class="logo">YOUR LOGO</h1>
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="hidden" name="redirect" id="redirect" value="" />
+        <input id="email" name="email" type="email" class="form-control" placeholder="Email" required autofocus>
+        <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+            <label>
+                <input id="remember" name="remember" type="checkbox" value="true"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br/>
+
+    {% embed "admin/messages.twig" %}
+
+    {% endembed %}
+        {#<?php require_once 'inc/messages.php' ?>#}
+    </form>
+{% endblock %}

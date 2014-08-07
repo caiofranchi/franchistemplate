@@ -59,6 +59,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <form class="form-signin" role="form" method="post">
         <h1 class="logo">YOUR LOGO</h1>
         <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="hidden" name="redirect" id="redirect" value="" />
         <input id="email" name="email" type="email" class="form-control" placeholder="Email" required autofocus>
         <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
         <div class="checkbox">

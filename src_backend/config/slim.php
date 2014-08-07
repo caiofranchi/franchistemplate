@@ -8,9 +8,6 @@
 
 $_ENV['SLIM_MODE'] = 'development';
 
-//    //View
-//    'view'          => new \Slim\Views\Twig(),
-//    'templates.path'=> APP_PATH.'views',
 $app = new \Slim\Slim(array(
     'mode' => $_ENV['SLIM_MODE']
 ));
@@ -20,7 +17,7 @@ $app->configureMode('production', function () use ($app) {
     $app->config(array(
         'log.enabled' => true,
         'debug' => false,
-        'templates.path' => './',
+        'templates.path' => APP_PATH.'views/',
         'cookies.httponly' => true,
         'cookies.secret_key' => 'SPECIAL_SECRET',
         'cookies.encrypt' => true,
@@ -32,7 +29,7 @@ $app->configureMode('development', function () use ($app) {
     $app->config(array(
         'log.enabled' => false,
         'debug' => true,
-        'templates.path' => './',
+        'templates.path' => APP_PATH.'views/',
         'cookies.httponly' => false,
         'cookies.secret_key' => 'secret',
         'cookies.encrypt' => true,

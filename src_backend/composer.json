@@ -14,13 +14,17 @@
     "require": {
         "php": ">= 5.4.0",
         "slim/slim": "*",
+        "slim/views": "0.1.*",
         "twig/twig": "1.*",
         "illuminate/database": "*"
     },
     "autoload": {
         "psr-4": {
             "": [
-                "controllers/"
+                "controllers/",
+                "models/",
+                "views/",
+                "lib/"
             ]
         }
     }
