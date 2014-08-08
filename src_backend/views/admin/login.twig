@@ -1,6 +1,6 @@
 {% extends 'admin/master.twig' %}
 
-{% block body %}
+{% block base %}
     <form class="form-signin" role="form" method="post" action="{{baseUrl()}}/admin/login">
         <h1 class="logo">YOUR LOGO</h1>
         <h2 class="form-signin-heading">Please sign in</h2>
@@ -18,6 +18,6 @@
     {% embed "admin/messages.twig" %}
 
     {% endembed %}
-        {#<?php require_once 'inc/messages.php' ?>#}
+
     </form>
 {% endblock %}

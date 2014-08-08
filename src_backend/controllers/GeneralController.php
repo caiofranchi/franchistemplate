@@ -14,6 +14,9 @@ class GeneralController
     protected $app;
     protected $data;
 
+    protected $pageLimit = 15;
+    protected $currentPage = 1;
+
     public function __construct()
     {
         $this->app = Slim::getInstance();
@@ -236,8 +239,8 @@ class GeneralController
      */
     protected function loadBaseCss()
     {
-        $this->loadCss("bootstrap.min.css");
-        $this->loadCss("main.css");
+//        $this->loadCss("vendor/bootstrap.min.css");
+//        $this->loadCss("main.css");
     }
 
     /**
@@ -245,8 +248,8 @@ class GeneralController
      */
     protected function loadBaseJs()
     {
-        $this->loadJs("jquery-1.10.2.js");
-        $this->loadJs("bootstrap.min.js");
+//        $this->loadJs("jquery-1.10.2.js");
+//        $this->loadJs("bootstrap.min.js");
     }
 
     /**
@@ -256,7 +259,7 @@ class GeneralController
     {
         $path       = dirname($_SERVER['SCRIPT_NAME']);
         $path       = trim($path, '/');
-        $baseUrl    = 'temp'; //Request::getUrl();
+        $baseUrl    = ''; //Request::getUrl();
         $baseUrl    = trim($baseUrl, '/');
         return $baseUrl.'/'.$path.( $path ? '/' : '' );
     }
@@ -269,4 +272,5 @@ class GeneralController
         $path = trim($path, '/');
         return $this->data['baseUrl'].$path;
     }
+
 }

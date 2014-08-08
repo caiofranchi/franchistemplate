@@ -14,13 +14,13 @@ use Slim\Slim;
 class AdminController extends \GeneralController {
 
 
-//    public function __construct()
-//    {
-////        self:$this->app = Slim::getInstance();
-//    }
-
-    public function index(\Slim\Route $route) {
-
+    public function index() {
+        //render page
+        if(\Admin\AdminController::isUserLogged()){
+            $this->app->redirect('dashboard');
+        } else {
+            $this->app->redirect('login');
+        }
     }
 
     /**
