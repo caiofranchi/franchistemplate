@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: cfranchi
@@ -14,7 +15,7 @@ class GeneralController
     protected $app;
     protected $data;
 
-    protected $pageLimit = 15;
+    protected $pageLimit = 10;
     protected $currentPage = 1;
 
     public function __construct()

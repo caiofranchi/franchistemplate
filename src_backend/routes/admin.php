@@ -43,12 +43,10 @@ $app->group('/admin', function () use ($app) {
         $app->get('/',array($refUserController,'index'));
 
         //page
-        $app->get('/page/:page', function ($id) {
-
-        });
+        $app->get('/page/:page',array($refUserController,'page_get'));
 
         //get one user
-        $app->get('/:id', array($refUserController,'edit'));
+        $app->get('/:id', array($refUserController,'edit_get'));
 
         //update/insert user
         $app->put('/:id', function ($id) {

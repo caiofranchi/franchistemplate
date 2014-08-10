@@ -51,11 +51,13 @@
             </table>
         </div>
 
+        {% if totalPages>1 %}
         <ul class="pagination">
-            <li class="disabled"><a href="#">&laquo;</a></li>
-            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">»</a></li>
+            <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="/admin/categorias/page/{{ previousPage }}">&laquo;</a></li>
+            {% for i in 1..totalPages %}
+                <li {% if currentPage==i %}class="active"{% endif %}><a href="/admin/categorias/page/{{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="/admin/categorias/page/{{ nextPage }}">»</a></li>
         </ul>
-
+        {% endif %}
 {% endblock %}
