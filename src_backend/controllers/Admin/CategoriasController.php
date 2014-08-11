@@ -11,7 +11,7 @@ namespace Admin;
 
 use Slim\Slim;
 
-class CategoriasController extends \GeneralController {
+class CategoriasController extends GeneralAdminController {
 
     public function __construct() {
         parent::__construct();
@@ -59,9 +59,24 @@ class CategoriasController extends \GeneralController {
     }
 
     public function edit_get($id) {
-        $this->data['action'] = 'list';
+        $this->data['action'] = 'edit';
 
         $this->data['table'] =  \Categorias::find($id);
+
+        $this->app->render('admin/categorias/edit.twig',$this->data);
+    }
+
+    public function create_get(){
+        $this->data['action'] = 'create';
+        $this->app->render('admin/categorias/edit.twig',$this->data);
+    }
+
+    public function create_post(){
+        $this->data['action'] = 'create';
+
+        $params = $this->app->request->post();
+
+        var_dump($params);
 
         $this->app->render('admin/categorias/edit.twig',$this->data);
     }

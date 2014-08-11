@@ -15,9 +15,6 @@ class GeneralController
     protected $app;
     protected $data;
 
-    protected $pageLimit = 10;
-    protected $currentPage = 1;
-
     public function __construct()
     {
         $this->app = Slim::getInstance();
@@ -260,7 +257,7 @@ class GeneralController
     {
         $path       = dirname($_SERVER['SCRIPT_NAME']);
         $path       = trim($path, '/');
-        $baseUrl    = ''; //Request::getUrl();
+        $baseUrl    = $this->app->request->getUrl(); //Request::getUrl();
         $baseUrl    = trim($baseUrl, '/');
         return $baseUrl.'/'.$path.( $path ? '/' : '' );
     }

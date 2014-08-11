@@ -11,8 +11,11 @@ namespace Admin;
 
 use Slim\Slim;
 
-class UsersController extends \GeneralController {
+class UsersController extends GeneralAdminController {
 
+    public function __construct() {
+        parent::__construct();
+    }
 
     public function index() {
         $this->app->render('admin/users_list.twig');

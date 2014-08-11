@@ -11,12 +11,15 @@ namespace Admin;
 
 use Slim\Slim;
 
-class AdminController extends \GeneralController {
+class AdminController extends GeneralAdminController {
 
+    public function __construct() {
+        parent::__construct();
+    }
 
     public function index() {
         //render page
-        if(\Admin\AdminController::isUserLogged()){
+        if($this->isUserLogged()){
             $this->app->redirect('dashboard');
         } else {
             $this->app->redirect('login');
@@ -30,7 +33,7 @@ class AdminController extends \GeneralController {
     public function authenticate(\Slim\Route $route) {
 //        $this->app = \Slim\Slim::getInstance();
 
-        if(!AdminController::isUserLogged()) {
+        if(!$this->isUserLogged()) {
 //        $this->app->stop();
             $this->app->redirect('login');
         }
@@ -112,7 +115,7 @@ class AdminController extends \GeneralController {
         }
 
 
-        $this->app->render('admin/login.twig');
+        $this->app->render('admin/login.twig',$this->data);
     }
 
     public function logout(){
@@ -133,5 +136,9 @@ class AdminController extends \GeneralController {
         $this->app->flashNow('error','You have been logged out.');
         $this->app->flashKeep();
         $this->app->redirect('login');
+    }
+
+    public function dashboard_get(){
+        $this->app->render('admin/dashboard.twig',$this->data);
     }
 }

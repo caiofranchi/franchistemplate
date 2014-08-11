@@ -6,78 +6,42 @@
             <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
         </div>
 
-    <form class="form-horizontal" role="form">
+    <form action="{{ siteUrl }}" class="form-horizontal default-form-validation" role="form" method="post">
         <input type="hidden" name="_METHOD" value="PUT"/>
-        <input type="hidden" name="id" value=""/>
+        <input type="hidden" name="id" value="{{ table.id }}"/>
 
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label">TEXT/EMAIL/PASSWORD FIELD</label>
+            <label for="firstname" class="col-sm-2 control-label" form="nome">Nome</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="firstname"
-                       placeholder="Enter First Name">
+                <input value="{{ table.nome }}" data-slug-target="#slug" type="text" class="form-control" id="nome" name="nome" placeholder="Coloque um nome pra categoria" required="required">
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="name">Text Area</label>
+            <label for="firstname" class="col-sm-2 control-label" form="slug">Slug (URL)</label>
             <div class="col-sm-8">
-                <textarea class="form-control" rows="3"></textarea>
+                <input type="text" class="form-control" id="slug" name="slug" required="required" placeholder="Esse é o nome que a URL terá">
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="name">Default Checkbox</label>
+            <label for="firstname" class="col-sm-2 control-label" form="ordem">Ordem</label>
             <div class="col-sm-8">
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Option 1</label>
-                </div>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="">Option 2</label>
-                </div>
+                <input type="number" onkeypress="validateOnlyNumbers(event);" class="form-control" id="ordem" name="ordem" required="required" placeholder="Digite um número">
             </div>
         </div>
-
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="name">Default Radio</label>
+            <label class="col-sm-2 control-label" for="descricao">Descrição</label>
             <div class="col-sm-8">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1"
-                               value="option1" checked> Option 1
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2"
-                               value="option2">
-                        Option 2 - selecting it will deselect option 1
-                    </label>
-                </div>
+                <textarea class="form-control" rows="3" id="descricao" name="descricao"></textarea>
             </div>
         </div>
-
-        <!-- SELECT -->
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="name">Default Select</label>
-            <div class="col-sm-8">
-                <select class="form-control">
-                    <option selected>-</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-        </div>
-
-
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <!--                            $('#submit-button').button('loading')-->
-                <button type="button" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Save</button>
+                <button type="submit" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Save</button>
             </div>
         </div>
     </form>

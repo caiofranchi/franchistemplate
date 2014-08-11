@@ -1,10 +1,15 @@
-var GENERAL = GENERAL || {};
+/**
+ * Created by cfranchi on 11/08/14.
+ */
 
-(function (GENERAL, $, window, document, undefined) {
+
+var ADMIN = ADMIN || {};
+
+(function (ADMIN, $, window, document, undefined) {
 
     'use strict';
 
-    GENERAL.mainURL = '';
+    ADMIN.mainURL = '';
 
     //Responsive
     var numWindowHeight; // = $(window).height();
@@ -14,61 +19,69 @@ var GENERAL = GENERAL || {};
     //PRELOAD
     //var preloaderGeral;
 
-    GENERAL.init = function(e){
+    ADMIN.init = function(e){
 
-      //resize method
-      $(window).resize(GENERAL.onWindowResize);
-      GENERAL.onWindowResize();
+        //resize method
+        $(window).resize(ADMIN.onWindowResize);
+        ADMIN.onWindowResize();
 
 
-        GENERAL.initForms();a
+        ADMIN.initForms();
     };
 
-    GENERAL.onWindowResize = function(e) {
+    ADMIN.onWindowResize = function(e) {
 
         numWindowHeight = $(window).height();
         numWindowWidth = $(window).width();
 
     };
 
-    GENERAL.initForms = function(){
-        $(':data(slug-target)').keypress(function(){
+    ADMIN.initForms = function(){
+
+        //validation
+
+        //only numbers
+
+        //form uploads
+
+        //slug generators
+        $('.default-form-validation [data-slug-target]').keyup(function(){
             var ref = $(this);
             var target= $(ref.data('slug-target'));
-
-            target.val(convertToSlug(ref.val()));
+            target.val(StringUtils.convertToSlug(ref.val()));
         });
+
+        //datapickers
     };
 
-//    GENERAL.render = function(){
+//    ADMIN.render = function(){
 //        stage.update();
 //
-//        requestAnimationFrame(GENERAL.render);
+//        requestAnimationFrame(ADMIN.render);
 //    };
-
 
     $(function () {
 
-        GENERAL.init();
+        ADMIN.init();
 
     });
 
-})(GENERAL, jQuery, window, document);
+})(ADMIN, jQuery, window, document);
 
+var StringUtils = {};
 
-
-function validateOnlyNumbers(evt) {
+StringUtils.validateOnlyNumbers = function (evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
     key = String.fromCharCode( key );
     var regex = /[0-9]|\./;
     if( !regex.test(key) ) {
-    theEvent.returnValue = false;
-    if(theEvent.preventDefault) theEvent.preventDefault();
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
     }
 }
 
-function convertToSlug(str) {
+StringUtils.convertToSlug = function(str) {
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
 
@@ -80,8 +93,8 @@ function convertToSlug(str) {
     }
 
     str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-    .replace(/\s+/g, '-') // collapse whitespace and replace by -
-    .replace(/-+/g, '-'); // collapse dashes
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
 
     return str;
 };

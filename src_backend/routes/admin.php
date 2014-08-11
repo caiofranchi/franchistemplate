@@ -27,9 +27,7 @@ $app->group('/admin', function () use ($app) {
 
 
         //DASHBOARD
-        $app->get('/dashboard', array($refAdminController,'authenticate') ,  function () use ($app) {
-            $app->render('/admin/dashboard.twig');
-        });
+        $app->get('/dashboard', array($refAdminController,'authenticate') , array($refAdminController, 'dashboard_get'));
 
 
     //USER GENERATED ENTITIES
@@ -45,13 +43,20 @@ $app->group('/admin', function () use ($app) {
         //page
         $app->get('/page/:page',array($refUserController,'page_get'));
 
+        //create
+        $app->get('/create', array($refUserController,'create_get'));
+        $app->post('/create', array($refUserController,'create_post'));
+
         //get one user
         $app->get('/:id', array($refUserController,'edit_get'));
 
-        //update/insert user
-        $app->put('/:id', function ($id) {
+        //edit user
+        $app->post('/:id', function ($id) {
 
         });
+
+
+
 
         //delete user
         $app->delete('/:id', function ($id) {
