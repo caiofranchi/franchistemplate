@@ -23,7 +23,7 @@ class GeneralAdminController extends \GeneralController
         parent::__construct();
 
         $this->app = Slim::getInstance();
-        $this->data = array();
+//        $this->data = array();
 
         /** default title */
         $this->data['title'] = 'Admin';

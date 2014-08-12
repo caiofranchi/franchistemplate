@@ -14,6 +14,9 @@ class Categorias extends Illuminate\Database\Eloquent\Model
 
     protected $hidden = [];
 
+    //
+    public $timestamps = false;
+
     public function portfolio()
         {
               return $this->hasMany('Portfolio');

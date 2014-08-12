@@ -58,25 +58,45 @@ class CategoriasController extends GeneralAdminController {
         $this->app->render('admin/categorias/list.twig',$this->data);
     }
 
-    public function edit_get($id) {
-        $this->data['action'] = 'edit';
+    public function edit_get($id = '') {
+        if($id=='') {
+            $this->data['action'] = 'create';
+        }else {
+            $this->data['action'] = 'edit';
+        }
+
 
         $this->data['table'] =  \Categorias::find($id);
 
         $this->app->render('admin/categorias/edit.twig',$this->data);
     }
 
-    public function create_get(){
-        $this->data['action'] = 'create';
-        $this->app->render('admin/categorias/edit.twig',$this->data);
-    }
+    public function edit_post(){
 
-    public function create_post(){
         $this->data['action'] = 'create';
 
         $params = $this->app->request->post();
 
-        var_dump($params);
+        if($params['id']=='') {
+            //create
+            $categoria = new \Categorias();
+        }else {
+            //edit
+            $categoria = \Categorias::find($params['id']);
+        }
+
+        //assign
+        $categoria->nome = $params['nome'];
+        $categoria->slug = $params['slug'];
+        $categoria->ordem = $params['ordem'];
+        $categoria->descricao = $params['descricao'];
+
+        //save
+        if($categoria->save()){
+            $this->app->flashNow('success', '');
+        }else {
+            $this->app->flashNow('error', 'Not possible at this time, try again later.');
+        }
 
         $this->app->render('admin/categorias/edit.twig',$this->data);
     }

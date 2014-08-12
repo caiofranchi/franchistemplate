@@ -7,34 +7,34 @@
         </div>
 
     <form action="{{ siteUrl }}" class="form-horizontal default-form-validation" role="form" method="post">
-        <input type="hidden" name="_METHOD" value="PUT"/>
+        {#<input type="hidden" name="_METHOD" value="PUT"/>#}
         <input type="hidden" name="id" value="{{ table.id }}"/>
 
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label" form="nome">Nome</label>
+            <label class="col-sm-2 control-label" for="nome">Nome</label>
             <div class="col-sm-8">
                 <input value="{{ table.nome }}" data-slug-target="#slug" type="text" class="form-control" id="nome" name="nome" placeholder="Coloque um nome pra categoria" required="required">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label" form="slug">Slug (URL)</label>
+            <label class="col-sm-2 control-label" for="slug">Slug (URL)</label>
             <div class="col-sm-8">
-                <input type="text" class="form-control" id="slug" name="slug" required="required" placeholder="Esse é o nome que a URL terá">
+                <input value="{{ table.slug }}" type="text" class="form-control" id="slug" name="slug" required="required" placeholder="Esse é o nome que a URL terá">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label" form="ordem">Ordem</label>
+            <label class="col-sm-2 control-label" form="ordem">Ordem</label>
             <div class="col-sm-8">
-                <input type="number" onkeypress="validateOnlyNumbers(event);" class="form-control" id="ordem" name="ordem" required="required" placeholder="Digite um número">
+                <input value="{{ table.ordem }}" type="number" onkeypress="validateOnlyNumbers(event);" class="form-control" id="ordem" name="ordem" required="required" placeholder="Digite um número">
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label" for="descricao">Descrição</label>
             <div class="col-sm-8">
-                <textarea class="form-control" rows="3" id="descricao" name="descricao"></textarea>
+                <textarea class="form-control" rows="3" id="descricao" name="descricao">{{ table.descricao }}</textarea>
             </div>
         </div>
 

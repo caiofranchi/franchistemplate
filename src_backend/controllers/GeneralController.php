@@ -50,6 +50,7 @@ class GeneralController
 
         /** base dir for asset file */
         $this->data['baseUrl']  = $this->baseUrl();
+        $this->data['siteUrl']  = $this->app->request->getResourceUri();
         $this->data['assetUrl'] = $this->data['baseUrl'].'assets/';
 
         $this->loadBaseCss();

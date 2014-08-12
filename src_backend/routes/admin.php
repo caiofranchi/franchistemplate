@@ -35,7 +35,7 @@ $app->group('/admin', function () use ($app) {
     // Library group`
     $app->group('/categorias', array($refAdminController,'authenticate') , function () use ($app) {
 
-        $refUserController = new \Admin\CategoriasController();
+        $refUserController = new \Admin\CategoriasController;
 
         //list
         $app->get('/',array($refUserController,'index'));
@@ -44,24 +44,22 @@ $app->group('/admin', function () use ($app) {
         $app->get('/page/:page',array($refUserController,'page_get'));
 
         //create
-        $app->get('/create', array($refUserController,'create_get'));
-        $app->post('/create', array($refUserController,'create_post'));
+        $app->get('/create', array($refUserController,'edit_get'));
+        $app->post('/create', array($refUserController,'edit_post'));
 
         //get one user
-        $app->get('/:id', array($refUserController,'edit_get'));
+        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
         //edit user
-        $app->post('/:id', function ($id) {
-
-        });
-
-
-
-
-        //delete user
-        $app->delete('/:id', function ($id) {
-
-        });
+//        $app->post('/:id', function ($id) {
+//
+//        });
+//
+//        //delete user
+//        $app->delete('/:id', function ($id) {
+//
+//        });
 
 
     });
