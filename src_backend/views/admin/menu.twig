@@ -9,9 +9,9 @@
         <div class="navbar-collapse collapse">
             <ul class="nav nav-sidebar" role="navigation">
 
-                <li class="active"><a href="/admin/dashboard"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
-                    {#ENTITIES#}
-                <li><a href="/admin/categorias">Categorias</a></li>
+                <li {% if menu=='dashboard' %}class="active"{% endif %}><a href="/admin/dashboard"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
+                <li {% if menu=='categorias' %}class="active"{% endif %}><a href="/admin/categorias">Categorias</a></li>
+                <li {% if menu=='portfolio' %}class="active"{% endif %}><a href="/admin/portfolio">Portfolio</a></li>
 
             </ul>
         </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 08, 2014 at 09:33 PM
+-- Generation Time: Aug 12, 2014 at 10:15 PM
 -- Server version: 5.5.37
 -- PHP Version: 5.5.12-2+deb.sury.org~precise+1
 
@@ -73,8 +73,27 @@ CREATE TABLE IF NOT EXISTS `tb_categorias` (
   `slug` varchar(255) NOT NULL,
   `ordem` int(11) NOT NULL,
   `descricao` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `tb_categorias`
+--
+
+INSERT INTO `tb_categorias` (`id`, `nome`, `slug`, `ordem`, `descricao`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(8, 'teste-alterado', 'teste-alterado', 1, 'teste', '2014-08-12 15:03:15', '2014-08-12 15:03:38', '2014-08-12 15:03:38'),
+(9, 'Categoria Um', 'categoria-um', 1, 'Testesteste', '2014-08-12 15:17:31', '2014-08-12 15:22:13', '2014-08-12 15:22:13'),
+(10, 'asd asd  asd asd ', 'asdasd', 1, '', '2014-08-12 15:21:10', '2014-08-12 15:21:15', '2014-08-12 15:21:15'),
+(11, 'asda', 'asda', 1, 'as', '2014-08-12 15:22:34', '2014-08-12 15:22:38', '2014-08-12 15:22:38'),
+(12, 'Carious Manolo Loks Truça', 'carious-manolo-loks-truca', 1, 'asdasda sd asd asd', '2014-08-12 17:03:48', '2014-08-12 17:08:39', '2014-08-12 17:08:39'),
+(13, 't', 't', 1, 'asdasd', '2014-08-12 17:05:17', '2014-08-12 17:05:26', '2014-08-12 17:05:26'),
+(14, 'cariaousadadsasda', 'cariaousadadsasda', 1, '', '2014-08-12 17:08:55', '2014-08-12 17:08:58', '2014-08-12 17:08:58'),
+(15, 'Categoria Um Semi Oficial agora vai v2', 'categoria-um-semi-oficial-agora-vai-v2', 1, 'OLAR', '2014-08-12 17:17:07', '2014-08-12 17:46:11', '2014-08-12 17:46:11'),
+(16, 'teste busca', 'teste-busca', 1, 'asad', '2014-08-12 18:00:05', '2014-08-12 18:00:05', '0000-00-00 00:00:00'),
+(17, 'Caraios maáximos mememem', 'caraios-maaximos-mememem', 3, 'asdasd asd asd asd asd sd asd asd', '2014-08-12 20:42:12', '2014-08-12 20:42:12', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -142,8 +161,11 @@ CREATE TABLE IF NOT EXISTS `tb_portfolio` (
   `ano` varchar(50) DEFAULT NULL,
   `metragem` varchar(50) DEFAULT NULL,
   `descricao` text,
-  `added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `categoria_id` (`categoria_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------

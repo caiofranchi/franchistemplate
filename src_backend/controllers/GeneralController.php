@@ -22,6 +22,7 @@ class GeneralController
 
         /** default title */
         $this->data['title'] = '';
+        $this->data['menu'] = '';
 
         /** meta tag and information */
         $this->data['meta'] = array();

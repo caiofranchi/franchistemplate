@@ -20,9 +20,9 @@ class AdminController extends GeneralAdminController {
     public function index() {
         //render page
         if($this->isUserLogged()){
-            $this->app->redirect('dashboard');
+            $this->app->redirect('/admin/dashboard');
         } else {
-            $this->app->redirect('login');
+            $this->app->redirect('/admin/login');
         }
     }
 
@@ -35,7 +35,7 @@ class AdminController extends GeneralAdminController {
 
         if(!$this->isUserLogged()) {
 //        $this->app->stop();
-            $this->app->redirect('login');
+            $this->app->redirect('/admin/login');
         }
     }
 
@@ -115,7 +115,7 @@ class AdminController extends GeneralAdminController {
         }
 
 
-        $this->app->render('admin/login.twig',$this->data);
+        $this->app->render('/admin/login.twig',$this->data);
     }
 
     public function logout(){
@@ -139,6 +139,8 @@ class AdminController extends GeneralAdminController {
     }
 
     public function dashboard_get(){
-        $this->app->render('admin/dashboard.twig',$this->data);
+        $this->data['menu'] = 'dashboard';
+        //
+        $this->app->render('/admin/dashboard.twig',$this->data);
     }
 }

@@ -51,6 +51,20 @@ var ADMIN = ADMIN || {};
             target.val(StringUtils.convertToSlug(ref.val()));
         });
 
+        //enable basic text field search-forms
+        $('.form-searchable').each(function(){
+            var currentForm = $(this);
+
+            currentForm.submit(function(e){
+                e.preventDefault();
+                //
+                var urlAction = $(this).attr('action');
+                var searchText = encodeURIComponent($(this).find('#search-txt').val());
+                window.open(urlAction+searchText,'_self');
+            });
+
+        });
+
         //datapickers
     };
 

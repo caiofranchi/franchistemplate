@@ -6,16 +6,27 @@
  * Time: 17:25
  */
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
+
+
 class Categorias extends Illuminate\Database\Eloquent\Model
 {
+    use SoftDeletingTrait;
+
+    //list of fields that can be searchable
+    public static $searchable = array('id','nome','descricao');
+
     protected $table = 'tb_categorias';
 
     protected $key = 'id';
 
     protected $hidden = [];
 
-    //
-    public $timestamps = false;
+    //table vars
+    protected $dates = ['deleted_at'];
+
+    public $timestamps = true;
 
     public function portfolio()
         {

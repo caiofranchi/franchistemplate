@@ -56,6 +56,7 @@ class GeneralAdminController extends \GeneralController
         /** base dir for asset file */
         $this->data['baseUrl']  = $this->baseUrl();
         $this->data['assetUrl'] = $this->data['baseUrl'].'admin/assets/';
+        $this->data['adminUrl'] = $this->data['baseUrl'].'admin/';
 
         $this->loadBaseCss();
         $this->loadBaseJs();

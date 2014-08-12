@@ -11,32 +11,36 @@ namespace Admin;
 
 use Slim\Slim;
 
-class CategoriasController extends GeneralAdminController {
+class PortfolioController extends GeneralAdminController {
 
     public function __construct() {
 
         parent::__construct();
 
-        $this->data['page_name'] = 'Categorias';
-        $this->data['menu'] = 'categorias';
+        $this->data['page_name'] = 'Portfolio';
+        $this->data['menu'] = 'portfolio';
 
-        $this->data['title'] = 'Admin - Categorias';
+        $this->data['title'] = 'Admin - Portfolio';
 
     }
 
     public function index() {
         $this->data['action'] = 'list';
 
-        $total = count(\Categorias::all());
+        $allPortfolio = \Portfolio::all();
+        $total = count($allPortfolio);
+
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
+//var_dump(\Portfolio::find(1)->categorias);
+//        die();
+        $this->data['table'] = \Portfolio::find(1)->categorias()->get();
+//        $this->data['table'] =  \Portfolio::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
 
-        $this->data['table'] =  \Categorias::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
-
-        $this->app->render('admin/categorias/list.twig',$this->data);
+        $this->app->render('admin/portfolio/list.twig',$this->data);
     }
 
     public function page_get($page) {
@@ -46,16 +50,16 @@ class CategoriasController extends GeneralAdminController {
         $this->currentPage = $page;
 
 
-        $total = count(\Categorias::all());
+        $total = count(\Portfolio::all());
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Categorias::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
+        $this->data['table'] =  \Portfolio::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
 
-        $this->app->render('admin/categorias/list.twig',$this->data);
+        $this->app->render('admin/portfolio/list.twig',$this->data);
     }
 
     public function edit_get($id = '') {
@@ -66,11 +70,11 @@ class CategoriasController extends GeneralAdminController {
         }
 
         //suggests a max order
-        $this->data['maxOrder'] = \Categorias::all()->max('ordem')+1;
+        $this->data['maxOrder'] = \Portfolio::all()->max('ordem')+1;
         //
-        $this->data['table'] =  \Categorias::find($id);
+        $this->data['table'] =  \Portfolio::find($id);
 
-        $this->app->render('admin/categorias/edit.twig',$this->data);
+        $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
 
     public function edit_post(){
@@ -81,10 +85,10 @@ class CategoriasController extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $categoria = new \Categorias();
+            $categoria = new \Portfolio();
         }else {
             //edit
-            $categoria = \Categorias::find($params['id']);
+            $categoria = \Portfolio::find($params['id']);
         }
 
         //assign
@@ -100,12 +104,12 @@ class CategoriasController extends GeneralAdminController {
             $this->app->flashNow('error', 'Not possible at this time, try again later.');
         }
 
-        $this->app->render('admin/categorias/edit.twig',$this->data);
+        $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
 
     public function delete_get($id) {
         //
-        $categoria = \Categorias::find($id);
+        $categoria = \Portfolio::find($id);
         $categoria->delete();
         $this->app->flashNow('warning', 'Successfully deleted');
 
@@ -113,14 +117,14 @@ class CategoriasController extends GeneralAdminController {
     }
 
     public function search_get($search){
-        $categoria = new \Categorias;
+        $categoria = new \Portfolio;
 
         $value = urldecode($search);
 
         $query = "(";
-        $total = count(\Categorias::$searchable);
+        $total = count(\Portfolio::$searchable);
         for($i=0;$i<$total;$i++) {
-            $searchableField = \Categorias::$searchable[$i];
+            $searchableField = \Portfolio::$searchable[$i];
             $query .= $searchableField." LIKE '%".$value."%'";
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
@@ -129,7 +133,7 @@ class CategoriasController extends GeneralAdminController {
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 
-        $this->app->render('admin/categorias/list.twig',$this->data);
+        $this->app->render('admin/portfolio/list.twig',$this->data);
 
     }
 }
