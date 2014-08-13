@@ -22,7 +22,7 @@
                 <thead>
                 <tr>
                     <th>#id</th>
-                    <th>Nome</th>
+                    <th>Título</th>
                     <th>Categoria</th>
                     <th>Descrição</th>
                     <th></th>
@@ -32,8 +32,8 @@
                 {% for row in table %}
                     <tr>
                         <td>{{ row.id }}</td>
-                        <td>{{ row.nome }}</td>
-                        <td>{{ row.categoria_id }}</td>
+                        <td>{{ row.titulo }}</td>
+                        <td>{{ row.categorias.nome }}</td>
                         <td>{{ row.descricao }}</td>
                         <td>
 

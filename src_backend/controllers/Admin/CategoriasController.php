@@ -113,8 +113,6 @@ class CategoriasController extends GeneralAdminController {
     }
 
     public function search_get($search){
-        $categoria = new \Categorias;
-
         $value = urldecode($search);
 
         $query = "(";
@@ -125,7 +123,7 @@ class CategoriasController extends GeneralAdminController {
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  $categoria->whereRAW($query)->get();
+        $this->data['table'] =  \Categorias::whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 

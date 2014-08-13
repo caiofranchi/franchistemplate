@@ -27,18 +27,18 @@ class PortfolioController extends GeneralAdminController {
     public function index() {
         $this->data['action'] = 'list';
 
-        $allPortfolio = \Portfolio::all();
-        $total = count($allPortfolio);
-
+        $total = \Portfolio::all()->count();
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
-//var_dump(\Portfolio::find(1)->categorias);
-//        die();
-        $this->data['table'] = \Portfolio::find(1)->categorias()->get();
-//        $this->data['table'] =  \Portfolio::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+
+        $queryModel = new \Portfolio();
+        $result = $queryModel->with('categorias')->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+
+        //assign view data from table
+        $this->data['table'] = $result;
 
         $this->app->render('admin/portfolio/list.twig',$this->data);
     }
@@ -68,11 +68,9 @@ class PortfolioController extends GeneralAdminController {
         }else {
             $this->data['action'] = 'edit';
         }
-
-        //suggests a max order
-        $this->data['maxOrder'] = \Portfolio::all()->max('ordem')+1;
         //
         $this->data['table'] =  \Portfolio::find($id);
+        $this->data['categorias'] =  \Categorias::all(); //relation
 
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
@@ -92,9 +90,12 @@ class PortfolioController extends GeneralAdminController {
         }
 
         //assign
-        $categoria->nome = $params['nome'];
+        $categoria->titulo = $params['titulo'];
         $categoria->slug = $params['slug'];
-        $categoria->ordem = $params['ordem'];
+        $categoria->categoria_id = $params['categoria_id'];
+        $categoria->localizacao = $params['localizacao'];
+        $categoria->ano = $params['ano'];
+        $categoria->metragem = $params['metragem'];
         $categoria->descricao = $params['descricao'];
 
         //save
@@ -117,7 +118,6 @@ class PortfolioController extends GeneralAdminController {
     }
 
     public function search_get($search){
-        $categoria = new \Portfolio;
 
         $value = urldecode($search);
 
@@ -129,7 +129,7 @@ class PortfolioController extends GeneralAdminController {
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  $categoria->whereRAW($query)->get();
+        $this->data['table'] =  \Portfolio::with('categorias')->whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 
