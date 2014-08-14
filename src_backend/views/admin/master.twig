@@ -37,6 +37,25 @@
 </head>
 <body>
 
+
+{#MODAL DELETE CONFIRMATION#}
+<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                ATTENTION
+            </div>
+            <div class="modal-body">
+                Do you really want to delete? There is no turning back...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger danger">Execute</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="main-wrapper">
 
     {% block base %}{% endblock %}
@@ -52,6 +71,39 @@
 {% for jsfile in js.internal %}
     <script src="{{assetUrl}}js/{{jsfile}}"></script>
 {% endfor %}
+
+
+
+<!-- The Templates plugin is included to render the upload/download listings -->
+<script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+
+<!-- blueimp Gallery script -->
+<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="/admin/assets/js/vendor/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload-process.js"></script>
+<!-- The File Upload image preview & resize plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload-image.js"></script>
+<!-- The File Upload audio preview plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload-audio.js"></script>
+<!-- The File Upload video preview plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload-video.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload-validate.js"></script>
+<!-- The File Upload user interface plugin -->
+<script src="/admin/assets/js/vendor/jquery.fileupload-ui.js"></script>
+<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
+<!--[if (gte IE 8)&(lt IE 10)]>
+<script src="js/cors/jquery.xdr-transport.js"></script>
+<![endif]-->
+
 
 </body>
 </html>

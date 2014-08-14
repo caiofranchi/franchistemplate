@@ -37,11 +37,11 @@
                         <td>{{ row.descricao }}</td>
                         <td>
 
-                            <a href="{{ siteUrl }}/edit/{{ row.id }}" class="btn btn-default btn-xs" title="EDIT">
+                            <a href="{{ siteUrl }}/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
 
-                            <a href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
+                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
                         </td>

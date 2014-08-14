@@ -31,7 +31,7 @@
                 <select class="form-control" name="categoria_id" id="categoria_id">
                     <option value="0">SELECIONE</option>
                     {% for row in categorias %}
-                    <option value="{{ row.id }}" {% if row.id == table.categorias.id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>
+                    <option value="{{ row.id }}" {% if row.categoria_id == table.categorias.id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -65,6 +65,11 @@
             <div class="col-sm-8">
                 <textarea class="form-control" rows="3" id="descricao" name="descricao">{{ table.descricao }}</textarea>
             </div>
+        </div>
+
+        <div class="page-header">
+            <h2 class="">/Add "Fotos"</h2>
+
         </div>
 
         <div class="form-group">

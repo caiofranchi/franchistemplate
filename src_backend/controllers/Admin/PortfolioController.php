@@ -22,6 +22,7 @@ class PortfolioController extends GeneralAdminController {
 
         $this->data['title'] = 'Admin - Portfolio';
 
+
     }
 
     public function index() {
@@ -104,6 +105,15 @@ class PortfolioController extends GeneralAdminController {
         }else {
             $this->app->flashNow('error', 'Not possible at this time, try again later.');
         }
+
+        //render css assets
+        $this->loadCss('vendor/jquery.fileupload.css');
+        $this->loadCss('vendor/jquery.fileupload-ui.css');
+
+        //render js assets
+        $this->loadJs('vendor/jquery.ui.widget.js');
+        $this->loadJs('vendor/jquery.fileupload.js');
+        $this->loadJs('vendor/jquery.iframe-transport.js');
 
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
