@@ -18,12 +18,12 @@
 
         <!--TABLE-->
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" id="table-results">
                 <thead>
                 <tr>
                     <th>#id</th>
-                    <th>Título</th>
-                    <th>Categoria</th>
+                    <th>Path</th>
+                    <th>Pertence a</th>
                     <th>Descrição</th>
                     <th></th>
                 </tr>
@@ -32,9 +32,9 @@
                 {% for row in table %}
                     <tr>
                         <td>{{ row.id }}</td>
-                        <td>{{ row.titulo }}</td>
-                        <td>{{ row.categorias.nome }}</td>
-                        <td>{{ row.descricao }}</td>
+                        <td>{{ row.path }}</td>
+                        <td>{% if row.connection_type!='' %}<a href="{{ adminUrl }}{% if row.connection_type=='Portfolio' %}portfolio{% elseif row.connection_type == 'Categorias' %}categorias{% endif %}/edit/{{ row.connection_id }}">{{ row.connection_type }} - {{ row.connection_id }}</a>{% else %}NENHUM{% endif %}</td>
+                        <td>{{ row.description }}</td>
                         <td>
 
                             <a href="{{ siteUrl }}/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">

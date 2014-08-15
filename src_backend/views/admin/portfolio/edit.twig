@@ -68,8 +68,43 @@
         </div>
 
         <div class="page-header">
-            <h2 class="">/Add "Fotos"</h2>
+            <h3 class="">Fotos:</h3>
+            <a href="/admin/portfolio/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add to this portfolio item</a>
+        </div>
 
+        <!--TABLE-->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#id</th>
+                    <th>Foto</th>
+                    <th>Descrição</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in photos_related %}
+                    <tr>
+                        <td>{{ row.id }}</td>
+                        <td>{{ row.path }}</td>
+                        <td>{{ row.description }}</td>
+                        <td>
+
+                            <a href="{{ adminUrl }}fotos/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+
+                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="This will let the " data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
         </div>
 
         <div class="form-group">

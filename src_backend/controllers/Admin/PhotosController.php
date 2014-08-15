@@ -36,7 +36,7 @@ class PhotosController extends GeneralAdminController {
         $this->data['nextPage'] = $this->currentPage+1;
 
         $queryModel = new \Photos();
-        $result = $queryModel->with('categorias')->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
@@ -71,7 +71,6 @@ class PhotosController extends GeneralAdminController {
         }
         //
         $this->data['table'] =  \Photos::find($id);
-        $this->data['categorias'] =  \Categorias::all(); //relation
 
         $this->app->render('admin/fotos/edit.twig',$this->data);
     }
@@ -124,7 +123,7 @@ class PhotosController extends GeneralAdminController {
         $categoria->delete();
         $this->app->flashNow('warning', 'Successfully deleted');
 
-        $this->app->redirect('/admin/categorias');
+        $this->app->redirect('/admin/fotos');
     }
 
     public function search_get($search){

@@ -71,7 +71,12 @@ class PortfolioController extends GeneralAdminController {
         }
         //
         $this->data['table'] =  \Portfolio::find($id);
+
+        //
         $this->data['categorias'] =  \Categorias::all(); //relation
+
+
+        $this->data['photos_related'] = $this->data['table']->photos()->get();
 
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
@@ -106,14 +111,7 @@ class PortfolioController extends GeneralAdminController {
             $this->app->flashNow('error', 'Not possible at this time, try again later.');
         }
 
-        //render css assets
-        $this->loadCss('vendor/jquery.fileupload.css');
-        $this->loadCss('vendor/jquery.fileupload-ui.css');
 
-        //render js assets
-        $this->loadJs('vendor/jquery.ui.widget.js');
-        $this->loadJs('vendor/jquery.fileupload.js');
-        $this->loadJs('vendor/jquery.iframe-transport.js');
 
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }

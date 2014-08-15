@@ -63,7 +63,8 @@ class GeneralAdminController extends \GeneralController
 
         /** global javascript var */
         $this->data['global'] = array(
-            'mainURL' => $this->baseUrl().'admin/'
+            'mainUrl' => $this->baseUrl(),
+            'adminUrl' => $this->baseUrl().'admin/'
         );
 
     }
