@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 14, 2014 at 11:03 PM
--- Server version: 5.5.37
--- PHP Version: 5.5.12-2+deb.sury.org~precise+1
+-- Generation Time: Aug 15, 2014 at 08:19 AM
+-- Server version: 5.5.38
+-- PHP Version: 5.5.15-1+deb.sury.org~precise+1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -117,21 +117,6 @@ CREATE TABLE IF NOT EXISTS `tb_contato` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_fotos`
---
-
-CREATE TABLE IF NOT EXISTS `tb_fotos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `portfolio_id` int(11) NOT NULL,
-  `path` varchar(255) NOT NULL,
-  `descricao` varchar(255) DEFAULT NULL,
-  `added` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tb_noticias`
 --
 
@@ -144,6 +129,24 @@ CREATE TABLE IF NOT EXISTS `tb_noticias` (
   `video` varchar(255) DEFAULT NULL,
   `descricao` text NOT NULL,
   `added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_photos`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `connection_id` int(11) NOT NULL,
+  `connection_type` varchar(50) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

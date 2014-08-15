@@ -34,9 +34,9 @@ class Portfolio extends Illuminate\Database\Eloquent\Model
 
     }
 
-    public function fotos()
+    public function photos()
     {
-          return $this->hasMany('Fotos');
-
+//          return $this->hasMany('Fotos')->select(array('id','path', 'descricao')); //normal relation one to many
+        $this->morphMany('Photos', 'connection');
     }
  }
