@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 15, 2014 at 08:19 AM
+-- Generation Time: Aug 17, 2014 at 07:30 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.5.15-1+deb.sury.org~precise+1
 
@@ -128,9 +128,18 @@ CREATE TABLE IF NOT EXISTS `tb_noticias` (
   `publicado` datetime DEFAULT NULL,
   `video` varchar(255) DEFAULT NULL,
   `descricao` text NOT NULL,
-  `added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tb_noticias`
+--
+
+INSERT INTO `tb_noticias` (`id`, `titulo`, `slug`, `tipo`, `publicado`, `video`, `descricao`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'titulo-noticia', 'titulo-noticia', 'sasss', '2014-08-16 14:00:00', NULL, 'descricao', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -148,7 +157,15 @@ CREATE TABLE IF NOT EXISTS `tb_photos` (
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tb_photos`
+--
+
+INSERT INTO `tb_photos` (`id`, `connection_id`, `connection_type`, `path`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 'Portfolio', '', 'desc noticia', '0000-00-00 00:00:00', '2014-08-17 00:23:43', '0000-00-00 00:00:00'),
+(2, 2, 'Portfolio', '', 'desc 2', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 

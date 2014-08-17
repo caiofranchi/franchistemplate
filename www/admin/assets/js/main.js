@@ -43,95 +43,40 @@ var ADMIN = ADMIN || {};
         //only numbers
 
         //form uploads
-        // Initialize the jQuery File Upload widget:
-//        $('#fileupload').fileupload({
-//            // Uncomment the following to send cross-domain cookies:
-//            //xhrFields: {withCredentials: true},
-//            url: global.mainURL+'portfolio/upload/'
-//        });
+        if($('#fileupload').fileupload) $('#fileupload').fileupload({
+            dataType: 'json',
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 5000000, // 5 MB,
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('.progress .progress-bar').html(progress+"%");
+                $('.progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+            add: function (e, data) {
+                $('.progress').show();
+                data.submit();
 
-        $('#fileupload').fileupload({
-            url: global.mainUrl+'assets/uploads/',
-            processQueue: [
-                {
-                    action: 'loadImage',
-                    fileTypes: /^image\/(gif|jpeg|png)$/,
-                    maxFileSize: 20000000 // 20MB
-                },
-                {
-                    action: 'resizeImage',
-                    maxWidth: 1920,
-                    maxHeight: 1200
-                },
-                {action: 'saveImage'},
-                {action: 'duplicateImage'},
-                {
-                    action: 'resizeImage',
-                    maxWidth: 1280,
-                    maxHeight: 1024
-                },
-                {action: 'saveImage'},
-                {action: 'duplicateImage'},
-                {
-                    action: 'resizeImage',
-                    maxWidth: 1024,
-                    maxHeight: 768
-                },
-                {action: 'saveImage'}
-            ]
-        });
-
-
-//        // Enable iframe cross-domain access via redirect option:
-//        $('#fileupload').fileupload(
-//            'option',
-//            'redirect',
-//            window.location.href.replace(
-//                /\/[^\/]*$/,
-//                '/cors/result.html?%s'
-//            )
-//        );
-//
-//        if (window.location.hostname === 'blueimp.github.io') {
-//            // Demo settings:
-//            $('#fileupload').fileupload('option', {
-//                url: '//jquery-file-upload.appspot.com/',
-//                // Enable image resizing, except for Android and Opera,
-//                // which actually support image resizing, but fail to
-//                // send Blob objects via XHR requests:
-//                disableImageResize: /Android(?!.*Chrome)|Opera/
-//                    .test(window.navigator.userAgent),
-//                maxFileSize: 5000000,
-//                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-//            });
-//            // Upload server status check for browsers with CORS support:
-//            if ($.support.cors) {
-//                $.ajax({
-//                    url: '//jquery-file-upload.appspot.com/',
-//                    type: 'HEAD'
-//                }).fail(function () {
-//                    $('<div class="alert alert-danger"/>')
-//                        .text('Upload server currently unavailable - ' +
-//                            new Date())
-//                        .appendTo('#fileupload');
+                $($('#fileupload').data('preview')).hide();
+                $('.progress .progress-bar').html("0%");
+                $('.progress .progress-bar').css(
+                    'width',
+                    '0%'
+                );
+            },
+            done: function (e, data) {
+                $('.progress').fadeOut();
+                $($('#fileupload').data('preview')).show();
+                $($('#fileupload').data('preview')).attr('src',data.result.files[0].thumbnailUrl);
+//                $.each(data.result.files, function (index, file) {
+//                    $('<p/>').text(file.name).appendTo(document.body);
 //                });
-//            }
-//        } else {
-//            // Load existing files:
-//            $('#fileupload').addClass('fileupload-processing');
-//            $.ajax({
-//                // Uncomment the following to send cross-domain cookies:
-//                //xhrFields: {withCredentials: true},
-//                url: $('#fileupload').fileupload('option', 'url'),
-//                dataType: 'json',
-//                context: $('#fileupload')[0]
-//            }).always(function () {
-//                $(this).removeClass('fileupload-processing');
-//            }).done(function (result) {
-//                $(this).fileupload('option', 'done')
-//                    .call(this, $.Event('done'), {result: result});
-//            });
-//        }
+//
+//                data.context.text('Upload finished.');
+            }
+        });
 
         //slug generators
         $('.default-form-validation [data-slug-target]').keyup(function(){
@@ -181,6 +126,7 @@ var ADMIN = ADMIN || {};
 
 })(ADMIN, jQuery, window, document);
 
+//String UTILS
 var StringUtils = {};
 
 StringUtils.validateOnlyNumbers = function (evt) {

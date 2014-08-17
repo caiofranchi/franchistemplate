@@ -15,7 +15,7 @@ class Portfolio extends Illuminate\Database\Eloquent\Model
     use SoftDeletingTrait;
 
     //list of fields that can be searchable
-    public static $searchable = array('id','nome','descricao','localizacao');
+    public static $searchable = array('id','titulo','descricao','localizacao');
 
     protected $table = 'tb_portfolio';
 

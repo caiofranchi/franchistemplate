@@ -4,11 +4,11 @@
 
         <div class="page-header">
             <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
-            <a href="/admin/portfolio/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add New</a>
+            <a href="{{ adminUrl }}fotos/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add New</a>
         </div>
 
         <!-- SEARCH-->
-        <form action="{{ adminUrl }}portfolio/search/" class="form-searchable navbar-form navbar-right page-header" role="search">
+        <form action="{{ adminUrl }}fotos/search/" class="form-searchable navbar-form navbar-right page-header" role="search">
             <div class="form-group">
                 <input type="text" name="search-txt" id="search-txt" class="form-control" placeholder="Search" required="required">
             </div>

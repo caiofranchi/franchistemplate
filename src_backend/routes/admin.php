@@ -97,6 +97,9 @@ $app->group('/admin', function () use ($app) {
         //page listing
         $app->get('/page/:page',array($refUserController,'page_get'));
 
+        //file upload
+        $app->post('/upload(/:id)',array($refUserController,'upload_post'));
+
         //search
         $app->get('/search/:value',array($refUserController,'search_get'));
 

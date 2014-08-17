@@ -72,7 +72,65 @@ class PhotosController extends GeneralAdminController {
         //
         $this->data['table'] =  \Photos::find($id);
 
+        //morphToMany
+        $this->data['portfolio'] =  \Portfolio::all();
+        $this->data['noticias'] =  \Noticias::all();
+
+        //render css assets
+        $this->loadCss('vendor/jquery.fileupload.css');
+        $this->loadCss('vendor/jquery.fileupload-ui.css');
+
+        //render js assets
+        $this->loadJs('vendor/jquery.ui.widget.js');
+        $this->loadJs('vendor/jquery.fileupload.js');
+        $this->loadJs('vendor/jquery.iframe-transport.js');
+        $this->loadJs('vendor/jquery.fileupload-process.js');
+        $this->loadJs('vendor/jquery.fileupload-image.js');
+
         $this->app->render('admin/fotos/edit.twig',$this->data);
+    }
+
+    public function upload_post($id = '') {
+        header("Content-Type: application/json");
+
+        $upload_handler = new \UploadHandler(array(
+            'upload_dir' => PUBLIC_PATH.'assets/uploads/',
+            'upload_url' => $this->baseUrl().'assets/uploads/',
+            'mkdir_mode' => 0777,
+
+            'image_versions' => array(
+                // The empty image version key defines options for the original image:
+                '' => array(
+                    // Automatically rotate images based on EXIF meta data:
+                    'auto_orient' => true
+                ),
+                'high' => array(
+                    'max_width' => 825,
+                    'max_height' => 555
+                ),
+                'medium' => array(
+                    'max_width' => 480,
+                    'max_height' => 380
+                ),
+                'thumbnail' => array(
+                    // Uncomment the following to use a defined directory for the thumbnails
+                    // instead of a subdirectory based on the version identifier.
+                    // Make sure that this directory doesn't allow execution of files if you
+                    // don't pose any restrictions on the type of uploaded files, e.g. by
+                    // copying the .htaccess file from the files directory for Apache:
+                    //'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/thumb/',
+                    //'upload_url' => $this->get_full_url().'/thumb/',
+                    // Uncomment the following to force the max
+                    // dimensions and e.g. create square thumbnails:
+                    //'crop' => true,
+                    'max_width' => 200,
+                    'max_height' => 200
+                )
+            )
+//            'post_max_size' =>
+        ));
+
+        exit;
     }
 
     public function edit_post(){
@@ -90,29 +148,20 @@ class PhotosController extends GeneralAdminController {
         }
 
         //assign
-        $categoria->titulo = $params['titulo'];
-        $categoria->slug = $params['slug'];
-        $categoria->categoria_id = $params['categoria_id'];
-        $categoria->localizacao = $params['localizacao'];
-        $categoria->ano = $params['ano'];
-        $categoria->metragem = $params['metragem'];
-        $categoria->descricao = $params['descricao'];
+        $categoria->path = $params['path'];
+        $categoria->connection_type = $params['connection_type'];
+        $categoria->connection_id = $params['connection_id'];
+        $categoria->description = $params['description'];
 
         //save
-        if($categoria->save()){
+        if($id = $categoria->save()){
             $this->app->flashNow('success', 'Registered');
         }else {
             $this->app->flashNow('error', 'Not possible at this time, try again later.');
         }
 
-        //render css assets
-        $this->loadCss('vendor/jquery.fileupload.css');
-        $this->loadCss('vendor/jquery.fileupload-ui.css');
+        //file upload rename
 
-        //render js assets
-        $this->loadJs('vendor/jquery.ui.widget.js');
-        $this->loadJs('vendor/jquery.fileupload.js');
-        $this->loadJs('vendor/jquery.iframe-transport.js');
 
         $this->app->render('admin/fotos/edit.twig',$this->data);
     }

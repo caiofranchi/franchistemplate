@@ -64,19 +64,18 @@ class PortfolioController extends GeneralAdminController {
     }
 
     public function edit_get($id = '') {
-        if($id=='') {
-            $this->data['action'] = 'create';
-        }else {
-            $this->data['action'] = 'edit';
-        }
+
         //
         $this->data['table'] =  \Portfolio::find($id);
 
         //
         $this->data['categorias'] =  \Categorias::all(); //relation
-
-
-        $this->data['photos_related'] = $this->data['table']->photos()->get();
+        if($id=='') {
+            $this->data['action'] = 'create';
+        }else {
+            $this->data['action'] = 'edit';
+            $this->data['photos_related'] = $this->data['table']->photos()->get();
+        }
 
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
