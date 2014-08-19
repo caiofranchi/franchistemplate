@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 17, 2014 at 07:30 AM
+-- Generation Time: Aug 19, 2014 at 07:47 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.5.15-1+deb.sury.org~precise+1
 
@@ -132,14 +132,15 @@ CREATE TABLE IF NOT EXISTS `tb_noticias` (
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `tb_noticias`
 --
 
 INSERT INTO `tb_noticias` (`id`, `titulo`, `slug`, `tipo`, `publicado`, `video`, `descricao`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'titulo-noticia', 'titulo-noticia', 'sasss', '2014-08-16 14:00:00', NULL, 'descricao', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 'titulo-noticia', 'titulo-noticia', 'sasss', '2014-08-16 14:00:00', NULL, 'descricao', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'Titulo da Noticia linduxa', 'titulo-da-noticia-linduxa', 'tipo dela', '0000-00-00 00:00:00', 'youtubil', 'descrição', '2014-08-19 07:30:44', '2014-08-19 07:30:44', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -164,8 +165,8 @@ CREATE TABLE IF NOT EXISTS `tb_photos` (
 --
 
 INSERT INTO `tb_photos` (`id`, `connection_id`, `connection_type`, `path`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 'Portfolio', '', 'desc noticia', '0000-00-00 00:00:00', '2014-08-17 00:23:43', '0000-00-00 00:00:00'),
-(2, 2, 'Portfolio', '', 'desc 2', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 2, 'Portfolio', 'IMG00159-20110711-1118 (17).jpg', 'desc noticia', '0000-00-00 00:00:00', '2014-08-19 07:14:18', '0000-00-00 00:00:00'),
+(2, 2, 'Portfolio', 'IMG00154-20110711-1117 (1).jpg', 'desc 2', '0000-00-00 00:00:00', '2014-08-19 07:14:08', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 

@@ -187,7 +187,7 @@ class PhotosController extends GeneralAdminController {
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  \Photos::with('categorias')->whereRAW($query)->get();
+        $this->data['table'] =  \Photos::whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 

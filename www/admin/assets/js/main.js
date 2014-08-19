@@ -70,6 +70,7 @@ var ADMIN = ADMIN || {};
                 $('.progress').fadeOut();
                 $($('#fileupload').data('preview')).show();
                 $($('#fileupload').data('preview')).attr('src',data.result.files[0].thumbnailUrl);
+                $($('#fileupload').data('reply-to')).val(data.result.files[0].name);
 //                $.each(data.result.files, function (index, file) {
 //                    $('<p/>').text(file.name).appendTo(document.body);
 //                });

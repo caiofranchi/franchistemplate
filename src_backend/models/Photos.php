@@ -15,7 +15,7 @@ class Photos extends Illuminate\Database\Eloquent\Model
     use SoftDeletingTrait;
 
     //list of fields that can be searchable
-    public static $searchable = array('id','descricao');
+    public static $searchable = array('id','description');
 
     protected $table = 'tb_photos';
 

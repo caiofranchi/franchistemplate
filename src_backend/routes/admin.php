@@ -87,6 +87,33 @@ $app->group('/admin', function () use ($app) {
     });
 
     // PORTFOLIO
+    $app->group('/noticias', array($refAdminController,'authenticate') , function () use ($app) {
+
+        $refUserController = new \Admin\NoticiasController;
+
+        //list
+        $app->get('/',array($refUserController,'index'));
+
+        //page listing
+        $app->get('/page/:page',array($refUserController,'page_get'));
+
+        //search
+        $app->get('/search/:value',array($refUserController,'search_get'));
+
+        //create
+        $app->get('/create', array($refUserController,'edit_get'));
+        $app->post('/create', array($refUserController,'edit_post'));
+
+        //get one user
+        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+
+        $app->get('/delete/:id', array($refUserController,'delete_get'));
+
+
+    });
+
+    // PORTFOLIO
     $app->group('/fotos', array($refAdminController,'authenticate') , function () use ($app) {
 
         $refUserController = new \Admin\PhotosController;

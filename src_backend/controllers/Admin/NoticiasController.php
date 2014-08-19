@@ -11,16 +11,16 @@ namespace Admin;
 
 use Slim\Slim;
 
-class PortfolioController extends GeneralAdminController {
+class NoticiasController extends GeneralAdminController {
 
     public function __construct() {
 
         parent::__construct();
 
-        $this->data['page_name'] = 'Portfolio';
-        $this->data['menu'] = 'portfolio';
+        $this->data['page_name'] = 'Notícias';
+        $this->data['menu'] = 'noticias';
 
-        $this->data['title'] = 'Admin - Portfolio';
+        $this->data['title'] = 'Admin - Notícias';
 
 
     }
@@ -28,20 +28,20 @@ class PortfolioController extends GeneralAdminController {
     public function index() {
         $this->data['action'] = 'list';
 
-        $total = \Portfolio::all()->count();
+        $total = \Noticias::all()->count();
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $queryModel = new \Portfolio();
-        $result = $queryModel->with('categorias')->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+        $queryModel = new \Noticias();
+        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
 
-        $this->app->render('admin/portfolio/list.twig',$this->data);
+        $this->app->render('admin/noticias/list.twig',$this->data);
     }
 
     public function page_get($page) {
@@ -51,25 +51,25 @@ class PortfolioController extends GeneralAdminController {
         $this->currentPage = $page;
 
 
-        $total = count(\Portfolio::all());
+        $total = count(\Noticias::all());
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Portfolio::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
+        $this->data['table'] =  \Noticias::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
 
-        $this->app->render('admin/portfolio/list.twig',$this->data);
+        $this->app->render('admin/noticias/list.twig',$this->data);
     }
 
     public function edit_get($id = '') {
 
         //
-        $this->data['table'] =  \Portfolio::find($id);
+        $this->data['table'] =  \Noticias::find($id);
 
         //
-        $this->data['categorias'] =  \Categorias::all(); //relation
+        
         if($id=='') {
             $this->data['action'] = 'create';
         }else {
@@ -77,7 +77,7 @@ class PortfolioController extends GeneralAdminController {
             $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
-        $this->app->render('admin/portfolio/edit.twig',$this->data);
+        $this->app->render('admin/noticias/edit.twig',$this->data);
     }
 
     public function edit_post(){
@@ -88,19 +88,18 @@ class PortfolioController extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $categoria = new \Portfolio();
+            $categoria = new \Noticias();
         }else {
             //edit
-            $categoria = \Portfolio::find($params['id']);
+            $categoria = \Noticias::find($params['id']);
         }
 
         //assign
         $categoria->titulo = $params['titulo'];
         $categoria->slug = $params['slug'];
-        $categoria->categoria_id = $params['categoria_id'];
-        $categoria->localizacao = $params['localizacao'];
-        $categoria->ano = $params['ano'];
-        $categoria->metragem = $params['metragem'];
+        $categoria->tipo = $params['tipo'];
+        $categoria->publicado = $params['publicado'];
+        $categoria->video = $params['video'];
         $categoria->descricao = $params['descricao'];
 
         //save
@@ -112,16 +111,16 @@ class PortfolioController extends GeneralAdminController {
 
 
 
-        $this->app->render('admin/portfolio/edit.twig',$this->data);
+        $this->app->render('admin/noticias/edit.twig',$this->data);
     }
 
     public function delete_get($id) {
         //
-        $categoria = \Portfolio::find($id);
+        $categoria = \Noticias::find($id);
         $categoria->delete();
         $this->app->flashNow('warning', 'Successfully deleted');
 
-        $this->app->redirect('/admin/portfolio');
+        $this->app->redirect('/admin/noticias');
     }
 
     public function search_get($search){
@@ -129,18 +128,18 @@ class PortfolioController extends GeneralAdminController {
         $value = urldecode($search);
 
         $query = "(";
-        $total = count(\Portfolio::$searchable);
+        $total = count(\Noticias::$searchable);
         for($i=0;$i<$total;$i++) {
-            $searchableField = \Portfolio::$searchable[$i];
+            $searchableField = \Noticias::$searchable[$i];
             $query .= $searchableField." LIKE '%".$value."%'";
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  \Portfolio::with('categorias')->whereRAW($query)->get();
+        $this->data['table'] =  \Noticias::whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 
-        $this->app->render('admin/portfolio/list.twig',$this->data);
+        $this->app->render('admin/noticias/list.twig',$this->data);
 
     }
 }
