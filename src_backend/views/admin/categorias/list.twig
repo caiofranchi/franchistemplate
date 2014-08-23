@@ -4,7 +4,7 @@
 
         <div class="page-header">
             <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
-            <a href="/admin/categorias/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add New</a>
+            <a href="{{ adminUrl }}categorias/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add New</a>
         </div>
 
         <!-- SEARCH-->
@@ -36,11 +36,11 @@
                         <td>{{ row.descricao }}</td>
                         <td>
 
-                            <a href="{{ siteUrl }}/edit/{{ row.id }}" class="btn btn-default btn-xs" title="EDIT">
+                            <a href="{{ adminUrl }}categorias/edit/{{ row.id }}" class="btn btn-default btn-xs" title="EDIT">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
 
-                            <a data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ siteUrl }}/delete/{{ row.id }}" href="#" type="button" class="btn btn-default btn-xs" title="REMOVE">
+                            <a data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ adminUrl }}categorias/delete/{{ row.id }}" href="#" type="button" class="btn btn-default btn-xs" title="REMOVE">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
                         </td>
@@ -53,11 +53,11 @@
 
         {% if totalPages>1 %}
         <ul class="pagination">
-            <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="/admin/categorias/page/{{ previousPage }}">&laquo;</a></li>
+            <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="{{ adminUrl }}categorias/page/{{ previousPage }}">&laquo;</a></li>
             {% for i in 1..totalPages %}
-                <li {% if currentPage==i %}class="active"{% endif %}><a href="/admin/categorias/page/{{ i }}">{{ i }}</a></li>
+                <li {% if currentPage==i %}class="active"{% endif %}><a href="{{ adminUrl }}categorias/page/{{ i }}">{{ i }}</a></li>
             {% endfor %}
-            <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="/admin/categorias/page/{{ nextPage }}">»</a></li>
+            <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="{{ adminUrl }}categorias/page/{{ nextPage }}">»</a></li>
         </ul>
         {% endif %}
 {% endblock %}

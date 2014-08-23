@@ -27,7 +27,7 @@ $app->group('/admin', function () use ($app) {
 
 
         //DASHBOARD
-        $app->get('/dashboard', array($refAdminController,'authenticate') , array($refAdminController, 'dashboard_get'));
+        $app->get('/dashboard', array($refAdminController,'authenticate') , array(new \Admin\DashboardController, 'index'));
 
 
     //USER GENERATED ENTITIES

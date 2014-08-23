@@ -76,7 +76,9 @@ class NoticiasController extends GeneralAdminController {
             $this->data['action'] = 'edit';
             $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
-
+        $this->loadJs('vendor/jquery-ui.min.js');
+        $this->loadJs("vendor/parsley.min.js");
+        $this->loadCss('vendor/jquery-ui.css');
         $this->app->render('admin/noticias/edit.twig',$this->data);
     }
 
@@ -98,7 +100,7 @@ class NoticiasController extends GeneralAdminController {
         $categoria->titulo = $params['titulo'];
         $categoria->slug = $params['slug'];
         $categoria->tipo = $params['tipo'];
-        $categoria->publicado = $params['publicado'];
+        $categoria->publicado = \DateUtils::convert_brazilian_date_to_mysql($params['publicado']);
         $categoria->video = $params['video'];
         $categoria->descricao = $params['descricao'];
 

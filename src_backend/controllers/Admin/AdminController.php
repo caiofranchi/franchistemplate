@@ -137,10 +137,4 @@ class AdminController extends GeneralAdminController {
         $this->app->flashKeep();
         $this->app->redirect('login');
     }
-
-    public function dashboard_get(){
-        $this->data['menu'] = 'dashboard';
-        //
-        $this->app->render('/admin/dashboard.twig',$this->data);
-    }
 }

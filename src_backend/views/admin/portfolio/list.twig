@@ -37,11 +37,11 @@
                         <td>{{ row.descricao }}</td>
                         <td>
 
-                            <a href="{{ siteUrl }}/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
+                            <a href="{{ adminUrl }}portfolio/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
 
-                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
+                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ adminUrl }}portfolio/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
                         </td>
@@ -54,11 +54,11 @@
 
         {% if totalPages>1 %}
         <ul class="pagination">
-            <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="/admin/portfolio/page/{{ previousPage }}">&laquo;</a></li>
+            <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="{{ adminUrl }}portfolio/page/{{ previousPage }}">&laquo;</a></li>
             {% for i in 1..totalPages %}
-                <li {% if currentPage==i %}class="active"{% endif %}><a href="/admin/portfolio/page/{{ i }}">{{ i }}</a></li>
+                <li {% if currentPage==i %}class="active"{% endif %}><a href="{{ adminUrl }}portfolio/page/{{ i }}">{{ i }}</a></li>
             {% endfor %}
-            <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="/admin/portfolio/page/{{ nextPage }}">»</a></li>
+            <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="{{ adminUrl }}portfolio/page/{{ nextPage }}">»</a></li>
         </ul>
         {% endif %}
 {% endblock %}

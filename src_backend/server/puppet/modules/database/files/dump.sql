@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 19, 2014 at 07:47 AM
+-- Generation Time: Aug 24, 2014 at 01:12 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.5.15-1+deb.sury.org~precise+1
 
@@ -41,25 +41,6 @@ CREATE TABLE IF NOT EXISTS `admins` (
 
 INSERT INTO `admins` (`id`, `nome`, `email`, `password`) VALUES
 (1, 'Admin', 'admin@admin.com.br', '$2a$10$a8c46c1084b868b15d6e1uzd.mPtORvO63gNjXcTcLxyx48rq9c/C');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `groups`
---
-
-CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `groups`
---
-
-INSERT INTO `groups` (`id`, `name`) VALUES
-(1, 'GRUPO 1');
 
 -- --------------------------------------------------------
 
@@ -125,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `tb_noticias` (
   `titulo` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `tipo` varchar(50) DEFAULT NULL,
-  `publicado` datetime DEFAULT NULL,
+  `publicado` date DEFAULT NULL,
   `video` varchar(255) DEFAULT NULL,
   `descricao` text NOT NULL,
   `created_at` datetime NOT NULL,
@@ -139,8 +120,8 @@ CREATE TABLE IF NOT EXISTS `tb_noticias` (
 --
 
 INSERT INTO `tb_noticias` (`id`, `titulo`, `slug`, `tipo`, `publicado`, `video`, `descricao`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'titulo-noticia', 'titulo-noticia', 'sasss', '2014-08-16 14:00:00', NULL, 'descricao', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 'Titulo da Noticia linduxa', 'titulo-da-noticia-linduxa', 'tipo dela', '0000-00-00 00:00:00', 'youtubil', 'descrição', '2014-08-19 07:30:44', '2014-08-19 07:30:44', '0000-00-00 00:00:00');
+(1, 'titulo-noticia', 'titulo-noticia', 'sasss', '2014-08-16', NULL, 'descricao', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'Titulo da Noticia linduxa', 'titulo-da-noticia-linduxa', 'tipo dela', '0000-00-00', 'youtubil', 'descrição', '2014-08-19 07:30:44', '2014-08-19 07:30:44', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -158,15 +139,17 @@ CREATE TABLE IF NOT EXISTS `tb_photos` (
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tb_photos`
 --
 
 INSERT INTO `tb_photos` (`id`, `connection_id`, `connection_type`, `path`, `description`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 'Portfolio', 'IMG00159-20110711-1118 (17).jpg', 'desc noticia', '0000-00-00 00:00:00', '2014-08-19 07:14:18', '0000-00-00 00:00:00'),
-(2, 2, 'Portfolio', 'IMG00154-20110711-1117 (1).jpg', 'desc 2', '0000-00-00 00:00:00', '2014-08-19 07:14:08', '0000-00-00 00:00:00');
+(1, 2, 'Portfolio', 'emed-noticias-portfolio-teste-cadastro-1.jpg', 'desc noticia', '0000-00-00 00:00:00', '2014-08-24 00:06:04', '0000-00-00 00:00:00'),
+(2, 2, 'Portfolio', 'emed-portfolio-portfolio-teste-cadastro-2.jpg', 'desc 2', '0000-00-00 00:00:00', '2014-08-24 00:10:48', '0000-00-00 00:00:00'),
+(3, 2, 'Noticias', 'dsc_0274web.jpg', 'Teste este stest etsteste', '2014-08-23 18:33:31', '2014-08-24 00:09:22', '0000-00-00 00:00:00'),
+(4, 2, 'Portfolio', 'emed-portfolio-portfolio-teste-cadastro-4.jpg', 'testeste', '2014-08-23 23:36:09', '2014-08-24 00:10:30', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -198,47 +181,6 @@ CREATE TABLE IF NOT EXISTS `tb_portfolio` (
 INSERT INTO `tb_portfolio` (`id`, `titulo`, `categoria_id`, `slug`, `localizacao`, `ano`, `metragem`, `descricao`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Portfolio 1', 16, 'portfolio-1', 'local', 'ano', 'metro', 'DESC', '0000-00-00 00:00:00', '2014-08-14 19:01:00', '2014-08-14 19:01:00'),
 (2, 'Portfolio Teste Cadastro', 16, 'portfolio-teste-cadastro', 'local', 'ano', 'metro', 'desc', '2014-08-14 19:09:00', '2014-08-14 19:09:00', '0000-00-00 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_rel_portfolio_noticias`
---
-
-CREATE TABLE IF NOT EXISTS `tb_rel_portfolio_noticias` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `portfolio_id` int(11) NOT NULL,
-  `foto_id` int(11) NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `descricao` text NOT NULL,
-  `nascimento` date NOT NULL,
-  `tipo` varchar(100) NOT NULL,
-  `groups_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `groups_id` (`groups_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `descricao`, `nascimento`, `tipo`, `groups_id`) VALUES
-(1, 'Teste Nome 1', 'Descricao 1', '2014-07-08', 'tal', 1),
-(2, 'Nome 2', 'Descricao 2', '2014-07-18', 'tal', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

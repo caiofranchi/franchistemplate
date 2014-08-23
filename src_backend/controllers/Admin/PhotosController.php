@@ -13,6 +13,9 @@ use Slim\Slim;
 
 class PhotosController extends GeneralAdminController {
 
+    protected $pathToUpload;
+    protected $URLToUpload;
+
     public function __construct() {
 
         parent::__construct();
@@ -22,7 +25,8 @@ class PhotosController extends GeneralAdminController {
 
         $this->data['title'] = 'Admin - Fotos';
 
-
+        $this->pathToUpload = PUBLIC_PATH.'assets/uploads/';
+        $this->URLToUpload = $this->baseUrl().'assets/uploads/';
     }
 
     public function index() {
@@ -36,7 +40,7 @@ class PhotosController extends GeneralAdminController {
         $this->data['nextPage'] = $this->currentPage+1;
 
         $queryModel = new \Photos();
-        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
@@ -58,7 +62,7 @@ class PhotosController extends GeneralAdminController {
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Photos::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
+        $this->data['table'] =  \Photos::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         $this->app->render('admin/fotos/list.twig',$this->data);
     }
@@ -86,6 +90,7 @@ class PhotosController extends GeneralAdminController {
         $this->loadJs('vendor/jquery.iframe-transport.js');
         $this->loadJs('vendor/jquery.fileupload-process.js');
         $this->loadJs('vendor/jquery.fileupload-image.js');
+        $this->loadJs("vendor/parsley.min.js");
 
         $this->app->render('admin/fotos/edit.twig',$this->data);
     }
@@ -94,8 +99,8 @@ class PhotosController extends GeneralAdminController {
         header("Content-Type: application/json");
 
         $upload_handler = new \UploadHandler(array(
-            'upload_dir' => PUBLIC_PATH.'assets/uploads/',
-            'upload_url' => $this->baseUrl().'assets/uploads/',
+            'upload_dir' => $this->pathToUpload,
+            'upload_url' => $this->URLToUpload,
             'mkdir_mode' => 0777,
 
             'image_versions' => array(
@@ -141,26 +146,54 @@ class PhotosController extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $categoria = new \Photos();
+            $photo = new \Photos();
         }else {
             //edit
-            $categoria = \Photos::find($params['id']);
+            $photo = \Photos::find($params['id']);
         }
 
+        $isNewImageUpload = false;
+        if($params['path']!==$photo->path) {
+            $isNewImageUpload = true;
+        }
+
+
         //assign
-        $categoria->path = $params['path'];
-        $categoria->connection_type = $params['connection_type'];
-        $categoria->connection_id = $params['connection_id'];
-        $categoria->description = $params['description'];
+        $photo->path = $params['path'];
+        $photo->connection_type = $params['connection_type'];
+        $photo->connection_id = $params['connection_id'];
+        $photo->description = $params['description'];
 
         //save
-        if($id = $categoria->save()){
+        if($photo->save()){
             $this->app->flashNow('success', 'Registered');
         }else {
             $this->app->flashNow('error', 'Not possible at this time, try again later.');
         }
 
-        //file upload rename
+        //changes the file name
+        if($isNewImageUpload){
+            $photo = \Photos::find($photo->id);
+            $slug = $photo->connection()->get()->toArray()[0]['slug'];
+
+            $newFilename = "emed-".strtolower($params['connection_type'])."-".$slug."-".$photo->id.".".pathinfo($params['path'], PATHINFO_EXTENSION);
+
+            //rename original
+            rename($this->pathToUpload.$params['path'], $this->pathToUpload.$newFilename);
+
+            //rename thumbnail
+            rename($this->pathToUpload.'thumbnail/'.$params['path'], $this->pathToUpload.'thumbnail/'.$newFilename);
+
+            //rename medium
+            rename($this->pathToUpload.'medium/'.$params['path'], $this->pathToUpload.'medium/'.$newFilename);
+
+            //rename high
+            rename($this->pathToUpload.'high/'.$params['path'], $this->pathToUpload.'high/'.$newFilename);
+
+            //change the path and update
+            $photo->path = $newFilename;
+            $photo->save();
+        }
 
 
         $this->app->render('admin/fotos/edit.twig',$this->data);

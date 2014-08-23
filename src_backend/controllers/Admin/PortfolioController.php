@@ -77,6 +77,7 @@ class PortfolioController extends GeneralAdminController {
             $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+        $this->loadJs("vendor/parsley.min.js");
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
 
