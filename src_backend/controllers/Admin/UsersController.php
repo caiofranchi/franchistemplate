@@ -21,4 +21,7 @@ class UsersController extends GeneralAdminController {
         $this->app->render('admin/users_list.twig');
     }
 
+    public function change_password(){
+        $this->app->redirect('/admin/dashboard');
+    }
 }

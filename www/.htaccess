@@ -1,3 +1,8 @@
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_flag  log_errors on
+
 # Apache Server Configs v1.1.0 | MIT License
 # https://github.com/h5bp/server-configs-apache
 
@@ -222,11 +227,7 @@ AddDefaultCharset utf-8
     #Rewrite for SLIM framework
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [QSA,L]
-#    RewriteRule ^ /generator/publish/admin/index.php [QSA,L]
-#    RewriteRule ^(.*)$ %/generator/publish/admin/index.php [QSA,L]
-#    RewriteRule ^(.*)$ %{ENV:BASE}index.php [QSA,L]
 
-  # RewriteBase /
 </IfModule>
 
 #<Directory /vagrant/www/generator/publish/admin>

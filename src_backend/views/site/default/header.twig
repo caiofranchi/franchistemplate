@@ -1,0 +1,17 @@
+<header class="header {% if menu=='portfolio' %}portfolio-active{% endif %} clearfix" role="banner">
+    <div class="barra-lateral"></div>
+    <a href="/" title="Home"><h1 class="logo"></h1></a>
+    <nav class="nav-menu {% if menu=='portfolio' %}portfolio-active{% endif %}">
+        <a class="btn-default {% if menu=='empresa' %}active{% endif %}" href="{{ baseUrl }}empresa" title="Empresa">empresa</a>
+        <div  class="btn-portfolio btn-default {% if menu=='portfolio' %}active{% endif %}" href="{{ baseUrl }}" title="Portfolio">
+            portfolio<span class="dois-pontos">:</span>
+            <nav class="nav-portfolio {% if menu=='portfolio' %}active{% endif %}">
+                {% for row in categorias %}
+                    <a {% if categoria==row.slug %} class="active" {% endif %} href="{{ baseUrl }}portfolio/{{ row.slug }}" title="{{ row.nome }}">{{ row.nome }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+        <a class="btn-default {% if menu=='noticias' %}active{% endif %}" href="{{ baseUrl }}noticias" title="Notícias">notícias</a>
+        <a class="btn-default {% if menu=='contato' %}active{% endif %}" href="{{ baseUrl }}contato" title="Contato">contato</a>
+    </nav>
+</header>

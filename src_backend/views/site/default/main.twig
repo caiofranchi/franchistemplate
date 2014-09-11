@@ -1,0 +1,13 @@
+{% extends 'site/master.twig' %}
+
+{% block base %}
+    {% embed "site/default/header.twig" %}{% endembed %}
+
+    <div class="main clearfix" role="main">
+
+        {% block main_content %}{% endblock %}
+
+    </div>
+
+    {% embed "site/default/footer.twig" %}{% endembed %}
+{% endblock %}

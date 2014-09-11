@@ -46,6 +46,7 @@ class UploadHandler
             'user_dirs' => false,
             'mkdir_mode' => 0755,
             'param_name' => 'files',
+            'random_name' => false,
             // Set the following option to 'POST', if your server does not support
             // DELETE requests. This is a parameter sent to the client:
             'delete_type' => 'DELETE',
@@ -617,7 +618,7 @@ class UploadHandler
                 $src_func = 'imagecreatefromjpeg';
                 $write_func = 'imagejpeg';
                 $image_quality = isset($options['jpeg_quality']) ?
-                    $options['jpeg_quality'] : 75;
+                    $options['jpeg_quality'] : 80;
                 break;
             case 'gif':
                 $src_func = 'imagecreatefromgif';

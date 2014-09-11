@@ -31,7 +31,7 @@
                 <select class="form-control" name="categoria_id" id="categoria_id">
                     <option value="0">SELECIONE</option>
                     {% for row in categorias %}
-                    <option value="{{ row.id }}" {% if row.categoria_id == table.categorias.id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>
+                    <option value="{{ row.id }}" {% if row.id == table.categoria_id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -67,12 +67,15 @@
             </div>
         </div>
 
+        {% if table.id!='' %}
         <div class="page-header">
             <h3 class="">Fotos:</h3>
-            <a href="/admin/portfolio/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add to this portfolio item</a>
+            {#<a href="{{ adminUrl }}portfolio/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add to this portfolio item</a>#}
         </div>
 
         <!--TABLE-->
+
+
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -87,7 +90,11 @@
                 {% for row in photos_related %}
                     <tr>
                         <td>{{ row.id }}</td>
-                        <td>{{ row.path }}</td>
+                        <td>
+                            <div class="col-xs-6 col-md-2 thumbnail">
+                                <img class="img-preview" {% if row.path!='' %}src="{{ baseUrl }}assets/uploads/thumbnail/{{ row.path }}"{% endif %}  data-src="holder.js/200x200">
+                            </div>
+                        </td>
                         <td>{{ row.description }}</td>
                         <td>
 
@@ -95,9 +102,9 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
 
-                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="This will let the " data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </a>
+                            {#<a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="This will let the " data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">#}
+                                {#<span class="glyphicon glyphicon-remove"></span>#}
+                            {#</a>#}
 
                         </td>
                     </tr>
@@ -106,6 +113,7 @@
                 </tbody>
             </table>
         </div>
+            {% endif %}
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

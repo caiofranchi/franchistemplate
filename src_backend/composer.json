@@ -16,7 +16,8 @@
         "slim/slim": "*",
         "slim/views": "0.1.*",
         "twig/twig": "1.*",
-        "illuminate/database": "*"
+        "illuminate/database": "*",
+        "phpmailer/phpmailer": "dev-master"
     },
     "autoload": {
         "psr-4": {

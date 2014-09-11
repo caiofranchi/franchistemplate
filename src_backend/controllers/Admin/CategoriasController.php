@@ -70,6 +70,7 @@ class CategoriasController extends GeneralAdminController {
         //
         $this->data['table'] =  \Categorias::find($id);
 
+        $this->loadJs("vendor/parsley.min.js");
         $this->app->render('admin/categorias/edit.twig',$this->data);
     }
 

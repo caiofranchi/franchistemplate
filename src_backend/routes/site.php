@@ -6,7 +6,24 @@
  * Time: 14:36
  */
 
-$app->get('/',function () use ($app) {
-    //render page EXAMPLE
-    $app->render('home.php');
+$app->group('/',function () use ($app) {
+    $refSiteController = new \Site\MainController;
+
+    // HOME
+    $app->get('/', array($refSiteController, 'home'));
+
+    //EMPRESA
+    $app->get('empresa', array($refSiteController, 'empresa'));
+
+    $app->get('portfolio/:slugCategoria(/:slugPortfolio)', array($refSiteController, 'portfolio'));
+
+//    $app->get('portfolio/:slugCategoria/:slugPortfolio', array($refSiteController, 'portfolio_item'));
+
+    $app->get('noticias(/:slug)', array($refSiteController, 'noticias'));
+
+    $app->get('contato', array($refSiteController, 'contato_get'));
+    $app->post('contato', array($refSiteController, 'contato_post'));
+    $app->post('contato/upload', array($refSiteController, 'contato_upload'));
+
+
 });

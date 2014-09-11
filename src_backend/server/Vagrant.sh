@@ -130,8 +130,19 @@ cd ~
 #	CustomLog ${APACHE_LOG_DIR}/vagrantpress.access.log combined
 #</VirtualHost>' > vagrant.conf
 #
-sudo cp /vagrant/src/server/files/etc/apache2/vagrant.conf /etc/apache2/sites-available
+sudo cp /vagrant/src_backend/server/files/etc/apache2/vagrant.conf /etc/apache2/sites-available
+#sudo cp /vagrant/src_backend/server/files/etc/apache2/httpd.conf /etc/apache2/conf.d/user
+
+# force session cache folder to work
+echo "session.save_path = "/tmp"" >> /etc/php5/apache2/php.ini
+
 sudo a2enmod rewrite
+
+#INSTALL POSTFIX
+sudo apt-get install postfix
+sudo cp /vagrant/src_backend/server/files/etc/postfix/main.cf /etc/postfix/
+sudo /etc/init.d/postfix reload
+
 
 #
 # Install PhalconPHP

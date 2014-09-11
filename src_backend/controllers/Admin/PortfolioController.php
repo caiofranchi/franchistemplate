@@ -36,7 +36,7 @@ class PortfolioController extends GeneralAdminController {
         $this->data['nextPage'] = $this->currentPage+1;
 
         $queryModel = new \Portfolio();
-        $result = $queryModel->with('categorias')->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+        $result = $queryModel->with('categorias')->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
@@ -58,7 +58,7 @@ class PortfolioController extends GeneralAdminController {
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Portfolio::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
+        $this->data['table'] =  \Portfolio::with('categorias')->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         $this->app->render('admin/portfolio/list.twig',$this->data);
     }
@@ -77,6 +77,7 @@ class PortfolioController extends GeneralAdminController {
             $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+        $this->loadJs("vendor/parsley.min.js");
         $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
 
@@ -105,14 +106,14 @@ class PortfolioController extends GeneralAdminController {
 
         //save
         if($categoria->save()){
-            $this->app->flashNow('success', 'Registered');
+            $this->app->flashKeep('success', 'Registered');
         }else {
-            $this->app->flashNow('error', 'Not possible at this time, try again later.');
+            $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
 
-
-        $this->app->render('admin/portfolio/edit.twig',$this->data);
+        $this->app->redirect('/admin/portfolio');
+//        $this->app->render('admin/portfolio/edit.twig',$this->data);
     }
 
     public function delete_get($id) {
@@ -121,7 +122,7 @@ class PortfolioController extends GeneralAdminController {
         $categoria->delete();
         $this->app->flashNow('warning', 'Successfully deleted');
 
-        $this->app->redirect('/admin/categorias');
+        $this->app->redirect('/admin/portfolio');
     }
 
     public function search_get($search){

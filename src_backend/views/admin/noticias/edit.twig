@@ -1,0 +1,121 @@
+{% extends 'admin/master_with_menu.twig' %}
+
+{% block main_content %}
+
+        <div class="page-header">
+            <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
+        </div>
+
+    <form action="{{ siteUrl }}" class="form-horizontal default-form-validation" role="form" method="post">
+        {#<input type="hidden" name="_METHOD" value="PUT"/>#}
+        <input type="hidden" name="id" value="{{ table.id }}"/>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="titulo">Título</label>
+            <div class="col-sm-8">
+                <input value="{{ table.titulo }}" data-slug-target="#slug" type="text" class="form-control" id="titulo" name="titulo" placeholder="Coloque o título da notícia" required="required">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="slug">Slug (URL)</label>
+            <div class="col-sm-8">
+                <input value="{{ table.slug }}" type="text" class="form-control" id="slug" name="slug" required="required" placeholder="Esse é o nome que a URL terá">
+            </div>
+        </div>
+
+        <!-- SELECT -->
+        {#<div class="form-group">#}
+            {#<label class="col-sm-2 control-label" for="tipo">Tipo</label>#}
+            {#<div class="col-sm-8">#}
+                {#<select class="form-control" name="tipo" id="tipo">#}
+                    {#<option value="0">SELECIONE</option>#}
+                {#</select>#}
+            {#</div>#}
+        {#</div>#}
+
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" form="tipo">Tipo</label>
+            <div class="col-sm-8">
+                <input value="{{ table.tipo }}" type="text" class="form-control" id="tipo" name="tipo" required="required" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="publicado">Data de publicação</label>
+            <div class="col-sm-8">
+                <input data-datepicker value="{{ table.publicado|date("d/m/Y")  }}" type="text" class="form-control" id="publicado" name="publicado" required="required" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="video">Youtube ID (Ex: dRV4hiXfenU) :</label>
+            <div class="col-sm-8">
+                <input value="{{ table.video }}" type="text" class="form-control" id="video" name="video" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="descricao">Descrição</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="3" id="descricao" name="descricao">{{ table.descricao }}</textarea>
+            </div>
+        </div>
+
+        {% if table.id!='' %}
+        <div class="page-header">
+            <h3 class="">Fotos:</h3>
+            {#<a href="{{ adminUrl }}noticias/create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add to this portfolio item</a>#}
+        </div>
+
+        <!--TABLE-->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#id</th>
+                    <th>Foto</th>
+                    <th>Descrição</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in photos_related %}
+                    <tr>
+                        <td>{{ row.id }}</td>
+                        <td>
+                            <div class="col-xs-6 col-md-2 thumbnail">
+                                <img class="img-preview" {% if row.path!='' %}src="{{ baseUrl }}assets/uploads/thumbnail/{{ row.path }}"{% endif %}  data-src="holder.js/200x200">
+                            </div>
+                        </td>
+                        <td>{{ row.description }}</td>
+                        <td>
+
+                            <a href="{{ adminUrl }}fotos/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+
+                            {#<a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="This will let the " data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">#}
+                                {#<span class="glyphicon glyphicon-remove"></span>#}
+                            {#</a>#}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+            {% endif %}
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <!--                            $('#submit-button').button('loading')-->
+                <button type="submit" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

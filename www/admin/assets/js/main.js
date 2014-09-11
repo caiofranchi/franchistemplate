@@ -42,6 +42,18 @@ var ADMIN = ADMIN || {};
 
         //only numbers
 
+        //enabling date pickers
+        if($("[data-datepicker]").length>0) $("[data-datepicker]").datepicker({
+            dateFormat: 'dd/mm/yy',
+            dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+            dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+            monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+            nextText: 'Próximo',
+            prevText: 'Anterior'
+        });
+
         //form uploads
         if($('#fileupload').fileupload) $('#fileupload').fileupload({
             dataType: 'json',
@@ -70,6 +82,7 @@ var ADMIN = ADMIN || {};
                 $('.progress').fadeOut();
                 $($('#fileupload').data('preview')).show();
                 $($('#fileupload').data('preview')).attr('src',data.result.files[0].thumbnailUrl);
+                $($('#fileupload').data('reply-to')).val(data.result.files[0].name);
 //                $.each(data.result.files, function (index, file) {
 //                    $('<p/>').text(file.name).appendTo(document.body);
 //                });
@@ -109,7 +122,6 @@ var ADMIN = ADMIN || {};
             $(this).find('.danger').attr('href', refButton.data('href'));
         });
 
-        //datapickers
     };
 
 //    ADMIN.render = function(){

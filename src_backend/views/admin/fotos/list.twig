@@ -31,17 +31,21 @@
                 <tbody>
                 {% for row in table %}
                     <tr>
-                        <td>{{ row.id }}</td>
-                        <td>{{ row.path }}</td>
-                        <td>{% if row.connection_type!='' %}<a href="{{ adminUrl }}{% if row.connection_type=='Portfolio' %}portfolio{% elseif row.connection_type == 'Categorias' %}categorias{% endif %}/edit/{{ row.connection_id }}">{{ row.connection_type }} - {{ row.connection_id }}</a>{% else %}NENHUM{% endif %}</td>
-                        <td>{{ row.description }}</td>
-                        <td>
+                        <td class="vert-align">{{ row.id }}</td>
+                        <td class="vert-align">
+                            <div class="col-xs-6 col-md-2 thumbnail">
+                                <img class="img-preview" {% if row.path!='' %}src="{{ baseUrl }}assets/uploads/thumbnail/{{ row.path }}"{% endif %}  data-src="holder.js/200x200">
+                            </div>
+                        </td>
+                        <td class="vert-align">{% if row.connection_type!='' %}<a href="{{ adminUrl }}{% if row.connection_type=='Portfolio' %}portfolio{% elseif row.connection_type == 'Categorias' %}categorias{% endif %}/edit/{{ row.connection_id }}">{{ row.connection_type }} - {{ row.connection_id }}</a>{% else %}NENHUM{% endif %}</td>
+                        <td class="vert-align">{{ row.description }}</td>
+                        <td class="vert-align">
 
-                            <a href="{{ siteUrl }}/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
+                            <a href="{{ adminUrl }}fotos/edit/{{ row.id }}" class ="btn btn-default btn-xs" title="EDIT">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </a>
 
-                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ siteUrl }}/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
+                            <a href="#" data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ adminUrl }}fotos/delete/{{ row.id }}" type="button" class="btn btn-default btn-xs" title="REMOVE">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
                         </td>
@@ -55,7 +59,7 @@
         {% if totalPages>1 %}
         <ul class="pagination">
             <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="/admin/portfolio/page/{{ previousPage }}">&laquo;</a></li>
-            {% for i in 1..totalPages %}
+            {% for i in 1..(totalPages+1) %}
                 <li {% if currentPage==i %}class="active"{% endif %}><a href="/admin/portfolio/page/{{ i }}">{{ i }}</a></li>
             {% endfor %}
             <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="/admin/portfolio/page/{{ nextPage }}">»</a></li>

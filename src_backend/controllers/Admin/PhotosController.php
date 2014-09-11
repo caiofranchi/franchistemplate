@@ -13,6 +13,9 @@ use Slim\Slim;
 
 class PhotosController extends GeneralAdminController {
 
+    protected $pathToUpload;
+    protected $URLToUpload;
+
     public function __construct() {
 
         parent::__construct();
@@ -22,7 +25,8 @@ class PhotosController extends GeneralAdminController {
 
         $this->data['title'] = 'Admin - Fotos';
 
-
+        $this->pathToUpload = PUBLIC_PATH.'assets/uploads/';
+        $this->URLToUpload = $this->baseUrl().'assets/uploads/';
     }
 
     public function index() {
@@ -36,7 +40,7 @@ class PhotosController extends GeneralAdminController {
         $this->data['nextPage'] = $this->currentPage+1;
 
         $queryModel = new \Photos();
-        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at')->get();
+        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
@@ -58,7 +62,7 @@ class PhotosController extends GeneralAdminController {
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Photos::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('ordem')->get();
+        $this->data['table'] =  \Photos::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         $this->app->render('admin/fotos/list.twig',$this->data);
     }
@@ -73,7 +77,7 @@ class PhotosController extends GeneralAdminController {
         $this->data['table'] =  \Photos::find($id);
 
         //morphToMany
-        $this->data['portfolio'] =  \Portfolio::all();
+        $this->data['portfolio'] =  \Portfolio::with('categorias')->get();
         $this->data['noticias'] =  \Noticias::all();
 
         //render css assets
@@ -86,6 +90,7 @@ class PhotosController extends GeneralAdminController {
         $this->loadJs('vendor/jquery.iframe-transport.js');
         $this->loadJs('vendor/jquery.fileupload-process.js');
         $this->loadJs('vendor/jquery.fileupload-image.js');
+        $this->loadJs("vendor/parsley.min.js");
 
         $this->app->render('admin/fotos/edit.twig',$this->data);
     }
@@ -94,8 +99,8 @@ class PhotosController extends GeneralAdminController {
         header("Content-Type: application/json");
 
         $upload_handler = new \UploadHandler(array(
-            'upload_dir' => PUBLIC_PATH.'assets/uploads/',
-            'upload_url' => $this->baseUrl().'assets/uploads/',
+            'upload_dir' => $this->pathToUpload,
+            'upload_url' => $this->URLToUpload,
             'mkdir_mode' => 0777,
 
             'image_versions' => array(
@@ -105,12 +110,12 @@ class PhotosController extends GeneralAdminController {
                     'auto_orient' => true
                 ),
                 'high' => array(
-                    'max_width' => 825,
-                    'max_height' => 555
+                    'max_width' => 1400,
+                    'max_height' => 942
                 ),
                 'medium' => array(
-                    'max_width' => 480,
-                    'max_height' => 380
+                    'max_width' => 631,//480,
+                    'max_height' => 500// 380
                 ),
                 'thumbnail' => array(
                     // Uncomment the following to use a defined directory for the thumbnails
@@ -123,8 +128,8 @@ class PhotosController extends GeneralAdminController {
                     // Uncomment the following to force the max
                     // dimensions and e.g. create square thumbnails:
                     //'crop' => true,
-                    'max_width' => 200,
-                    'max_height' => 200
+                    'max_width' => 300,
+                    'max_height' => 300
                 )
             )
 //            'post_max_size' =>
@@ -141,29 +146,57 @@ class PhotosController extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $categoria = new \Photos();
+            $photo = new \Photos();
         }else {
             //edit
-            $categoria = \Photos::find($params['id']);
+            $photo = \Photos::find($params['id']);
         }
+
+        $isNewImageUpload = false;
+        if($params['path']!==$photo->path) {
+            $isNewImageUpload = true;
+        }
+
 
         //assign
-        $categoria->path = $params['path'];
-        $categoria->connection_type = $params['connection_type'];
-        $categoria->connection_id = $params['connection_id'];
-        $categoria->description = $params['description'];
+        $photo->path = $params['path'];
+        $photo->connection_type = $params['connection_type'];
+        $photo->connection_id = $params['connection_id'];
+        $photo->description = $params['description'];
 
         //save
-        if($id = $categoria->save()){
-            $this->app->flashNow('success', 'Registered');
+        if($photo->save()){
+            $this->app->flashKeep('success', 'Registered');
         }else {
-            $this->app->flashNow('error', 'Not possible at this time, try again later.');
+            $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
-        //file upload rename
+        //changes the file name
+        if($isNewImageUpload){
+            $photo = \Photos::find($photo->id);
+            $slug = $photo->connection()->get()->toArray()[0]['slug'];
+
+            $newFilename = "emed-".strtolower($params['connection_type'])."-".$slug."-".$photo->id.".".pathinfo($params['path'], PATHINFO_EXTENSION);
+
+            //rename original
+            rename($this->pathToUpload.$params['path'], $this->pathToUpload.$newFilename);
+
+            //rename thumbnail
+            rename($this->pathToUpload.'thumbnail/'.$params['path'], $this->pathToUpload.'thumbnail/'.$newFilename);
+
+            //rename medium
+            rename($this->pathToUpload.'medium/'.$params['path'], $this->pathToUpload.'medium/'.$newFilename);
+
+            //rename high
+            rename($this->pathToUpload.'high/'.$params['path'], $this->pathToUpload.'high/'.$newFilename);
+
+            //change the path and update
+            $photo->path = $newFilename;
+            $photo->save();
+        }
 
 
-        $this->app->render('admin/fotos/edit.twig',$this->data);
+        $this->app->redirect('/admin/fotos',$this->data);
     }
 
     public function delete_get($id) {
@@ -187,7 +220,7 @@ class PhotosController extends GeneralAdminController {
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  \Photos::with('categorias')->whereRAW($query)->get();
+        $this->data['table'] =  \Photos::whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 
