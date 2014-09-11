@@ -6,6 +6,7 @@
  * Time: 16:19
  */
 
+
 class Utils {
     public static function get_real_ip()
     {
@@ -30,6 +31,3 @@ class Utils {
     }
 
 }
-
-
-
