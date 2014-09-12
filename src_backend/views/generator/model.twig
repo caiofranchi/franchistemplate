@@ -6,21 +6,33 @@
  * Time: 17:25
  */
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class {{ modelName }} extends Illuminate\Database\Eloquent\Model
 {
+    use SoftDeletingTrait;
+
+    //list of fields that can be searchable
+    public static $searchable = array({% for item in searchableFields %}'{{ item }}',{% endfor %});
+
     protected $table = '{{ table }}';
 
     protected $key = '{{ primaryKey }}';
 
     protected $hidden = [{% for item in hiddenFields %}'{{ item }}',{% endfor %}];
 
+    //table vars
+    protected $dates = ['deleted_at'];
+
+    public $timestamps = true;
+
     {% for rel in relations %}
         {% for field in rel.models %}
-        public function {{ field }}()
-        {
-              return $this->{{ rel.type }}('{{ field }}');
+            public function {{ field }}()
+            {
+            return $this->{{ rel.type }}('{{ field }}');
 
-        }
-         {% endfor %}
+            }
+        {% endfor %}
     {% endfor %}
 }

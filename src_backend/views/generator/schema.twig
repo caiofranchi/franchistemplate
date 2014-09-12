@@ -10,7 +10,7 @@ Schema::table('{{ table }}', function($table)
 {
     $table->create();
     $table->increments('id');
-    $table->string('name');
+    $table->string('name')->unique();
     $table->string('tipo');
     $table->date('nascimento')->nullable();
     $table->text('descricao');

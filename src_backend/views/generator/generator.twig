@@ -1,0 +1,137 @@
+{% extends 'site/master.twig' %}
+
+{% block base %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div id="main-content" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <form action="{{ siteUrl }}" class="form-horizontal default-form-validation" role="form" method="post">
+
+                    {% for table in data %}
+                        <h1>Table: {{ table.name }}</h1>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="titulo">Model Name</label>
+                            <div class="col-sm-8">
+                                <input id="table_{{ table.name }}_model" name="table_{{ table.name }}_model" class="form-control" type="text" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="titulo">Is Admin?</label>
+                            <div class="col-sm-8">
+                                <input id="table_{{ table.name }}_admin" name="table_{{ table.name }}_admin" class="form-control" type="text" value="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="titulo">Is API?</label>
+                            <div class="col-sm-8">
+                                <input id="table_{{ table.name }}_api" name="table_{{ table.name }}_api" class="form-control" type="text" value="">
+                            </div>
+                        </div>
+
+                        <h2>Relations:</h2>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="titulo">
+                                <select class="form-control" name="categoria_id" id="categoria_id">
+                                    <option value="0">TIPO:</option>
+                                    <option value="0">HAS_MANY</option>
+                                    <option value="0">HAS_MANY_THROUGH</option>
+                                    <option value="0">HAS_ONE</option>
+                                    <option value="0">BELONGS_TO</option>
+                                    <option value="0">BELONGS_TO_MANY</option>
+                                    <option value="0">MORPH_MANY</option>
+                                    <option value="0">MORPH_TO</option>
+                                    <option value="0">MORPHED_BY_MANY</option>
+                                </select>
+                            </label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="categoria_id" id="categoria_id">
+                                    {% for tablezz in data %}
+                                    <option value="0">TIPO:</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <h2>Fields:</h2>
+                        {% for field in table.fields %}
+                            <h3>
+                                {{ field.Field }}
+                            </h3>
+                            {% if field.key=='PRI' %}
+                                {#PRIMARY KEY#}
+
+                            {% elseif field.key=='MUL' %}
+                                {#FOREGIN KEY#}
+
+                            {% else %}
+                                {#NORMAL#}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="titulo">Field Type on Admin</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="categoria_id" id="categoria_id">
+                                            <option value="0">SELECIONE</option>
+                                            <option value="0">DATEPICKER</option>
+
+                                            {#VARCHAR#}
+                                            <option value="0">COLORPICKER</option>
+                                            <option value="0">FORM_UPLOAD</option>
+                                            <option value="0">SLUG</option>
+                                            <option value="0">SINGLELINE_TEXT</option>
+                                            <option value="0">MULTILINE_TEXT</option>
+
+                                            <option value="0">SELECT</option>
+                                            <option value="0">RADIO</option>
+                                            <option value="0">CHECKBOX</option>
+                                            <option value="0">EMAIL</option>
+                                            <option value="0">PASSWORD</option>
+
+                                            {#TEXT#}
+                                            <option value="0">TEXT</option>
+                                            <option value="0">HTML</option>
+                                            {#{% for row in categorias %}#}
+                                            {#<option value="{{ row.id }}" {% if row.id == table.categoria_id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>#}
+                                            {#{% endfor %}#}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="titulo">Is Searchable?</label>
+                                    <div class="col-sm-8">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" id="optionsRadios1"
+                                                       value="option1" checked> Yes
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" id="optionsRadios2"
+                                                       value="option2">
+                                                No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+
+
+
+                        {% endfor %}
+
+
+
+
+                    {% endfor %}
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
