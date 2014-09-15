@@ -11,34 +11,34 @@ namespace Admin;
 
 use Slim\Slim;
 
-class {{ model }}Controller extends GeneralAdminController {
+class FotosController extends GeneralAdminController {
 
     public function __construct() {
 
         parent::__construct();
 
-        $this->data['page_name'] = '{{ model }}';
-        $this->data['menu'] = '{{ slug }}';
+        $this->data['page_name'] = 'Fotos';
+        $this->data['menu'] = 'fotos';
 
     }
 
     public function index() {
         $this->data['action'] = 'list';
 
-        $total = \{{ model }}::all()->count();
+        $total = \Fotos::all()->count();
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $queryModel = new \{{ model }}();
+        $queryModel = new \Fotos();
         $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
 
-        $this->app->render('admin/{{ slug }}/list.twig',$this->data);
+        $this->app->render('admin/fotos/list.twig',$this->data);
     }
 
     public function page_get($page) {
@@ -48,22 +48,22 @@ class {{ model }}Controller extends GeneralAdminController {
         $this->currentPage = $page;
 
 
-        $total = count(\{{ model }}::all());
+        $total = count(\Fotos::all());
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \{{ model }}::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
+        $this->data['table'] =  \Fotos::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
-        $this->app->render('admin/{{ slug }}/list.twig',$this->data);
+        $this->app->render('admin/fotos/list.twig',$this->data);
     }
 
     public function edit_get($id = '') {
 
         //
-        $this->data['table'] =  \{{ model }}::find($id);
+        $this->data['table'] =  \Fotos::find($id);
 
         //
         $this->data['categorias'] =  \Categorias::all(); //relation
@@ -75,7 +75,7 @@ class {{ model }}Controller extends GeneralAdminController {
         }
 
         $this->loadJs("vendor/parsley.min.js");
-        $this->app->render('admin/{{ slug }}/edit.twig',$this->data);
+        $this->app->render('admin/fotos/edit.twig',$this->data);
     }
 
     public function edit_post(){
@@ -86,23 +86,17 @@ class {{ model }}Controller extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $model = new \{{ model }}();
+            $model = new \Fotos();
         }else {
             //edit
-            $model = \{{ model }}::find($params['id']);
+            $model = \Fotos::find($params['id']);
         }
 
         //assign
-        {% for item in fields %}
-        $model->item = $params['item'];
-        {% endfor %}
-        {#$model->slug = $params['slug'];#}
-        {#$model->categoria_id = $params['categoria_id'];#}
-        {#$model->localizacao = $params['localizacao'];#}
-        {#$model->ano = $params['ano'];#}
-        {#$model->metragem = $params['metragem'];#}
-        {#$model->descricao = $params['descricao'];#}
-
+                $model->item = $params['item'];
+                $model->item = $params['item'];
+                $model->item = $params['item'];
+                                                        
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -111,16 +105,16 @@ class {{ model }}Controller extends GeneralAdminController {
         }
 
 
-        $this->app->redirect('/admin/{{ model }}');
+        $this->app->redirect('/admin/Fotos');
     }
 
     public function delete_get($id) {
         //
-        $model = \{{ model }}::find($id);
+        $model = \Fotos::find($id);
         $model->delete();
         $this->app->flashNow('warning', 'Successfully deleted');
 
-        $this->app->redirect('/admin/{{ model }}');
+        $this->app->redirect('/admin/Fotos');
     }
 
     public function search_get($search){
@@ -128,18 +122,18 @@ class {{ model }}Controller extends GeneralAdminController {
         $value = urldecode($search);
 
         $query = "(";
-        $total = count(\{{ model }}::$searchable);
+        $total = count(\Fotos::$searchable);
         for($i=0;$i<$total;$i++) {
-            $searchableField = \{{ model }}::$searchable[$i];
+            $searchableField = \Fotos::$searchable[$i];
             $query .= $searchableField." LIKE '%".$value."%'";
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  \{{ model }}::whereRAW($query)->get();
+        $this->data['table'] =  \Fotos::whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 
-        $this->app->render('admin/{{ slug }}/list.twig',$this->data);
+        $this->app->render('admin/fotos/list.twig',$this->data);
 
     }
 }

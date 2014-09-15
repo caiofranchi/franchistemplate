@@ -225,6 +225,29 @@ class GeneratorController extends \GeneralController
                 'relations'=>$relations
             );
 
+
+
+            //writing models
+            $renderedClass = $twig->render('model.twig', $data);
+            $myfile = fopen(APP_PATH.'models/test/'.$modelName.'.php', "w");
+            fwrite($myfile, $renderedClass);
+            fclose($myfile);
+
+
+            if($isAdmin){
+                //writing ADMIN CONTROLLERS
+                $renderedClass = $twig->render('admincontroller.twig', $data);
+                $myfile = fopen(APP_PATH.'controllers/Admin/test/'.$modelName.'Controller.php', "w");
+                fwrite($myfile, $renderedClass);
+                fclose($myfile);
+
+                //writing ADMIN VIEWS
+            }
+
+
+
+            //writing admin controllers
+
             array_push($jsonResult['generator']['entities'],$data);
 
 
