@@ -11,6 +11,7 @@ $app->group('/generator',function () use ($app) {
 
     // HOME
     $app->get('/', array($refSiteController, 'index'));
+    $app->post('/', array($refSiteController, 'generate'));
 
 
 });

@@ -26,13 +26,19 @@ class {{ modelName }} extends Illuminate\Database\Eloquent\Model
 
     public $timestamps = true;
 
-    {% for rel in relations %}
-        {% for field in rel.models %}
-            public function {{ field }}()
-            {
-            return $this->{{ rel.type }}('{{ field }}');
+    {#{% for rel in relations %}#}
+        {#{% for field in rel.models %}#}
+            {#public function {{ field }}()#}
+            {#{#}
+            {#return $this->{{ rel.type }}('{{ field }}');#}
 
-            }
-        {% endfor %}
+            {#}#}
+        {#{% endfor %}#}
+    {#{% endfor %}#}
+    {% for rel in relations %}
+        public function {{ rel.model }}()
+        {
+            return $this->{{ rel.type }}('{{ rel.model }}');
+        }
     {% endfor %}
 }

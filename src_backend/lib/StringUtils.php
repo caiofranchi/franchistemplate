@@ -34,6 +34,19 @@ class StringUtils {
         }
         $func = create_function('$c', 'return strtoupper($c[1]);');
         return preg_replace_callback('/_([a-z])/', $func, $str);
+
+//        $r ='@_+(\w)@';
+//
+//        $a='a_bf_csdfc__dasdf';
+//        $b= ucfirst(preg_replace_callback(
+//            $r,
+//            function ($matches) {
+//                return strtoupper($matches[1]);
+//            },
+//            $a
+//        ));
+//        echo $a,PHP_EOL;
+//        echo $b,PHP_EOL;
     }
 
     /**

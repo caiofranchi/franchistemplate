@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 12, 2014 at 10:58 PM
+-- Generation Time: Sep 15, 2014 at 11:34 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.5.16-1+deb.sury.org~precise+1
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `contato` (
 
 CREATE TABLE IF NOT EXISTS `estrutura` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` int(11) NOT NULL,
+  `nome` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `icone` varchar(100) CHARACTER SET latin1 NOT NULL,
   `descricao` text CHARACTER SET latin1 NOT NULL,
   `created_at` datetime NOT NULL,

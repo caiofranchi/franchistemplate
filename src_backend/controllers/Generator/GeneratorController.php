@@ -92,16 +92,19 @@ class GeneratorController extends \GeneralController
 
 
     public function index(){
-        $dbName = 'vagrant_dev';
+
+        $dbName = Manager::select('SELECT DATABASE()')[0]['DATABASE()'];
         $tables = Manager::select('SHOW TABLES');
         $responseTable = array();
 
         for($i=0;$i<count($tables);$i++){
             $tableName = $tables[$i]['Tables_in_'.$dbName];
-            $tableCollumns = Manager::select('SHOW COLUMNS FROM '.$tableName);
+            $tableCollumns = Manager::select('SHOW COLUMNS FROM '.$tableName.'  WHERE Field !=\'deleted_at\' AND Field!=\'updated_at\' AND Field!=\'created_at\'');
 
             array_push($responseTable, array(
                 'name'=>$tableName,
+                'modelName'=>\StringUtils::to_camel_case($tableName,true),
+                'slug'=>\StringUtils::slugify($tableName),
                 'fields'=>$tableCollumns
             ));
 
@@ -110,9 +113,135 @@ class GeneratorController extends \GeneralController
 //        echo json_encode($responseTable);
 //        die;
 
+
         $this->data['data'] = $responseTable;
 
         $this->app->render('/generator/generator.twig',$this->data);
+    }
+
+    public function generate(){
+        $this->data['action'] = 'generate';
+
+        $params = $this->app->request->post();
+
+
+        $loader = new \Twig_Loader_Filesystem(APP_PATH.'views/generator/');
+        $twig = new \Twig_Environment($loader);
+
+        $jsonResult['generator'] = array();
+        $jsonResult['generator']['entities'] = array();
+
+        $dbName = Manager::select('SELECT DATABASE()')[0]['DATABASE()'];
+        $tables = Manager::select('SHOW TABLES');
+        $responseTable = array();
+
+        for($i=0;$i<count($tables);$i++){
+            $tableName = $tables[$i]['Tables_in_'.$dbName];
+
+            //add model name
+            $modelName = $params['table_'.$tableName.'_model'];
+
+            //add entity slug
+            $slug = $params['table_'.$tableName.'_slug'];
+
+            //add entity slug
+            $isAdmin = ($params['table_'.$tableName.'_admin']);
+
+            //add entity slug
+            $isApi = ($params['table_'.$tableName.'_api']);
+
+            $primaryKey = '';
+            $foreignKeys = array();
+
+            //ENTITY FIELDS
+            $tableCollumns = Manager::select('SHOW COLUMNS FROM '.$tableName.'  WHERE Field !=\'deleted_at\' AND Field!=\'updated_at\' AND Field!=\'created_at\'');
+            $fields = array();
+            $searchableFields = array();
+
+            for($k=0;$k<count($tableCollumns);$k++){
+                //table
+                $fieldName = $tableCollumns[$k]['Field'];
+                $fieldType = $tableCollumns[$k]['Type'];
+                $fieldKey = $tableCollumns[$k]['Key'];
+
+                if ($fieldKey=='PRI') {
+                    //PK
+                    $primaryKey = $fieldName;
+                }elseif ($fieldKey=='MUL'){
+                    //FK
+                    array_push($foreignKeys,$fieldName);
+                }else {
+
+                    //form
+                    $fieldIsAdmin = $params['table_'.$tableName.'_field_'.$fieldName.'_admin'];
+                    $fieldIsSearchable = $params['table_'.$tableName.'_field_'.$fieldName.'_searchable'];
+                    $fieldFormType = $params['table_'.$tableName.'_field_'.$fieldName.'_formtype'];
+
+                    //add to searchables
+                    if($fieldIsSearchable) {
+                        array_push($searchableFields,$fieldName);
+                    }
+
+
+                    array_push($fields,array(
+                        $fieldName=>array(
+                            "isAdmin"=>$fieldIsAdmin,
+                            "isSearchable"=>$fieldIsSearchable,
+                            "formType"=>$fieldFormType
+                        )
+                    ));
+
+                }
+            }
+
+            //RELATIONS
+            $relations = array();
+            $totalRelations = $params['table_'.$tableName.'_relations_total'];
+            for($k=0;$k<$totalRelations;$k++){
+                $relationType = $params['table_'.$tableName.'_relations_type_'.$k];
+                $relationModel = $params['table_'.$tableName.'_relations_model_'.$k];
+
+                $relation = array(
+                    'type'=>$relationType,
+                    'model'=>$relationModel
+                );
+                array_push($relations,$relation);
+            }
+
+            //generating models
+
+
+
+            //ADD DATA
+            $data = array(
+                'model'=>$modelName,
+                'table'=>$tableName,
+                'primaryKey'=>$primaryKey,
+                'slug'=>$slug,
+                'isAdmin'=>$isAdmin,
+                'isAPI'=>$isApi,
+                'fields'=>$fields,
+                'searchableFields'=>$searchableFields,
+                'relations'=>$relations
+            );
+
+            array_push($jsonResult['generator']['entities'],$data);
+
+
+//            array_push($responseTable, array(
+//                'name'=>$tableName,
+//                'modelName'=>\StringUtils::to_camel_case($tableName,true),
+//                'slug'=>\StringUtils::slugify($tableName),
+//                'fields'=>$tableCollumns
+//            ));
+        }
+
+
+        echo json_encode($jsonResult);
+        die;
+
+
+
     }
 
 }

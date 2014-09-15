@@ -13,125 +13,198 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="titulo">Model Name</label>
                             <div class="col-sm-8">
-                                <input id="table_{{ table.name }}_model" name="table_{{ table.name }}_model" class="form-control" type="text" value="">
+                                <input id="table_{{ table.name }}_model" name="table_{{ table.name }}_model" class="form-control" type="text" value="{{ table.modelName }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="titulo">Slug</label>
+                            <div class="col-sm-8">
+                                <input id="table_{{ table.name }}_slug" name="table_{{ table.name }}_slug" class="form-control" type="text" value="{{ table.slug }}" readonly>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="titulo">Is Admin?</label>
                             <div class="col-sm-8">
-                                <input id="table_{{ table.name }}_admin" name="table_{{ table.name }}_admin" class="form-control" type="text" value="">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="table_{{ table.name }}_admin" id="optionsRadios1" value="1" checked> Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="table_{{ table.name }}_admin" id="optionsRadios2" value="0"> No
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="titulo">Is API?</label>
                             <div class="col-sm-8">
-                                <input id="table_{{ table.name }}_api" name="table_{{ table.name }}_api" class="form-control" type="text" value="">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="table_{{ table.name }}_api" id="optionsRadios1" value="1" checked> Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="table_{{ table.name }}_api" id="optionsRadios2" value="0"> No
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
-                        <h2>Relations:</h2>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label" for="titulo">
-                                <select class="form-control" name="categoria_id" id="categoria_id">
-                                    <option value="0">TIPO:</option>
-                                    <option value="0">HAS_MANY</option>
-                                    <option value="0">HAS_MANY_THROUGH</option>
-                                    <option value="0">HAS_ONE</option>
-                                    <option value="0">BELONGS_TO</option>
-                                    <option value="0">BELONGS_TO_MANY</option>
-                                    <option value="0">MORPH_MANY</option>
-                                    <option value="0">MORPH_TO</option>
-                                    <option value="0">MORPHED_BY_MANY</option>
-                                </select>
-                            </label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="categoria_id" id="categoria_id">
-                                    {% for tablezz in data %}
-                                    <option value="0">TIPO:</option>
-                                    {% endfor %}
-                                </select>
+                        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+                            <h2>Relations:</h2>
+
+                            <div class="form-group" id="table_{{ table.name }}_relations_container">
+                                <input type="hidden" name="table_{{ table.name }}_relations_total" id="table_{{ table.name }}_relations_total" value="0">
                             </div>
+                            <button type="button" id="submit-button" class="btn btn-primary btn-add-more-relation" data-table="{{ table.name }}">Add More</button>
+
+                            <h2>Fields:</h2>
+                            {% for field in table.fields %}
+                                <h3>
+                                    {{ field.Field }}
+                                </h3>
+                                {% if field.Key=='PRI' %}
+                                    {#PRIMARY KEY#}
+                                    - PK
+                                {% elseif field.Key=='MUL' %}
+                                    {#FOREGIN KEY#}
+                                    - FK
+                                {% else %}
+                                    {#NORMAL#}
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="titulo">Field Type ({{ field.Type }})</label>
+                                        <div class="col-sm-7">
+                                            <select class="form-control" name="table_{{ table.name }}_field_{{ field.Field }}_formtype" id="table_{{ table.name }}_field_{{ field.Field }}_formtype" required="required">
+                                                <option value="">SELECIONE</option>
+                                                {% if field.Type=='date' %}
+                                                <option value="datepicker" selected>DATEPICKER</option>
+                                                {% endif %}
+
+                                                {% if field.Type=='datetime' or field.Type=='timestamp' %}
+                                                    <option value="datetimepicker" selected>DATETIMEPICKER</option>
+                                                {% endif %}
+
+                                                {#VARCHAR#}
+                                                {% if 'varchar' in field.Type or 'char' in field.Type %}
+                                                    <option value="singleline_text" selected>SINGLELINE_TEXT</option>
+                                                    <option value="colorpicker">COLORPICKER</option>
+                                                    <option value="form_upload">FORM_UPLOAD</option>
+                                                    <option value="slug" {% if field.Field=='slug' %} selected {% endif %}>SLUG</option>
+                                                    <option value="multline_text">MULTILINE_TEXT</option>
+                                                    <option value="checkbox">CHECKBOX</option>
+                                                    <option value="email" {% if field.Field=='email' %} selected {% endif %}>EMAIL</option>
+                                                    <option value="password">PASSWORD</option>
+                                                    <option value="password_with_confirmation">PASSWORD_WITH_CONFIRMATION</option>
+                                                {% endif %}
+
+                                                {% if field.Type=='tinyint(1)' or field.Type == 'boolean' %}
+                                                <option value="select">SELECT</option>
+                                                <option value="radio">RADIO</option>
+                                                {% endif %}
+
+                                                {#TEXT#}
+                                                {% if field.Type=='text' %}
+                                                    <option value="textarea" selected>TEXTAREA</option>
+                                                    <option value="html">HTML</option>
+                                                {% endif %}
+                                                {#{% for row in categorias %}#}
+                                                {#<option value="{{ row.id }}" {% if row.id == table.categoria_id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>#}
+                                                {#{% endfor %}#}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="titulo">Is Searchable?</label>
+                                        <div class="col-sm-7">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="table_{{ table.name }}_field_{{ field.Field }}_searchable" id="optionsRadios1" value="1" checked> Yes
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="table_{{ table.name }}_field_{{ field.Field }}_searchable" id="optionsRadios2" value="0">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" for="titulo">Appears on Admin?</label>
+                                        <div class="col-sm-7">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="table_{{ table.name }}_field_{{ field.Field }}_admin" id="optionsRadios1" value="1" checked> Yes
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="table_{{ table.name }}_field_{{ field.Field }}_admin" id="optionsRadios2" value="0">
+                                                    No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
                         </div>
-
-                        <h2>Fields:</h2>
-                        {% for field in table.fields %}
-                            <h3>
-                                {{ field.Field }}
-                            </h3>
-                            {% if field.key=='PRI' %}
-                                {#PRIMARY KEY#}
-
-                            {% elseif field.key=='MUL' %}
-                                {#FOREGIN KEY#}
-
-                            {% else %}
-                                {#NORMAL#}
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="titulo">Field Type on Admin</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" name="categoria_id" id="categoria_id">
-                                            <option value="0">SELECIONE</option>
-                                            <option value="0">DATEPICKER</option>
-
-                                            {#VARCHAR#}
-                                            <option value="0">COLORPICKER</option>
-                                            <option value="0">FORM_UPLOAD</option>
-                                            <option value="0">SLUG</option>
-                                            <option value="0">SINGLELINE_TEXT</option>
-                                            <option value="0">MULTILINE_TEXT</option>
-
-                                            <option value="0">SELECT</option>
-                                            <option value="0">RADIO</option>
-                                            <option value="0">CHECKBOX</option>
-                                            <option value="0">EMAIL</option>
-                                            <option value="0">PASSWORD</option>
-
-                                            {#TEXT#}
-                                            <option value="0">TEXT</option>
-                                            <option value="0">HTML</option>
-                                            {#{% for row in categorias %}#}
-                                            {#<option value="{{ row.id }}" {% if row.id == table.categoria_id %} selected {% endif %} >{{ row.id }} - {{ row.nome }}</option>#}
-                                            {#{% endfor %}#}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="titulo">Is Searchable?</label>
-                                    <div class="col-sm-8">
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios1"
-                                                       value="option1" checked> Yes
-                                            </label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="optionsRadios" id="optionsRadios2"
-                                                       value="option2">
-                                                No
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-
-
-
-
-                        {% endfor %}
-
-
-
 
                     {% endfor %}
-
+                    <button type="submit" id="submit-button" class="btn btn-primary" data-table="{{ table.name }}">PROCESS</button>
                 </form>
             </div>
 
         </div>
     </div>
 
+{% endblock %}
 
+{% block extra_script %}
+    <script>
+        //.btn-add-more-relation
+
+        $(document).ready(function() {
+
+            //add more relationship
+            $('.btn-add-more-relation').click(function(e){
+                var currentTable = $(this).data('table');
+                var container =  $('#table_'+currentTable+'_relations_container');
+                var totalCount =  $('#table_'+currentTable+'_relations_total');
+                var currentIndex = Number(totalCount.val());
+                var nextIndex = currentIndex+1;
+
+                var strElements = '<div class="clearfix"></div><label class="col-sm-4" for="titulo">'+
+                                        '<select required="required" class="form-control" name="table_'+currentTable+'_relations_type_'+currentIndex+'" id="table_'+currentTable+'_relations_type_'+currentIndex+'">'+
+                                            '<option value="">TIPO:</option>'+
+                                            '<option value="hasMany">HAS_MANY</option>'+
+                                            '<option value="hasManyThrough">HAS_MANY_THROUGH</option>'+
+                                            '<option value="hasOne">HAS_ONE</option>'+
+                                            '<option value="belongsTo">BELONGS_TO</option>'+
+                                            '<option value="belongsToMany">BELONGS_TO_MANY</option>'+
+                                            '<option value="morphMany">MORPH_MANY</option>'+
+                                            '<option value="morphTo">MORPH_TO</option>'+
+                                            '<option value="morphedByMany">MORPHED_BY_MANY</option>'+
+                                        '</select>'+
+                                '</label>'+
+                '<div class="col-sm-6">'+
+                 '       <select class="form-control" required="required" name="table_'+currentTable+'_relations_model_'+currentIndex+'" id="table_'+currentTable+'_relations_model_'+currentIndex+'">'+
+                        '<option value="">RELACIONADO A:</option>'+
+                        {% for tableNames in data %}{% if tableNames.name != table.name  %}'<option value="{{ tableNames.modelName }}">{{ tableNames.modelName }}</option>'+{% endif %}{% endfor %}
+                '</select>'+
+                '</div>'
+
+
+                //
+                totalCount.val(nextIndex);
+                container.append(strElements);
+            });
+        });
+    </script>
 {% endblock %}
