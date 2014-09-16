@@ -74,7 +74,12 @@ class EtapasController extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/etapas/edit.twig',$this->data);
     }
 
@@ -93,17 +98,17 @@ class EtapasController extends GeneralAdminController {
         }
 
         //assign
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                                                        
+                                    $model->nome = $params['nome'];
+                                                $model->slug = $params['slug'];
+                                                $model->data_inicio = \DateUtils::convert_brazilian_date_to_mysql($params['data_inicio']);
+                                                $model->data_fim = \DateUtils::convert_brazilian_date_to_mysql($params['data_fim']);
+                                                $model->localizacao = $params['localizacao'];
+                                                $model->retirada = $params['retirada'];
+                                                $model->regulamento_arquivo = $params['regulamento_arquivo'];
+                                                $model->regulamento = $params['regulamento'];
+                                                $model->manual = $params['manual'];
+                                                $model->cor = $params['cor'];
+                    
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');

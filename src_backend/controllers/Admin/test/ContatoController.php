@@ -74,7 +74,12 @@ class ContatoController extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/contato/edit.twig',$this->data);
     }
 
@@ -93,11 +98,11 @@ class ContatoController extends GeneralAdminController {
         }
 
         //assign
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                                                        
+                                    $model->nome = $params['nome'];
+                                                $model->email = $params['email'];
+                                                $model->mensagem = $params['mensagem'];
+                                                $model->ip = $params['ip'];
+                    
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');

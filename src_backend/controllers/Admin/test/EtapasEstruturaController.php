@@ -74,7 +74,12 @@ class EtapasEstruturaController extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/etapas-estrutura/edit.twig',$this->data);
     }
 
@@ -93,7 +98,7 @@ class EtapasEstruturaController extends GeneralAdminController {
         }
 
         //assign
-                                                        
+        
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');

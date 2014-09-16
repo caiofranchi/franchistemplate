@@ -1,0 +1,99 @@
+{% extends 'admin/master_with_menu.twig' %}
+
+{% block main_content %}
+
+        <div class="page-header">
+            <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
+        </div>
+
+
+    <form action="{{ siteUrl }}" class="form-horizontal default-form-validation" role="form" method="post">
+                <input type="hidden" name="id" value="{{ table.id }}"/>
+
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="nome">nome</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.nome }}" type="text" class="form-control" id="nome" name="nome" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="slug">slug</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.slug }}" type="text" class="form-control" id="slug" name="slug" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="data_inicio">data_inicio</label>
+                    <div class="col-sm-8">
+                                                    <input data-datepicker value="{{ table.data_inicio|date("d/m/Y") }}" type="text" class="form-control" id="data_inicio" name="data_inicio" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="data_fim">data_fim</label>
+                    <div class="col-sm-8">
+                                                    <input data-datepicker value="{{ table.data_fim|date("d/m/Y") }}" type="text" class="form-control" id="data_fim" name="data_fim" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="localizacao">localizacao</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.localizacao }}" type="text" class="form-control" id="localizacao" name="localizacao" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="retirada">retirada</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.retirada }}" type="text" class="form-control" id="retirada" name="retirada" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="regulamento_arquivo">regulamento_arquivo</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.regulamento_arquivo }}" type="text" class="form-control" id="regulamento_arquivo" name="regulamento_arquivo" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="regulamento">regulamento</label>
+                    <div class="col-sm-8">
+                                                    <textarea class="form-control" rows="3" id="regulamento" name="regulamento">{{ table.regulamento }}</textarea>
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="manual">manual</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.manual }}" type="text" class="form-control" id="manual" name="manual" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="cor">cor</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.cor }}" type="text" class="form-control" id="cor" name="cor" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+
+                                                                                                                                                        
+                                                                                                                                                    
+                                                                                                        </form>
+
+{% endblock %}

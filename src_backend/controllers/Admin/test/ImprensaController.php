@@ -74,7 +74,12 @@ class ImprensaController extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/imprensa/edit.twig',$this->data);
     }
 
@@ -93,11 +98,11 @@ class ImprensaController extends GeneralAdminController {
         }
 
         //assign
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                                                        
+                                    $model->titulo = $params['titulo'];
+                                                $model->descricao = $params['descricao'];
+                                                $model->thumb = $params['thumb'];
+                                                $model->arquivo = $params['arquivo'];
+                    
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');

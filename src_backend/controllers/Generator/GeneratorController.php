@@ -25,7 +25,7 @@ class GeneratorController extends \GeneralController
 //        $this->data = array();
 
         /** default title */
-        $this->data['title'] = 'EMED';
+        $this->data['title'] = 'ADMIN GENERATOR';
 
         /** meta tag and information */
         $this->data['meta'] = array();
@@ -182,13 +182,11 @@ class GeneratorController extends \GeneralController
                         array_push($searchableFields,$fieldName);
                     }
 
-
                     array_push($fields,array(
-                        $fieldName=>array(
-                            "isAdmin"=>$fieldIsAdmin,
-                            "isSearchable"=>$fieldIsSearchable,
-                            "formType"=>$fieldFormType
-                        )
+                        "name"=>$fieldName,
+                        "isAdmin"=>$fieldIsAdmin,
+                        "isSearchable"=>$fieldIsSearchable,
+                        "formType"=>$fieldFormType
                     ));
 
                 }
@@ -207,9 +205,6 @@ class GeneratorController extends \GeneralController
                 );
                 array_push($relations,$relation);
             }
-
-            //generating models
-
 
 
             //ADD DATA
@@ -236,28 +231,39 @@ class GeneratorController extends \GeneralController
 
             if($isAdmin){
                 //writing ADMIN CONTROLLERS
-                $renderedClass = $twig->render('admincontroller.twig', $data);
+                $renderedClass = $twig->render('admin_controller.twig', $data);
+
+
                 $myfile = fopen(APP_PATH.'controllers/Admin/test/'.$modelName.'Controller.php', "w");
                 fwrite($myfile, $renderedClass);
                 fclose($myfile);
 
                 //writing ADMIN VIEWS
+
+
+                //edit
+                $renderedClass = $twig->render('admin_edit.twig', $data);
+                $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/test/'.$slug.'/edit.twig'), "w");
+                fwrite($myfile, $this->replaceTwigTags($renderedClass));
+                fclose($myfile);;
+
+                //list
+
+                $renderedClass = $twig->render('admin_list.twig', $data);
+                $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/test/'.$slug.'/list.twig'), "w");
+                fwrite($myfile, $this->replaceTwigTags($renderedClass));
+                fclose($myfile);
+
+
+                //MAIN MENU
+
             }
 
 
-
-            //writing admin controllers
-
             array_push($jsonResult['generator']['entities'],$data);
-
-
-//            array_push($responseTable, array(
-//                'name'=>$tableName,
-//                'modelName'=>\StringUtils::to_camel_case($tableName,true),
-//                'slug'=>\StringUtils::slugify($tableName),
-//                'fields'=>$tableCollumns
-//            ));
         }
+
+        //write admin routes
 
 
         echo json_encode($jsonResult);
@@ -265,6 +271,25 @@ class GeneratorController extends \GeneralController
 
 
 
+    }
+
+    public function checkFolder($pFileName){
+        $filename = $pFileName;
+        $dirname = dirname($filename);
+        if (!is_dir($dirname))
+        {
+            mkdir($dirname, 0755, true);
+        }
+        return $filename;
+    }
+
+    public function replaceTwigTags($pString) {
+        $pString = str_replace('[%','{%',$pString);
+        $pString = str_replace('%]','%}',$pString);
+        $pString = str_replace('[[','{{',$pString);
+        $pString = str_replace(']]','}}',$pString);
+
+        return $pString;
     }
 
 }

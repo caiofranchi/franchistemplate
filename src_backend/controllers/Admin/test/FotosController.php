@@ -74,7 +74,12 @@ class FotosController extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/fotos/edit.twig',$this->data);
     }
 
@@ -93,10 +98,10 @@ class FotosController extends GeneralAdminController {
         }
 
         //assign
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                                                        
+                                    $model->caminho = $params['caminho'];
+                                                $model->titulo = $params['titulo'];
+                                                $model->descricao = $params['descricao'];
+                    
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');

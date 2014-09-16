@@ -74,7 +74,12 @@ class EstruturaController extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/estrutura/edit.twig',$this->data);
     }
 
@@ -93,10 +98,10 @@ class EstruturaController extends GeneralAdminController {
         }
 
         //assign
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                $model->item = $params['item'];
-                                                        
+                                    $model->nome = $params['nome'];
+                                                $model->icone = $params['icone'];
+                                                $model->descricao = $params['descricao'];
+                    
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');

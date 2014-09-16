@@ -1,0 +1,61 @@
+{% extends 'admin/master_with_menu.twig' %}
+
+{% block main_content %}
+
+    <div class="page-header">
+        <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
+        <a href="{{ adminUrl }}{{ slug }}create" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Add New</a>
+    </div>
+
+    <!-- SEARCH-->
+    <form action="{{ adminUrl }}{{ slug }}search/" class="form-searchable navbar-form navbar-right page-header" role="search">
+        <div class="form-group">
+            <input type="text" name="search-txt" id="search-txt" class="form-control" placeholder="Search" required="required">
+        </div>
+        <button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
+    </form>
+
+    <!--TABLE-->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                                    <th>nome</th>
+                                    <th>icone</th>
+                                    <th>descricao</th>
+                                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in table %}
+                <tr>
+                                            <th>{{ row.nome }}</th>
+                                            <th>{{ row.icone }}</th>
+                                            <th>{{ row.descricao }}</th>
+                                        <td>
+
+                        <a href="{{ adminUrl }}{{ slug }}edit/{{ row.id }}" class="btn btn-default btn-xs" title="EDIT">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+
+                        <a data-toggle="modal" data-target="#confirm-modal" data-title="Attention" data-text="Do you really want to delete? There is no turning back..." data-href="{{ adminUrl }}{{ slug }}delete/{{ row.id }}" href="#" type="button" class="btn btn-default btn-xs" title="REMOVE">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    {% if totalPages>1 %}
+        <ul class="pagination">
+            <li {% if currentPage==1 %} class="disabled" {% endif %}><a href="{{ adminUrl }}{{ slug }}page/{{ previousPage }}">&laquo;</a></li>
+            {% for i in 1..totalPages %}
+                <li {% if currentPage==i %}class="active"{% endif %}><a href="{{ adminUrl }}{{ slug }}page/{{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            <li {% if currentPage==totalPages %} class="disabled" {% endif %}><a href="{{ adminUrl }}{{ slug }}page/{{ nextPage }}">»</a></li>
+        </ul>
+    {% endif %}
+{% endblock %}

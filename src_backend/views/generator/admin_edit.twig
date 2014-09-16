@@ -1,0 +1,105 @@
+[% extends 'admin/master_with_menu.twig' %]
+
+[% block main_content %]
+
+        <div class="page-header">
+            <h1 class="">/[[ page_name ]] <small>/[[ action ]]</small></h1>
+        </div>
+
+
+    <form action="[[ siteUrl ]]" class="form-horizontal default-form-validation" role="form" method="post">
+        {#<input type="hidden" name="_METHOD" value="PUT"/>#}
+        <input type="hidden" name="id" value="[[ table.id ]]"/>
+
+        {% for field in fields %}
+
+            {% if field.isAdmin=='1' %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for="{{ field.name }}">{{ field.name }}</label>
+                    <div class="col-sm-8">
+                        {% if field.formType=='singleline_text' %}
+                            <input value="[[ table.{{ field.name }} ]]" type="text" class="form-control" id="{{ field.name }}" name="{{ field.name }}" required="required" placeholder="">
+                        {% elseif field.formType=='select' %}
+                                <select class="form-control" name="{{ field.name }}" id="{{ field.name }}">
+                                    <option value="">SELECIONE</option>
+                                    <option [% if table.{{ field.name }} == 'TAL_COISA' %] selected [% endif %] value="[[ table.{{ field.name }} ]]">TAL_COISA</option>
+                                </select>
+                        {% elseif field.formType=='radio' %}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="{{ field.name }}" id="optionsRadios1" value="1" [% if table.{{ field.name }} == 'TAL_COISA' %] checked [% endif %]> TAL_COISA
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="{{ field.name }}" id="optionsRadios2" value="0">
+                                    TAL_COISA
+                                </label>
+                            </div>
+                        {% elseif field.formType=='slug' %}
+                            <input value="[[ table.{{ field.name }} ]]" type="text" class="form-control" id="{{ field.name }}" name="{{ field.name }}" required="required" placeholder="">
+                        {% elseif field.formType=='email' %}
+                            <input value="[[ table.{{ field.name }} ]]" type="email" class="form-control" id="{{ field.name }}" name="{{ field.name }}" required="required" placeholder="">
+                        {% elseif field.formType=='password' %}
+                            <input value="[[ table.{{ field.name }} ]]" type="password" class="form-control" id="{{ field.name }}" name="{{ field.name }}" required="required" placeholder="">
+                        {% elseif field.formType=='datepicker' or field.formType=='datetimepicker' %}
+                            <input data-datepicker value="[[ table.{{ field.name }}|date("d/m/Y") ]]" type="text" class="form-control" id="{{ field.name }}" name="{{ field.name }}" required="required" placeholder="">
+                        {% elseif field.formType=='textarea' or field.formType=='multiline_text'  %}
+                            <textarea class="form-control" rows="3" id="{{ field.name }}" name="{{ field.name }}">[[ table.{{ field.name }} ]]</textarea>
+                        {% elseif field.formType=='form_upload' %}
+
+                            <input type="hidden" name="{{ field.name }}" id="{{ field.name }}" value="[[ table.{{ field.name }} ]]" />
+
+                            <input id="fileupload" type="file" name="files[]" data-url="{{ adminUrl }}[[ slug ]]/upload" data-preview=".img-preview" data-reply-to="#{{ field.name }}">
+                            <br/>
+
+                            <div class="progress" style="display: none;">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="00" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                    0% Complete
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6 col-md-2 thumbnail">
+                                <img class="img-preview" [% if table.path!='' %]src="[[ baseUrl ]]assets/uploads/thumbnail/[[ table.{{ field.name }} ]]"[% endif %]  data-src="holder.js/200x200">
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+
+        {#<!-- SELECT -->#}
+        {#<div class="form-group">#}
+            {#<label class="col-sm-2 control-label" for="connection_type">Tipo</label>#}
+            {#<div class="col-sm-8">#}
+                {#<select class="form-control" name="connection_type" id="connection_type">#}
+                    {#<option value="">SELECIONE</option>#}
+                    {#<option [% if table.connection_type == 'Portfolio' %] selected [% endif %] value="Portfolio">Portfolio</option>#}
+                    {#<option [% if table.connection_type == 'Noticias' %] selected [% endif %] value="Noticias">Noticias</option>#}
+                {#</select>#}
+            {#</div>#}
+        {#</div>#}
+
+        {#<!-- SELECT -->#}
+        {#<!-- SELECT -->#}
+        {#<div class="form-group">#}
+            {#<label class="col-sm-2 control-label" for="connection_id">Pertence a</label>#}
+            {#<div class="col-sm-8">#}
+                {#<select class="form-control" name="connection_id" id="connection_id">#}
+                    {#<option value="0">SELECIONE</option>#}
+                    {#[% for row in portfolio %]#}
+                        {#<option value="[[ row.id ]]" [% if row.id == table.connection_id and table.connection_type == 'Portfolio' %] selected [% endif %] >PORTFOLIO - [[ row.titulo ]]</option>#}
+                    {#[% endfor %]#}
+
+                    {#[% for row in noticias %]#}
+                        {#<option value="[[ row.id ]]" [% if row.id == table.connection_id and table.connection_type == 'Noticias' %] selected [% endif %] >NOTÍCIA - [[ row.titulo ]]</option>#}
+                    {#[% endfor %]#}
+                {#</select>#}
+            {#</div>#}
+        {#</div>#}
+    </form>
+
+[% endblock %]

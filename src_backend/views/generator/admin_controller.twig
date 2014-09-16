@@ -74,7 +74,21 @@ class {{ model }}Controller extends GeneralAdminController {
         $this->data['photos_related'] = $this->data['table']->photos()->get();
         }
 
+
+        {#//render css assets#}
+        {#$this->loadCss('vendor/jquery.fileupload.css');#}
+        {#$this->loadCss('vendor/jquery.fileupload-ui.css');#}
+
+        {#//render js assets#}
+        {#$this->loadJs('vendor/jquery.ui.widget.js');#}
+        {#$this->loadJs('vendor/jquery.fileupload.js');#}
+        {#$this->loadJs('vendor/jquery.iframe-transport.js');#}
+        {#$this->loadJs('vendor/jquery.fileupload-process.js');#}
+        {#$this->loadJs('vendor/jquery.fileupload-image.js');#}
+
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/{{ slug }}/edit.twig',$this->data);
     }
 
@@ -94,14 +108,12 @@ class {{ model }}Controller extends GeneralAdminController {
 
         //assign
         {% for item in fields %}
-        $model->item = $params['item'];
+            {% if item.formType == 'datepicker' %}
+                $model->{{ item.name }} = \DateUtils::convert_brazilian_date_to_mysql($params['{{ item.name }}']);
+            {% else %}
+                $model->{{ item.name }} = $params['{{ item.name }}'];
+            {% endif %}
         {% endfor %}
-        {#$model->slug = $params['slug'];#}
-        {#$model->categoria_id = $params['categoria_id'];#}
-        {#$model->localizacao = $params['localizacao'];#}
-        {#$model->ano = $params['ano'];#}
-        {#$model->metragem = $params['metragem'];#}
-        {#$model->descricao = $params['descricao'];#}
 
         //save
         if($model->save()){

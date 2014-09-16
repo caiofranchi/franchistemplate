@@ -27,16 +27,4 @@ class Contato extends Illuminate\Database\Eloquent\Model
     public $timestamps = true;
 
                                                 
-                                    public function Estrutura()
-        {
-            return $this->belongsTo('Estrutura');
-        }
-            public function Fotos()
-        {
-            return $this->belongsToMany('Fotos');
-        }
-            public function Etapas()
-        {
-            return $this->morphTo('Etapas');
-        }
-    }
+                            }

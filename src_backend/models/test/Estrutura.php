@@ -27,8 +27,4 @@ class Estrutura extends Illuminate\Database\Eloquent\Model
     public $timestamps = true;
 
                                                 
-                                    public function EtapasFotos()
-        {
-            return $this->belongsTo('EtapasFotos');
-        }
-    }
+                            }

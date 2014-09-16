@@ -82,12 +82,14 @@
                                         <div class="col-sm-7">
                                             <select class="form-control" name="table_{{ table.name }}_field_{{ field.Field }}_formtype" id="table_{{ table.name }}_field_{{ field.Field }}_formtype" required="required">
                                                 <option value="">SELECIONE</option>
-                                                {% if field.Type=='date' %}
-                                                <option value="datepicker" selected>DATEPICKER</option>
-                                                {% endif %}
+                                                {#{% if field.Type=='date' %}#}
+                                                {#<option value="datepicker" selected>DATEPICKER</option>#}
+                                                {#{% endif %}#}
 
-                                                {% if field.Type=='datetime' or field.Type=='timestamp' %}
-                                                    <option value="datetimepicker" selected>DATETIMEPICKER</option>
+                                                {% if field.Type=='datetime' or field.Type=='timestamp' or field.Type=='date' %}
+                                                    <option value="datepicker" selected>DATEPICKER</option>
+                                                    <option value="datetimepicker">DATETIMEPICKER</option>
+
                                                 {% endif %}
 
                                                 {#VARCHAR#}
@@ -95,17 +97,19 @@
                                                     <option value="singleline_text" selected>SINGLELINE_TEXT</option>
                                                     <option value="colorpicker">COLORPICKER</option>
                                                     <option value="form_upload">FORM_UPLOAD</option>
-                                                    <option value="slug" {% if field.Field=='slug' %} selected {% endif %}>SLUG</option>
-                                                    <option value="multline_text">MULTILINE_TEXT</option>
-                                                    <option value="checkbox">CHECKBOX</option>
+                                                    {#<option value="slug" {% if field.Field=='slug' %} selected {% endif %}>SLUG</option>#}
+                                                    <option value="multiline_text">MULTILINE_TEXT</option>
                                                     <option value="email" {% if field.Field=='email' %} selected {% endif %}>EMAIL</option>
                                                     <option value="password">PASSWORD</option>
                                                     <option value="password_with_confirmation">PASSWORD_WITH_CONFIRMATION</option>
+                                                    <option value="select">SELECT</option>
+                                                    <option value="radio">RADIO</option>
+                                                    <option value="checkbox">CHECKBOX</option>
                                                 {% endif %}
 
                                                 {% if field.Type=='tinyint(1)' or field.Type == 'boolean' %}
-                                                <option value="select">SELECT</option>
-                                                <option value="radio">RADIO</option>
+                                                    <option value="select">SELECT</option>
+                                                    <option value="radio">RADIO</option>
                                                 {% endif %}
 
                                                 {#TEXT#}
