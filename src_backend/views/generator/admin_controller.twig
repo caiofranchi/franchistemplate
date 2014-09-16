@@ -107,13 +107,21 @@ class {{ model }}Controller extends GeneralAdminController {
         }
 
         //assign
+
         {% for item in fields %}
             {% if item.formType == 'datepicker' %}
                 $model->{{ item.name }} = \DateUtils::convert_brazilian_date_to_mysql($params['{{ item.name }}']);
+            {% elseif item.formType == 'form_upload' %}
+                {% set isUpload = true %}
+                $isNewImageUpload = false;
+                if($params['{{ item.name }}']!==$model->{{ item.name }}) {
+                    $isNewImageUpload = true;
+                }
             {% else %}
                 $model->{{ item.name }} = $params['{{ item.name }}'];
             {% endif %}
         {% endfor %}
+
 
         //save
         if($model->save()){
@@ -121,6 +129,32 @@ class {{ model }}Controller extends GeneralAdminController {
         }else {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
+
+        {% if isUpload %}
+            //changes the file name
+            $model = \{{ model }}::find($model->id);
+            {#$slug = $photo->connection()->get()->toArray()[0]['slug'];#}
+            $uploadPath = $params['{{ item.name }};
+
+            $newFilename = "title-".$model->id.".".pathinfo($uploadPath, PATHINFO_EXTENSION);
+
+            //rename original
+            rename($this->pathToUpload.$uploadPath, $this->pathToUpload.$newFilename);
+
+            //rename thumbnail
+            rename($this->pathToUpload.'thumbnail/'.$uploadPath, $this->pathToUpload.'thumbnail/'.$newFilename);
+
+            //rename medium
+            rename($this->pathToUpload.'medium/'.$uploadPath, $this->pathToUpload.'medium/'.$newFilename);
+
+            //rename high
+            rename($this->pathToUpload.'high/'.$uploadPath, $this->pathToUpload.'high/'.$newFilename);
+
+            //change the path and update
+            $model->{{ item.name }} = $newFilename;
+            $model->save();
+
+        {% endif %}
 
 
         $this->app->redirect('/admin/{{ model }}');

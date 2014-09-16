@@ -98,10 +98,12 @@ class EstruturaController extends GeneralAdminController {
         }
 
         //assign
+
                                     $model->nome = $params['nome'];
                                                 $model->icone = $params['icone'];
                                                 $model->descricao = $params['descricao'];
                     
+
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -109,6 +111,7 @@ class EstruturaController extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
+        
 
         $this->app->redirect('/admin/Estrutura');
     }

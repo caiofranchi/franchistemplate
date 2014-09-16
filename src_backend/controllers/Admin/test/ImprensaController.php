@@ -98,11 +98,13 @@ class ImprensaController extends GeneralAdminController {
         }
 
         //assign
+
                                     $model->titulo = $params['titulo'];
                                                 $model->descricao = $params['descricao'];
                                                 $model->thumb = $params['thumb'];
                                                 $model->arquivo = $params['arquivo'];
                     
+
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -110,6 +112,7 @@ class ImprensaController extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
+        
 
         $this->app->redirect('/admin/Imprensa');
     }

@@ -98,7 +98,9 @@ class EtapasEstruturaController extends GeneralAdminController {
         }
 
         //assign
+
         
+
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -106,6 +108,7 @@ class EtapasEstruturaController extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
+        
 
         $this->app->redirect('/admin/EtapasEstrutura');
     }

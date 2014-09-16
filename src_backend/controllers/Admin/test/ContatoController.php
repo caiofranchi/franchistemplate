@@ -98,11 +98,13 @@ class ContatoController extends GeneralAdminController {
         }
 
         //assign
+
                                     $model->nome = $params['nome'];
                                                 $model->email = $params['email'];
                                                 $model->mensagem = $params['mensagem'];
                                                 $model->ip = $params['ip'];
                     
+
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -110,6 +112,7 @@ class ContatoController extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
+        
 
         $this->app->redirect('/admin/Contato');
     }

@@ -98,10 +98,12 @@ class FotosController extends GeneralAdminController {
         }
 
         //assign
+
                                     $model->caminho = $params['caminho'];
                                                 $model->titulo = $params['titulo'];
                                                 $model->descricao = $params['descricao'];
                     
+
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -109,6 +111,7 @@ class FotosController extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
+        
 
         $this->app->redirect('/admin/Fotos');
     }

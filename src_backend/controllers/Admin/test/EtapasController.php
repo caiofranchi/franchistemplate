@@ -98,6 +98,7 @@ class EtapasController extends GeneralAdminController {
         }
 
         //assign
+
                                     $model->nome = $params['nome'];
                                                 $model->slug = $params['slug'];
                                                 $model->data_inicio = \DateUtils::convert_brazilian_date_to_mysql($params['data_inicio']);
@@ -109,6 +110,7 @@ class EtapasController extends GeneralAdminController {
                                                 $model->manual = $params['manual'];
                                                 $model->cor = $params['cor'];
                     
+
         //save
         if($model->save()){
             $this->app->flashKeep('success', 'Registered');
@@ -116,6 +118,7 @@ class EtapasController extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
+        
 
         $this->app->redirect('/admin/Etapas');
     }
