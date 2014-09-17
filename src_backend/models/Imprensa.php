@@ -8,14 +8,14 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class Contato extends Illuminate\Database\Eloquent\Model
+class Imprensa extends Illuminate\Database\Eloquent\Model
 {
     use SoftDeletingTrait;
 
     //list of fields that can be searchable
-    public static $searchable = array('nome','email','mensagem','ip',);
+    public static $searchable = array('titulo','descricao','thumb','arquivo',);
 
-    protected $table = 'contato';
+    protected $table = 'imprensa';
 
     protected $key = 'id';
 

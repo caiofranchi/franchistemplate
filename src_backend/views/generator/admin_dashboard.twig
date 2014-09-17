@@ -1,0 +1,17 @@
+[% extends 'admin/master_with_menu.twig' %]
+
+[% block main_content %]
+
+    <h1 class="page-header">Dashboard</h1>
+
+    <div class="row placeholders">
+        {% for entity in entities %}
+            <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL {{ entity.model }}</h4>
+                <span class="text-muted">[[ total_{{ entity.table }} ]]</span>
+            </div>
+        {% endfor %}
+
+    </div>
+
+[% endblock %]

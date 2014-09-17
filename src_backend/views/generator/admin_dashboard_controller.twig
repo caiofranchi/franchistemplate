@@ -1,0 +1,30 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: cfranchi
+ * Date: 06/08/14
+ * Time: 15:12
+ */
+
+
+namespace Admin;
+
+use Slim\Slim;
+
+class DashboardController extends GeneralAdminController {
+
+    public function __construct() {
+        parent::__construct();
+    }
+
+    public function index() {
+        $this->data['menu'] = 'dashboard';
+        //
+        {% for entity in entities %}
+            $this->data['total_{{ entity.table }}'] = \{{ entity.model }}::all()->count();
+        {% endfor %}
+        //
+        $this->app->render('/admin/dashboard.twig',$this->data);
+    }
+
+}

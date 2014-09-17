@@ -20,18 +20,32 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                                    <th>caminho</th>
-                                    <th>titulo</th>
-                                    <th>descricao</th>
+                                    <th>nome</th>
+                                    <th>slug</th>
+                                    <th>data_inicio</th>
+                                    <th>data_fim</th>
+                                    <th>localizacao</th>
+                                    <th>retirada</th>
+                                    <th>regulamento_arquivo</th>
+                                    <th>regulamento</th>
+                                    <th>manual</th>
+                                    <th>cor</th>
                                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for row in table %}
                 <tr>
-                                            <th>{{ row.caminho }}</th>
-                                            <th>{{ row.titulo }}</th>
-                                            <th>{{ row.descricao }}</th>
+                                            <th>{{ row.nome }}</th>
+                                            <th>{{ row.slug }}</th>
+                                            <th>{{ row.data_inicio }}</th>
+                                            <th>{{ row.data_fim }}</th>
+                                            <th>{{ row.localizacao }}</th>
+                                            <th>{{ row.retirada }}</th>
+                                            <th>{{ row.regulamento_arquivo }}</th>
+                                            <th>{{ row.regulamento }}</th>
+                                            <th>{{ row.manual }}</th>
+                                            <th>{{ row.cor }}</th>
                                         <td>
 
                         <a href="{{ adminUrl }}{{ menu }}/edit/{{ row.id }}" class="btn btn-default btn-xs" title="EDIT">

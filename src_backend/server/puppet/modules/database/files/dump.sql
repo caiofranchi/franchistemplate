@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 15, 2014 at 11:34 PM
+-- Generation Time: Sep 18, 2014 at 12:30 AM
 -- Server version: 5.5.38
 -- PHP Version: 5.5.16-1+deb.sury.org~precise+1
 
@@ -19,6 +19,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `vagrant_dev`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE IF NOT EXISTS `admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `nome`, `email`, `password`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Admin', 'admin@admin.com.br', '$2a$10$a8c46c1084b868b15d6e1uzd.mPtORvO63gNjXcTcLxyx48rq9c/C', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -89,6 +114,9 @@ CREATE TABLE IF NOT EXISTS `etapas_estrutura` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `etapas_id` int(11) NOT NULL,
   `estrutura_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `etapas_id` (`etapas_id`,`estrutura_id`),
   KEY `estrutura_id` (`estrutura_id`)
@@ -162,15 +190,15 @@ INSERT INTO `imprensa` (`id`, `titulo`, `descricao`, `thumb`, `arquivo`, `create
 -- Constraints for table `etapas_estrutura`
 --
 ALTER TABLE `etapas_estrutura`
-  ADD CONSTRAINT `etapas_estrutura_ibfk_2` FOREIGN KEY (`estrutura_id`) REFERENCES `estrutura` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `etapas_estrutura_ibfk_1` FOREIGN KEY (`etapas_id`) REFERENCES `etapas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `etapas_estrutura_ibfk_1` FOREIGN KEY (`etapas_id`) REFERENCES `etapas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `etapas_estrutura_ibfk_2` FOREIGN KEY (`estrutura_id`) REFERENCES `estrutura` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `etapas_fotos`
 --
 ALTER TABLE `etapas_fotos`
-  ADD CONSTRAINT `etapas_fotos_ibfk_2` FOREIGN KEY (`fotos_id`) REFERENCES `fotos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `etapas_fotos_ibfk_1` FOREIGN KEY (`etapas_id`) REFERENCES `etapas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `etapas_fotos_ibfk_1` FOREIGN KEY (`etapas_id`) REFERENCES `etapas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `etapas_fotos_ibfk_2` FOREIGN KEY (`fotos_id`) REFERENCES `fotos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

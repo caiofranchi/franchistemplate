@@ -12,18 +12,14 @@ $app->group('/',function () use ($app) {
     // HOME
     $app->get('/', array($refSiteController, 'home'));
 
-    //EMPRESA
-    $app->get('empresa', array($refSiteController, 'empresa'));
-
-    $app->get('portfolio/:slugCategoria(/:slugPortfolio)', array($refSiteController, 'portfolio'));
-
-//    $app->get('portfolio/:slugCategoria/:slugPortfolio', array($refSiteController, 'portfolio_item'));
-
-    $app->get('noticias(/:slug)', array($refSiteController, 'noticias'));
-
-    $app->get('contato', array($refSiteController, 'contato_get'));
-    $app->post('contato', array($refSiteController, 'contato_post'));
-    $app->post('contato/upload', array($refSiteController, 'contato_upload'));
-
-
+    //USER GENERATED ENTITIES
+            $app->map('admins', array($refSiteController, 'admins_index'))->via('GET', 'POST');
+            $app->map('contato', array($refSiteController, 'contato_index'))->via('GET', 'POST');
+            $app->map('estrutura', array($refSiteController, 'estrutura_index'))->via('GET', 'POST');
+            $app->map('etapas', array($refSiteController, 'etapas_index'))->via('GET', 'POST');
+            $app->map('etapas-estrutura', array($refSiteController, 'etapas_estrutura_index'))->via('GET', 'POST');
+            $app->map('etapas-fotos', array($refSiteController, 'etapas_fotos_index'))->via('GET', 'POST');
+            $app->map('fotos', array($refSiteController, 'fotos_index'))->via('GET', 'POST');
+            $app->map('imprensa', array($refSiteController, 'imprensa_index'))->via('GET', 'POST');
+    
 });

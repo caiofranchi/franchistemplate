@@ -11,34 +11,34 @@ namespace Admin;
 
 use Slim\Slim;
 
-class {{ model }}Controller extends GeneralAdminController {
+class EtapasController extends GeneralAdminController {
 
     public function __construct() {
 
         parent::__construct();
 
-        $this->data['page_name'] = '{{ model }}';
-        $this->data['menu'] = '{{ slug }}';
+        $this->data['page_name'] = 'Etapas';
+        $this->data['menu'] = 'etapas';
 
     }
 
     public function index() {
         $this->data['action'] = 'list';
 
-        $total = \{{ model }}::all()->count();
+        $total = \Etapas::all()->count();
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $queryModel = new \{{ model }}();
+        $queryModel = new \Etapas();
         $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         //assign view data from table
         $this->data['table'] = $result;
 
-        $this->app->render('admin/{{ slug }}/list.twig',$this->data);
+        $this->app->render('admin/etapas/list.twig',$this->data);
     }
 
     public function page_get($page) {
@@ -48,48 +48,37 @@ class {{ model }}Controller extends GeneralAdminController {
         $this->currentPage = $page;
 
 
-        $total = count(\{{ model }}::all());
+        $total = count(\Etapas::all());
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \{{ model }}::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
+        $this->data['table'] =  \Etapas::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
-        $this->app->render('admin/{{ slug }}/list.twig',$this->data);
+        $this->app->render('admin/etapas/list.twig',$this->data);
     }
 
     public function edit_get($id = '') {
 
         //
-        $this->data['table'] =  \{{ model }}::find($id);
+        $this->data['table'] =  \Etapas::find($id);
 
         //
-        {#$this->data['categorias'] =  \Categorias::all(); //relation#}
-        if($id=='') {
+                if($id=='') {
         $this->data['action'] = 'create';
         }else {
         $this->data['action'] = 'edit';
-        {#$this->data['photos_related'] = $this->data['table']->photos()->get();#}
-        }
+                }
 
 
-        {#//render css assets#}
-        {#$this->loadCss('vendor/jquery.fileupload.css');#}
-        {#$this->loadCss('vendor/jquery.fileupload-ui.css');#}
-
-        {#//render js assets#}
-        {#$this->loadJs('vendor/jquery.ui.widget.js');#}
-        {#$this->loadJs('vendor/jquery.fileupload.js');#}
-        {#$this->loadJs('vendor/jquery.iframe-transport.js');#}
-        {#$this->loadJs('vendor/jquery.fileupload-process.js');#}
-        {#$this->loadJs('vendor/jquery.fileupload-image.js');#}
-
+                        
+                                                
 
         $this->loadJs("vendor/parsley.min.js");
 
-        $this->app->render('admin/{{ slug }}/edit.twig',$this->data);
+        $this->app->render('admin/etapas/edit.twig',$this->data);
     }
 
     public function edit_post(){
@@ -100,28 +89,25 @@ class {{ model }}Controller extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $model = new \{{ model }}();
+            $model = new \Etapas();
         }else {
             //edit
-            $model = \{{ model }}::find($params['id']);
+            $model = \Etapas::find($params['id']);
         }
 
         //assign
 
-        {% for item in fields %}
-            {% if item.formType == 'datepicker' %}
-                $model->{{ item.name }} = \DateUtils::convert_brazilian_date_to_mysql($params['{{ item.name }}']);
-            {% elseif item.formType == 'form_upload' %}
-                {% set isUpload = true %}
-                $isNewImageUpload = false;
-                if($params['{{ item.name }}']!==$model->{{ item.name }}) {
-                    $isNewImageUpload = true;
-                }
-            {% else %}
-                $model->{{ item.name }} = $params['{{ item.name }}'];
-            {% endif %}
-        {% endfor %}
-
+                                    $model->nome = $params['nome'];
+                                                $model->slug = $params['slug'];
+                                                $model->data_inicio = \DateUtils::convert_brazilian_date_to_mysql($params['data_inicio']);
+                                                $model->data_fim = \DateUtils::convert_brazilian_date_to_mysql($params['data_fim']);
+                                                $model->localizacao = $params['localizacao'];
+                                                $model->retirada = $params['retirada'];
+                                                $model->regulamento_arquivo = $params['regulamento_arquivo'];
+                                                $model->regulamento = $params['regulamento'];
+                                                $model->manual = $params['manual'];
+                                                $model->cor = $params['cor'];
+                    
 
         //save
         if($model->save()){
@@ -130,34 +116,9 @@ class {{ model }}Controller extends GeneralAdminController {
             $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
-        {% if isUpload %}
-            //changes the file name
-            $model = \{{ model }}::find($model->id);
-            {#$slug = $photo->connection()->get()->toArray()[0]['slug'];#}
-            $uploadPath = $params['{{ item.name }};
+        
 
-            $newFilename = "title-".$model->id.".".pathinfo($uploadPath, PATHINFO_EXTENSION);
-
-            //rename original
-            rename($this->pathToUpload.$uploadPath, $this->pathToUpload.$newFilename);
-
-            //rename thumbnail
-            rename($this->pathToUpload.'thumbnail/'.$uploadPath, $this->pathToUpload.'thumbnail/'.$newFilename);
-
-            //rename medium
-            rename($this->pathToUpload.'medium/'.$uploadPath, $this->pathToUpload.'medium/'.$newFilename);
-
-            //rename high
-            rename($this->pathToUpload.'high/'.$uploadPath, $this->pathToUpload.'high/'.$newFilename);
-
-            //change the path and update
-            $model->{{ item.name }} = $newFilename;
-            $model->save();
-
-        {% endif %}
-
-
-        $this->app->redirect('/admin/{{ slug }}');
+        $this->app->redirect('/admin/etapas');
     }
 
     public function upload_post($id = '') {
@@ -205,11 +166,11 @@ class {{ model }}Controller extends GeneralAdminController {
 
     public function delete_get($id) {
         //
-        $model = \{{ model }}::find($id);
+        $model = \Etapas::find($id);
         $model->delete();
         $this->app->flashNow('warning', 'Successfully deleted');
 
-        $this->app->redirect('/admin/{{ model }}');
+        $this->app->redirect('/admin/Etapas');
     }
 
     public function search_get($search){
@@ -217,18 +178,18 @@ class {{ model }}Controller extends GeneralAdminController {
         $value = urldecode($search);
 
         $query = "(";
-        $total = count(\{{ model }}::$searchable);
+        $total = count(\Etapas::$searchable);
         for($i=0;$i<$total;$i++) {
-            $searchableField = \{{ model }}::$searchable[$i];
+            $searchableField = \Etapas::$searchable[$i];
             $query .= $searchableField." LIKE '%".$value."%'";
             $query .= ($i==$total-1) ? ') AND deleted_at IS NULL' : ' OR '; //excluding soft deleted from the search query
         }
 
-        $this->data['table'] =  \{{ model }}::whereRAW($query)->get();
+        $this->data['table'] =  \Etapas::whereRAW($query)->get();
 
         $this->data['action'] = 'Search by "'.$value.'" resulted in "'.$this->data['table']->count().'" term(s)';
 
-        $this->app->render('admin/{{ slug }}/list.twig',$this->data);
+        $this->app->render('admin/etapas/list.twig',$this->data);
 
     }
 }

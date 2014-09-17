@@ -224,7 +224,7 @@ class GeneratorController extends \GeneralController
 
             //writing models
             $renderedClass = $twig->render('model.twig', $data);
-            $myfile = fopen(APP_PATH.'models/test/'.$modelName.'.php', "w");
+            $myfile = fopen(APP_PATH.'models/'.$modelName.'.php', "w");
             fwrite($myfile, $renderedClass);
             fclose($myfile);
 
@@ -234,7 +234,7 @@ class GeneratorController extends \GeneralController
                 $renderedClass = $twig->render('admin_controller.twig', $data);
 
 
-                $myfile = fopen(APP_PATH.'controllers/Admin/test/'.$modelName.'Controller.php', "w");
+                $myfile = fopen(APP_PATH.'controllers/Admin/'.$modelName.'Controller.php', "w");
                 fwrite($myfile, $renderedClass);
                 fclose($myfile);
 
@@ -243,19 +243,19 @@ class GeneratorController extends \GeneralController
 
                 //edit
                 $renderedClass = $twig->render('admin_edit.twig', $data);
-                $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/test/'.$slug.'/edit.twig'), "w");
+                $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/'.$slug.'/edit.twig'), "w");
                 fwrite($myfile, $this->replaceTwigTags($renderedClass));
                 fclose($myfile);;
 
                 //list
 
                 $renderedClass = $twig->render('admin_list.twig', $data);
-                $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/test/'.$slug.'/list.twig'), "w");
+                $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/'.$slug.'/list.twig'), "w");
                 fwrite($myfile, $this->replaceTwigTags($renderedClass));
                 fclose($myfile);
 
 
-                //MAIN MENU
+
 
             }
 
@@ -263,14 +263,48 @@ class GeneratorController extends \GeneralController
             array_push($jsonResult['generator']['entities'],$data);
         }
 
+        //ADMIN MENU
+        $renderedClass = $twig->render('admin_menu.twig', $jsonResult['generator']);
+        $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/menu.twig'), "w");
+        fwrite($myfile, $this->replaceTwigTags($renderedClass));
+        fclose($myfile);
+
+        //ADMIN DASHBOARD
+        $renderedClass = $twig->render('admin_dashboard.twig', $jsonResult['generator']);
+        $myfile = fopen($this->checkFolder(APP_PATH.'views/admin/dashboard.twig'), "w");
+        fwrite($myfile, $this->replaceTwigTags($renderedClass));
+        fclose($myfile);
+
+        //ADMIN DASHBOARD
+        $renderedClass = $twig->render('admin_dashboard_controller.twig', $jsonResult['generator']);
+        $myfile = fopen($this->checkFolder(APP_PATH.'controllers/Admin/DashboardController.php'), "w");
+        fwrite($myfile, $this->replaceTwigTags($renderedClass));
+        fclose($myfile);
+
+
         //write admin routes
+        $renderedClass = $twig->render('admin_routes.twig', $jsonResult['generator']);
+        $myfile = fopen($this->checkFolder(APP_PATH.'routes/admin.php'), "w");
+        fwrite($myfile, $this->replaceTwigTags($renderedClass));
+        fclose($myfile);
 
+        //write basic site routes
+        $renderedClass = $twig->render('site_routes.twig', $jsonResult['generator']);
+        $myfile = fopen($this->checkFolder(APP_PATH.'routes/site.php'), "w");
+        fwrite($myfile, $this->replaceTwigTags($renderedClass));
+        fclose($myfile);
 
-        echo json_encode($jsonResult);
-        die;
+        //write basic SITE CONTROLLER
+        $renderedClass = $twig->render('site_controller.twig', $jsonResult['generator']);
+        $myfile = fopen($this->checkFolder(APP_PATH.'controllers/Site/MainController.php'), "w");
+        fwrite($myfile, $this->replaceTwigTags($renderedClass));
+        fclose($myfile);
 
+        $myfile = fopen($this->checkFolder(APP_PATH.'data/generator/config.json'), "w");
+        fwrite($myfile, json_encode($jsonResult));
+        fclose($myfile);
 
-
+        $this->app->redirect('/admin');
     }
 
     public function checkFolder($pFileName){

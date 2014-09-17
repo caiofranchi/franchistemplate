@@ -30,146 +30,215 @@ $app->group('/admin', function () use ($app) {
         $app->get('/dashboard', array($refAdminController,'authenticate') , array(new \Admin\DashboardController, 'index'));
 
 
-    //USER GENERATED ENTITIES
+        //USER GENERATED ENTITIES
+                    // Admins
+            $app->group('/admins', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\AdminsController;
 
-    // CATEGORIAS
-    $app->group('/categorias', array($refAdminController,'authenticate') , function () use ($app) {
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-        $refUserController = new \Admin\CategoriasController;
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-        //list
-        $app->get('/',array($refUserController,'index'));
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-        //page listing
-        $app->get('/page/:page',array($refUserController,'page_get'));
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
-        //search
-        $app->get('/search/:value',array($refUserController,'search_get'));
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-        //create
-        $app->get('/create', array($refUserController,'edit_get'));
-        $app->post('/create', array($refUserController,'edit_post'));
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
-        //get one user
-        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
-        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // Contato
+            $app->group('/contato', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\ContatoController;
 
-        $app->get('/delete/:id', array($refUserController,'delete_get'));
+                //list
+                $app->get('/',array($refUserController,'index'));
 
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-    });
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-    // PORTFOLIO
-    $app->group('/portfolio', array($refAdminController,'authenticate') , function () use ($app) {
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
-        $refUserController = new \Admin\PortfolioController;
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-        //list
-        $app->get('/',array($refUserController,'index'));
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
-        //page listing
-        $app->get('/page/:page',array($refUserController,'page_get'));
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // Estrutura
+            $app->group('/estrutura', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\EstruturaController;
 
-        //search
-        $app->get('/search/:value',array($refUserController,'search_get'));
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-        //create
-        $app->get('/create', array($refUserController,'edit_get'));
-        $app->post('/create', array($refUserController,'edit_post'));
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-        //get one user
-        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
-        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-        $app->get('/delete/:id', array($refUserController,'delete_get'));
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-    });
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
-    // PORTFOLIO
-    $app->group('/noticias', array($refAdminController,'authenticate') , function () use ($app) {
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // Etapas
+            $app->group('/etapas', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\EtapasController;
 
-        $refUserController = new \Admin\NoticiasController;
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-        //list
-        $app->get('/',array($refUserController,'index'));
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-        //page listing
-        $app->get('/page/:page',array($refUserController,'page_get'));
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-        //search
-        $app->get('/search/:value',array($refUserController,'search_get'));
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
-        //create
-        $app->get('/create', array($refUserController,'edit_get'));
-        $app->post('/create', array($refUserController,'edit_post'));
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-        //get one user
-        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
-        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
-        $app->get('/delete/:id', array($refUserController,'delete_get'));
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // EtapasEstrutura
+            $app->group('/etapas-estrutura', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\EtapasEstruturaController;
 
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-    });
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-    // PORTFOLIO
-    $app->group('/fotos', array($refAdminController,'authenticate') , function () use ($app) {
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-        $refUserController = new \Admin\PhotosController;
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
-        //list
-        $app->get('/',array($refUserController,'index'));
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-        //page listing
-        $app->get('/page/:page',array($refUserController,'page_get'));
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
-        //file upload
-        $app->post('/upload(/:id)',array($refUserController,'upload_post'));
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // EtapasFotos
+            $app->group('/etapas-fotos', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\EtapasFotosController;
 
-        //search
-        $app->get('/search/:value',array($refUserController,'search_get'));
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-        //create
-        $app->get('/create', array($refUserController,'edit_get'));
-        $app->post('/create', array($refUserController,'edit_post'));
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-        //get one user
-        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
-        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-        $app->get('/delete/:id', array($refUserController,'delete_get'));
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-    });
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // Fotos
+            $app->group('/fotos', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\FotosController;
 
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-    // CATEGORIAS
-    $app->group('/contato', array($refAdminController,'authenticate') , function () use ($app) {
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
-        $refUserController = new \Admin\ContatoController;
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-        //list
-        $app->get('/',array($refUserController,'index'));
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
 
-        //page listing
-        $app->get('/page/:page',array($refUserController,'page_get'));
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
 
-        //search
-        $app->get('/search/:value',array($refUserController,'search_get'));
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
 
-//        //create
-//        $app->get('/create', array($refUserController,'edit_get'));
-//        $app->post('/create', array($refUserController,'edit_post'));
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+                    // Imprensa
+            $app->group('/imprensa', array($refAdminController,'authenticate') , function () use ($app) {
+                $refUserController = new \Admin\ImprensaController;
 
-        //get one user
-        $app->get('/edit(/:id)', array($refUserController,'edit_get'));
-        $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+                //list
+                $app->get('/',array($refUserController,'index'));
 
-        $app->get('/delete/:id', array($refUserController,'delete_get'));
+                //page listing
+                $app->get('/page/:page',array($refUserController,'page_get'));
 
+                //search
+                $app->get('/search/:value',array($refUserController,'search_get'));
 
-    });
+                //file upload
+                $app->post('/upload(/:id)',array($refUserController,'upload_post'));
+
+                //create
+                $app->get('/create', array($refUserController,'edit_get'));
+                $app->post('/create', array($refUserController,'edit_post'));
+
+                //get one user
+                $app->get('/edit(/:id)', array($refUserController,'edit_get'));
+                $app->post('/edit(/:id)', array($refUserController,'edit_post'));
+
+                $app->get('/delete/:id', array($refUserController,'delete_get'));
+            });
+        
 
 });

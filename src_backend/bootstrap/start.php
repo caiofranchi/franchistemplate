@@ -95,8 +95,8 @@ $view->parserExtensions = array(
  * SETUP SLIM ROUTES
  */
 require APP_PATH.'routes/generator.php';
-//require APP_PATH.'routes/site.php';
-//require APP_PATH.'routes/admin.php';
+require APP_PATH.'routes/site.php';
+require APP_PATH.'routes/admin.php';
 //require APP_PATH.'routes/rest.php';
 
 return $app;

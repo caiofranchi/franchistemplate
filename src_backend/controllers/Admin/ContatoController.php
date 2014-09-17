@@ -20,21 +20,23 @@ class ContatoController extends GeneralAdminController {
         $this->data['page_name'] = 'Contato';
         $this->data['menu'] = 'contato';
 
-        $this->data['title'] = 'Admin - Contato';
-
     }
 
     public function index() {
         $this->data['action'] = 'list';
 
-        $total = count(\Contato::all());
+        $total = \Contato::all()->count();
 
         $this->data['totalPages'] = $total/$this->pageLimit;
         $this->data['currentPage'] = $this->currentPage;
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Contato::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('created_at','DESC')->get();
+        $queryModel = new \Contato();
+        $result = $queryModel->take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
+
+        //assign view data from table
+        $this->data['table'] = $result;
 
         $this->app->render('admin/contato/list.twig',$this->data);
     }
@@ -53,24 +55,29 @@ class ContatoController extends GeneralAdminController {
         $this->data['previousPage'] = $this->currentPage-1;
         $this->data['nextPage'] = $this->currentPage+1;
 
-        $this->data['table'] =  \Contato::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('created_at','DESC')->get();
+        $this->data['table'] =  \Contato::take($this->pageLimit)->skip($this->pageLimit*($this->currentPage-1))->orderBy('updated_at','DESC')->get();
 
         $this->app->render('admin/contato/list.twig',$this->data);
     }
 
     public function edit_get($id = '') {
-        if($id=='') {
-            $this->data['action'] = 'create';
-        }else {
-            $this->data['action'] = 'edit';
-        }
 
-        //suggests a max order
-        $this->data['maxOrder'] = \Contato::all()->max('ordem')+1;
         //
         $this->data['table'] =  \Contato::find($id);
 
+        //
+                if($id=='') {
+        $this->data['action'] = 'create';
+        }else {
+        $this->data['action'] = 'edit';
+                }
+
+
+                        
+                                                
+
         $this->loadJs("vendor/parsley.min.js");
+
         $this->app->render('admin/contato/edit.twig',$this->data);
     }
 
@@ -82,38 +89,86 @@ class ContatoController extends GeneralAdminController {
 
         if($params['id']=='') {
             //create
-            $categoria = new \Contato();
+            $model = new \Contato();
         }else {
             //edit
-            $categoria = \Contato::find($params['id']);
+            $model = \Contato::find($params['id']);
         }
 
         //assign
-        $categoria->nome = $params['nome'];
-        $categoria->slug = $params['slug'];
-        $categoria->ordem = $params['ordem'];
-        $categoria->descricao = $params['descricao'];
+
+                                    $model->nome = $params['nome'];
+                                                $model->email = $params['email'];
+                                                $model->mensagem = $params['mensagem'];
+                                                $model->ip = $params['ip'];
+                    
 
         //save
-        if($categoria->save()){
-            $this->app->flashNow('success', 'Registered');
+        if($model->save()){
+            $this->app->flashKeep('success', 'Registered');
         }else {
-            $this->app->flashNow('error', 'Not possible at this time, try again later.');
+            $this->app->flashKeep('error', 'Not possible at this time, try again later.');
         }
 
-        $this->app->render('admin/contato/edit.twig',$this->data);
-    }
-
-    public function delete_get($id) {
-        //
-        $categoria = \Contato::find($id);
-        $categoria->delete();
-        $this->app->flashNow('warning', 'Successfully deleted');
+        
 
         $this->app->redirect('/admin/contato');
     }
 
+    public function upload_post($id = '') {
+        header("Content-Type: application/json");
+
+        $upload_handler = new \UploadHandler(array(
+        'upload_dir' => $this->pathToUpload,
+        'upload_url' => $this->URLToUpload,
+        'mkdir_mode' => 0777,
+
+        'image_versions' => array(
+            // The empty image version key defines options for the original image:
+            '' => array(
+            // Automatically rotate images based on EXIF meta data:
+            'auto_orient' => true
+            ),
+            'high' => array(
+            'max_width' => 1400,
+            'max_height' => 942
+            ),
+            'medium' => array(
+            'max_width' => 631,//480,
+            'max_height' => 500// 380
+            ),
+            'thumbnail' => array(
+                // Uncomment the following to use a defined directory for the thumbnails
+                // instead of a subdirectory based on the version identifier.
+                // Make sure that this directory doesn't allow execution of files if you
+                // don't pose any restrictions on the type of uploaded files, e.g. by
+                // copying the .htaccess file from the files directory for Apache:
+                //'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/thumb/',
+                //'upload_url' => $this->get_full_url().'/thumb/',
+                // Uncomment the following to force the max
+                // dimensions and e.g. create square thumbnails:
+                //'crop' => true,
+                'max_width' => 300,
+                'max_height' => 300
+            )
+        )
+        //            'post_max_size' =>
+        ));
+
+        exit;
+    }
+
+    public function delete_get($id) {
+        //
+        $model = \Contato::find($id);
+        $model->delete();
+        $this->app->flashNow('warning', 'Successfully deleted');
+
+        $this->app->redirect('/admin/Contato');
+    }
+
     public function search_get($search){
+
         $value = urldecode($search);
 
         $query = "(";

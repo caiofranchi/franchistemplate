@@ -20,12 +20,15 @@ class DashboardController extends GeneralAdminController {
     public function index() {
         $this->data['menu'] = 'dashboard';
         //
-        $this->data['total_fotos'] = \Photos::all()->count();
-        $this->data['total_categorias'] = \Categorias::all()->count();
-        $this->data['total_noticias'] = \Noticias::all()->count();
-        $this->data['total_portfolio'] = \Portfolio::all()->count();
-        $this->data['total_contatos'] = \Contato::all()->count();
-        //
+                    $this->data['total_admins'] = \Admins::all()->count();
+                    $this->data['total_contato'] = \Contato::all()->count();
+                    $this->data['total_estrutura'] = \Estrutura::all()->count();
+                    $this->data['total_etapas'] = \Etapas::all()->count();
+                    $this->data['total_etapas_estrutura'] = \EtapasEstrutura::all()->count();
+                    $this->data['total_etapas_fotos'] = \EtapasFotos::all()->count();
+                    $this->data['total_fotos'] = \Fotos::all()->count();
+                    $this->data['total_imprensa'] = \Imprensa::all()->count();
+                //
         $this->app->render('/admin/dashboard.twig',$this->data);
     }
 

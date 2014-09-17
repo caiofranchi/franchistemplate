@@ -20,18 +20,12 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                                    <th>caminho</th>
-                                    <th>titulo</th>
-                                    <th>descricao</th>
                                 <th></th>
             </tr>
             </thead>
             <tbody>
             {% for row in table %}
                 <tr>
-                                            <th>{{ row.caminho }}</th>
-                                            <th>{{ row.titulo }}</th>
-                                            <th>{{ row.descricao }}</th>
                                         <td>
 
                         <a href="{{ adminUrl }}{{ menu }}/edit/{{ row.id }}" class="btn btn-default btn-xs" title="EDIT">

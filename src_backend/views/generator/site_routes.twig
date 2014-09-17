@@ -1,0 +1,20 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: cfranchi
+ * Date: 05/08/14
+ * Time: 14:36
+ */
+
+$app->group('/',function () use ($app) {
+    $refSiteController = new \Site\MainController;
+
+    // HOME
+    $app->get('/', array($refSiteController, 'home'));
+
+    //USER GENERATED ENTITIES
+    {% for entity in entities %}
+        $app->map('{{ entity.slug }}', array($refSiteController, '{{ entity.table }}_index'))->via('GET', 'POST');
+    {% endfor %}
+
+});

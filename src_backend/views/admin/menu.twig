@@ -8,15 +8,16 @@
         </button>
         <div class="navbar-collapse collapse">
             <ul class="nav nav-sidebar" role="navigation">
-
-                <li {% if menu=='dashboard' %}class="active"{% endif %}><a href="/admin/dashboard"><span class="glyphicon glyphicon-home"></span> DASHBOARD</a></li>
-                <li {% if menu=='categorias' %}class="active"{% endif %}><a href="/admin/categorias">CATEGORIAS</a></li>
-                <li {% if menu=='portfolio' %}class="active"{% endif %}><a href="/admin/portfolio">PORTFOLIO</a></li>
-                <li {% if menu=='noticias' %}class="active"{% endif %}><a href="/admin/noticias">NOTÍCIAS</a></li>
-                <li {% if menu=='fotos' %}class="active"{% endif %}><a href="/admin/fotos">FOTOS</a></li>
-                <li {% if menu=='contato' %}class="active"{% endif %}><a href="/admin/contato">CONTATO</a></li>
-
-            </ul>
+                <li ><a href="/admin/dashboard"><span class="glyphicon glyphicon-home"></span> DASHBOARD</a></li>
+                             <li {% if menu=='admins' %}class="active"{% endif %}><a href="/admin/admins"><span class="glyphicon"></span> admins</a></li>
+                            <li {% if menu=='contato' %}class="active"{% endif %}><a href="/admin/contato"><span class="glyphicon"></span> contato</a></li>
+                            <li {% if menu=='estrutura' %}class="active"{% endif %}><a href="/admin/estrutura"><span class="glyphicon"></span> estrutura</a></li>
+                            <li {% if menu=='etapas' %}class="active"{% endif %}><a href="/admin/etapas"><span class="glyphicon"></span> etapas</a></li>
+                            <li {% if menu=='etapas-estrutura' %}class="active"{% endif %}><a href="/admin/etapas-estrutura"><span class="glyphicon"></span> etapas-estrutura</a></li>
+                            <li {% if menu=='etapas-fotos' %}class="active"{% endif %}><a href="/admin/etapas-fotos"><span class="glyphicon"></span> etapas-fotos</a></li>
+                            <li {% if menu=='fotos' %}class="active"{% endif %}><a href="/admin/fotos"><span class="glyphicon"></span> fotos</a></li>
+                            <li {% if menu=='imprensa' %}class="active"{% endif %}><a href="/admin/imprensa"><span class="glyphicon"></span> imprensa</a></li>
+                        </ul>
         </div>
 
     </ul>

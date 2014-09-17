@@ -95,47 +95,14 @@ class MainController extends \GeneralController
         $this->app->render('/site/content/home.twig',$this->data);
     }
 
-            public function admins_index(){
-            $this->data['menu'] = 'admins';
+    {% for entity in entities %}
+        public function {{ entity.table }}_index(){
+            $this->data['menu'] = '{{ entity.slug }}';
             //
-            $this->app->render('/site/content/admins.twig',$this->data);
+            $this->app->render('/site/content/{{ entity.slug }}.twig',$this->data);
         }
-            public function contato_index(){
-            $this->data['menu'] = 'contato';
-            //
-            $this->app->render('/site/content/contato.twig',$this->data);
-        }
-            public function estrutura_index(){
-            $this->data['menu'] = 'estrutura';
-            //
-            $this->app->render('/site/content/estrutura.twig',$this->data);
-        }
-            public function etapas_index(){
-            $this->data['menu'] = 'etapas';
-            //
-            $this->app->render('/site/content/etapas.twig',$this->data);
-        }
-            public function etapas_estrutura_index(){
-            $this->data['menu'] = 'etapas-estrutura';
-            //
-            $this->app->render('/site/content/etapas-estrutura.twig',$this->data);
-        }
-            public function etapas_fotos_index(){
-            $this->data['menu'] = 'etapas-fotos';
-            //
-            $this->app->render('/site/content/etapas-fotos.twig',$this->data);
-        }
-            public function fotos_index(){
-            $this->data['menu'] = 'fotos';
-            //
-            $this->app->render('/site/content/fotos.twig',$this->data);
-        }
-            public function imprensa_index(){
-            $this->data['menu'] = 'imprensa';
-            //
-            $this->app->render('/site/content/imprensa.twig',$this->data);
-        }
-    
+    {% endfor %}
+
     public function contato_get(){
         $this->data['menu'] = 'contato';
         //

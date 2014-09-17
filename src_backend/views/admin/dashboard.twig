@@ -2,32 +2,42 @@
 
 {% block main_content %}
 
-            <h1 class="page-header">Dashboard</h1>
+    <h1 class="page-header">Dashboard</h1>
 
-            <div class="row placeholders">
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <h4>TOTAL DE CATEGORIAS</h4>
-                    <span class="text-muted">{{ total_categorias }}</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <h4>TOTAL DE PORTFOLIO</h4>
-                    <span class="text-muted">{{ total_portfolio }}</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <h4>TOTAL DE NOTÍCIAS</h4>
-                    <span class="text-muted">{{ total_noticias }}</span>
-                </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    {#<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">#}
-                    <h4>TOTAL DE FOTOS</h4>
-                    <span class="text-muted">{{ total_fotos }}</span>
-                </div>
-
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    {#<img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">#}
-                    <h4>TOTAL DE CONTATOS</h4>
-                    <span class="text-muted">{{ total_contatos }}</span>
-                </div>
+    <div class="row placeholders">
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL Admins</h4>
+                <span class="text-muted">{{ total_admins }}</span>
             </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL Contato</h4>
+                <span class="text-muted">{{ total_contato }}</span>
+            </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL Estrutura</h4>
+                <span class="text-muted">{{ total_estrutura }}</span>
+            </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL Etapas</h4>
+                <span class="text-muted">{{ total_etapas }}</span>
+            </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL EtapasEstrutura</h4>
+                <span class="text-muted">{{ total_etapas_estrutura }}</span>
+            </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL EtapasFotos</h4>
+                <span class="text-muted">{{ total_etapas_fotos }}</span>
+            </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL Fotos</h4>
+                <span class="text-muted">{{ total_fotos }}</span>
+            </div>
+                    <div class="col-xs-6 col-sm-3 placeholder">
+                <h4>TOTAL Imprensa</h4>
+                <span class="text-muted">{{ total_imprensa }}</span>
+            </div>
+        
+    </div>
 
 {% endblock %}

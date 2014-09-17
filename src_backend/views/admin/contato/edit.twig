@@ -6,44 +6,52 @@
             <h1 class="">/{{ page_name }} <small>/{{ action }}</small></h1>
         </div>
 
+
     <form action="{{ siteUrl }}" class="form-horizontal default-form-validation" role="form" method="post">
-        {#<input type="hidden" name="_METHOD" value="PUT"/>#}
-        <input type="hidden" name="id" value="{{ table.id }}"/>
+                <input type="hidden" name="id" value="{{ table.id }}"/>
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="nome">Nome</label>
-            <div class="col-sm-8">
-                <input value="{{ table.nome }}" data-slug-target="#slug" type="text" class="form-control" id="nome" name="nome" placeholder="Coloque um nome pra categoria" required="required">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="slug">Slug (URL)</label>
-            <div class="col-sm-8">
-                <input value="{{ table.slug }}" type="text" class="form-control" id="slug" name="slug" required="required" placeholder="Esse é o nome que a URL terá">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label" form="ordem">Ordem</label>
-            <div class="col-sm-8">
-                <input value="{% if table.ordem %}{{ table.ordem }}{% else %}{{ maxOrder }}{% endif %}" type="number" onkeypress="validateOnlyNumbers(event);" class="form-control" id="ordem" name="ordem" required="required" placeholder="Digite um número">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="descricao">Descrição</label>
-            <div class="col-sm-8">
-                <textarea class="form-control" rows="3" id="descricao" name="descricao">{{ table.descricao }}</textarea>
-            </div>
-        </div>
-
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="nome">nome</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.nome }}" type="text" class="form-control" id="nome" name="nome" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="email">email</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.email }}" type="email" class="form-control" id="email" name="email" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="mensagem">mensagem</label>
+                    <div class="col-sm-8">
+                                                    <textarea class="form-control" rows="3" id="mensagem" name="mensagem">{{ table.mensagem }}</textarea>
+                                            </div>
+                </div>
+            
+        
+                            <div class="form-group">
+                    <label class="col-sm-2 control-label" for="ip">ip</label>
+                    <div class="col-sm-8">
+                                                    <input value="{{ table.ip }}" type="text" class="form-control" id="ip" name="ip" required="required" placeholder="">
+                                            </div>
+                </div>
+            
+        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <!--                            $('#submit-button').button('loading')-->
                 <button type="submit" id="submit-button" data-loading-text="Loading..."  class="btn btn-primary">Save</button>
             </div>
         </div>
-    </form>
+
+                                                                                                                                                        
+                                                                                                                                                    
+                                                                                                        </form>
 
 {% endblock %}
