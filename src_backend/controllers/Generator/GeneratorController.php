@@ -255,10 +255,13 @@ class GeneratorController extends \GeneralController
                 fclose($myfile);
 
 
-
+                //SITE VIEWS
+                $renderedClass = $twig->render('site_view.twig', $data);
+                $myfile = fopen($this->checkFolder(APP_PATH.'views/site/content/'.$slug.'.twig'), "w");
+                fwrite($myfile, $this->replaceTwigTags($renderedClass));
+                fclose($myfile);
 
             }
-
 
             array_push($jsonResult['generator']['entities'],$data);
         }
@@ -300,6 +303,7 @@ class GeneratorController extends \GeneralController
         fwrite($myfile, $this->replaceTwigTags($renderedClass));
         fclose($myfile);
 
+        //write config file generated
         $myfile = fopen($this->checkFolder(APP_PATH.'data/generator/config.json'), "w");
         fwrite($myfile, json_encode($jsonResult));
         fclose($myfile);
